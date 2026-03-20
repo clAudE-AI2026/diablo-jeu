@@ -1,0 +1,15 @@
+{
+  "name": "diablo-jeu",
+  "version": "1.0.0",
+  "description": "DIABLO - Jeu de soirée avec Oracle sadique",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.14.2",
+    "qrcode": "^1.5.3",
+    "uuid": "^9.0.0"
+  }
+}
