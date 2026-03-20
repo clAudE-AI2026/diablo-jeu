@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>DIABLO — Joueur</title>
+<style>
+  :root {
+    --rouge: #ff2d55;
+    --rouge-sombre: #c0142b;
+    --orange: #ff6b35;
+    --noir: #0a0a0f;
+    --noir2: #12121a;
+    --noir3: #1e1e2e;
+    --blanc: #f0e6ff;
+    --gris: #888;
+    --or: #ffd700;
+    --vert: #4ecdc4;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    height: 100%; background: var(--noir);
+    color: var(--blanc); font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow: hidden;
+  }
+  .screen {
+    height: 100vh; width: 100vw;
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 1.5rem; text-align: center;
+  }
+  .screen.active { display: flex; }
+
+  /* ─── JOIN ─── */
+  #screen-join .logo {
+    font-size: 3.5rem; font-weight: 900; letter-spacing: 0.1em;
+    background: linear-gradient(135deg, var(--rouge), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 0.3rem;
+  }
+  .tagline { color: var(--gris); font-size: 0.8rem; letter-spacing: 0.3em; margin-bottom: 2.5rem; }
+  .input-field {
+    background: var(--noir3); border: 1px solid var(--rouge);
+    color: var(--blanc); padding: 1rem 1.2rem;
+    border-radius: 10px; font-size: 1.1rem; width: 100%; max-width: 320px;
+    margin-bottom: 0.8rem; text-align: center; outline: none;
+    -webkit-text-fill-color: var(--blanc);
+  }
+  .btn {
+    width: 100%; max-width: 320px; padding: 1rem;
+    border-radius: 10px; border: none; font-size: 1rem;
+    font-weight: 700; cursor: pointer; letter-spacing: 0.08em;
+    text-transform: uppercase; transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-rouge { background: linear-gradient(135deg, var(--rouge), var(--rouge-sombre)); color: white; }
+  .btn-rouge:active { transform: scale(0.97); }
+  .btn-vert { background: var(--vert); color: #000; }
+  .btn-vert:active { transform: scale(0.97); }
+  .btn-gris { background: var(--noir3); color: var(--gris); border: 1px solid var(--gris); }
+
+  /* ─── LOBBY JOUEUR ─── */
+  #screen-lobby-joueur .big-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .status-text { font-size: 1.1rem; color: var(--gris); margin-bottom: 0.5rem; }
+  .nom-display {
+    font-size: 1.8rem; font-weight: 900; color: var(--rouge);
+    margin-bottom: 2rem;
+  }
+
+  /* ─── EN JEU ─── */
+  #screen-jeu { justify-content: space-between; padding: 1.5rem 1rem 2rem; }
+  .jeu-header {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; margin-bottom: 1rem;
+  }
+  .jeu-logo { font-size: 1.2rem; font-weight: 900; color: var(--rouge); letter-spacing: 0.2em; }
+  .jeu-stats { display: flex; gap: 0.5rem; }
+  .stat-badge {
+    padding: 0.3rem 0.6rem; border-radius: 15px; font-size: 0.8rem; font-weight: 700;
+  }
+  .stat-pts { background: rgba(255,215,0,0.15); color: var(--or); }
+  .stat-palier { font-size: 0.8rem; }
+  .palier-noms { background: rgba(78,205,196,0.15); color: var(--vert); }
+  .palier-chaud { background: rgba(255,107,53,0.15); color: var(--orange); }
+  .palier-brulant { background: rgba(255,45,85,0.15); color: var(--rouge); }
+
+  .jeu-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+
+  /* État normal (en attente) */
+  .idle-state { text-align: center; }
+  .idle-icon { font-size: 3rem; margin-bottom: 0.8rem; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+  .idle-text { color: var(--gris); font-size: 1rem; }
+
+  /* Notification accord reçue */
+  .accord-card {
+    display: none; width: 100%;
+    background: var(--noir3); border: 2px solid var(--rouge);
+    border-radius: 16px; padding: 1.5rem;
+    box-shadow: 0 0 40px rgba(255,45,85,0.3);
+    animation: pop-in 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .accord-card.visible { display: block; }
+  @keyframes pop-in {
+    from { transform: scale(0.8) translateY(30px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  .accord-label {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--rouge); margin-bottom: 0.5rem; font-weight: 700;
+  }
+  .accord-partenaire {
+    font-size: 0.9rem; color: var(--gris); margin-bottom: 1rem;
+  }
+  .accord-texte {
+    font-size: 1.1rem; line-height: 1.5; color: var(--blanc);
+    margin-bottom: 1.5rem; font-weight: 500;
+  }
+  .accord-timer-bar { height: 4px; background: var(--noir2); border-radius: 2px; margin-bottom: 1.2rem; overflow: hidden; }
+  .accord-timer-fill {
+    height: 100%; background: var(--rouge);
+    width: 100%; transition: width 1s linear;
+    border-radius: 2px;
+  }
+  .accord-btns { display: flex; gap: 0.8rem; }
+  .accord-btns .btn { flex: 1; }
+
+  /* Après accord */
+  .attente-autre {
+    display: none; text-align: center; padding: 1.5rem;
+  }
+  .attente-autre.visible { display: block; }
+  .attente-icon { font-size: 3rem; margin-bottom: 0.8rem; animation: spin 2s linear infinite; }
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  /* Action solo */
+  .solo-card {
+    display: none; width: 100%;
+    background: var(--noir3); border: 2px solid var(--orange);
+    border-radius: 16px; padding: 1.5rem;
+    animation: pop-in 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .solo-card.visible { display: block; }
+  .solo-label {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 0.5rem; font-weight: 700;
+  }
+  .solo-texte {
+    font-size: 1.1rem; line-height: 1.5; color: var(--blanc);
+    margin-bottom: 0.8rem;
+  }
+  .solo-role { font-size: 0.85rem; color: var(--gris); margin-bottom: 1.2rem; font-style: italic; }
+  .solo-btns { display: flex; gap: 0.8rem; }
+  .solo-btns .btn { flex: 1; font-size: 0.85rem; }
+
+  /* ─── Palier montée ─── */
+  .jeu-footer { width: 100%; }
+  .palier-section { margin-top: 1rem; }
+  .palier-info {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--noir3); border-radius: 10px; padding: 0.8rem 1rem;
+    margin-bottom: 0.6rem;
+  }
+  .palier-label { font-size: 0.85rem; color: var(--gris); }
+  .palier-val { font-weight: 700; font-size: 0.9rem; }
+  .btn-monter { font-size: 0.85rem; padding: 0.7rem; }
+
+  /* ─── FIN ─── */
+  #screen-fin { background: var(--noir); }
+  .fin-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .fin-titre { font-size: 1.8rem; font-weight: 900; color: var(--rouge); margin-bottom: 0.5rem; }
+  .fin-pts { font-size: 3rem; font-weight: 900; color: var(--or); margin-bottom: 0.5rem; }
+  .fin-verdict {
+    font-size: 1rem; color: var(--gris); font-style: italic;
+    max-width: 300px; line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── JOIN ─── -->
+<div class="screen active" id="screen-join">
+  <div class="logo">DIABLO</div>
+  <div class="tagline">Le jeu qui décide pour toi</div>
+  <input class="input-field" id="input-nom" placeholder="Ton prénom" maxlength="20" autocomplete="off">
+  <br>
+  <input class="input-field" id="input-code" placeholder="Code de session (ex: A1B2C3)" maxlength="6"
+    style="text-transform:uppercase;letter-spacing:0.3em" autocomplete="off">
+  <br>
+  <button class="btn btn-rouge" onclick="rejoindre()" style="margin-top:0.5rem">Rejoindre DIABLO</button>
+</div>
+
+<!-- ─── LOBBY ─── -->
+<div class="screen" id="screen-lobby-joueur">
+  <div class="big-icon">🎲</div>
+  <div class="status-text">Tu as rejoint la soirée</div>
+  <div class="nom-display" id="nom-affiché">—</div>
+  <div class="status-text">En attente que l'hôte lance la partie...</div>
+  <div style="color:var(--rouge);margin-top:2rem;font-size:0.85rem;animation:pulse 2s infinite">
+    DIABLO se réveille...
+  </div>
+</div>
+
+<!-- ─── JEU ─── -->
+<div class="screen" id="screen-jeu">
+  <div class="jeu-header">
+    <div class="jeu-logo">DIABLO</div>
+    <div class="jeu-stats">
+      <span class="stat-badge stat-pts" id="stat-pts">0 pts</span>
+      <span class="stat-badge stat-palier palier-noms" id="stat-palier">🌊 Tiède</span>
+    </div>
+  </div>
+
+  <div class="jeu-content">
+    <!-- État idle -->
+    <div class="idle-state" id="idle-state">
+      <div class="idle-icon">👁️</div>
+      <div class="idle-text">L'Oracle réfléchit...<br>Reste attentif.</div>
+    </div>
+
+    <!-- Accord duo -->
+    <div class="accord-card" id="accord-card">
+      <div class="accord-label">🔐 Proposition secrète de DIABLO</div>
+      <div class="accord-partenaire" id="accord-partenaire"></div>
+      <div class="accord-texte" id="accord-texte"></div>
+      <div class="accord-timer-bar">
+        <div class="accord-timer-fill" id="accord-timer-fill"></div>
+      </div>
+      <div class="accord-btns">
+        <button class="btn btn-rouge" onclick="repondreAccord(false)">✗ Refuser</button>
+        <button class="btn btn-vert" onclick="repondreAccord(true)">✓ Accepter</button>
+      </div>
+    </div>
+
+    <!-- Attente de l'autre joueur -->
+    <div class="attente-autre" id="attente-autre">
+      <div class="attente-icon">⏳</div>
+      <div style="font-size:1rem;color:var(--gris)">Ta réponse est enregistrée.<br>En attente de l'autre joueur...</div>
+      <div style="color:var(--gris);font-size:0.8rem;margin-top:1rem;font-style:italic">
+        Personne ne saura ce que tu as répondu tant que les deux n'ont pas décidé.
+      </div>
+    </div>
+
+    <!-- Action solo -->
+    <div class="solo-card" id="solo-card">
+      <div class="solo-label">⚡ L'Oracle t'ordonne</div>
+      <div class="solo-texte" id="solo-texte"></div>
+      <div class="solo-role" id="solo-role"></div>
+      <div class="solo-btns">
+        <button class="btn btn-gris" onclick="actionSolo(false)">Refuser</button>
+        <button class="btn btn-vert" onclick="actionSolo(true)">✓ Accompli !</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="jeu-footer">
+    <div class="palier-section">
+      <div class="palier-info">
+        <span class="palier-label">Ton niveau d'intensité</span>
+        <span class="palier-val" id="palier-val">🌊 Tiède</span>
+      </div>
+      <button class="btn btn-gris btn-monter" id="btn-monter" onclick="monterPalier()">
+        Monter en intensité →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FIN ─── -->
+<div class="screen" id="screen-fin">
+  <div class="fin-icon">⚖️</div>
+  <div class="fin-titre">Jugement rendu</div>
+  <div class="fin-pts" id="fin-pts">0</div>
+  <div style="color:var(--gris);margin-bottom:1rem">points</div>
+  <div class="fin-verdict" id="fin-verdict"></div>
+</div>
+
+<script>
+let ws = null;
+let sessionId = null;
+let joueurId = null;
+let palierActuel = 0;
+let pointsActuels = 0;
+let accordEnCours = null;
+let accordTimerInterval = null;
+
+const palierNoms = ['🌊 Tiède', '🔥 Chaud', '💀 Brûlant'];
+const palierClasses = ['palier-noms', 'palier-chaud', 'palier-brulant'];
+
+// Récupérer code depuis URL si QR code
+window.addEventListener('load', () => {
+  const params = new URLSearchParams(location.search);
+  const s = params.get('s');
+  if (s) document.getElementById('input-code').value = s.toUpperCase();
+});
+
+function rejoindre() {
+  const nom = document.getElementById('input-nom').value.trim();
+  const code = document.getElementById('input-code').value.trim().toUpperCase();
+  if (!nom || !code) { alert('Entre ton prénom et le code de session !'); return; }
+
+  sessionId = code;
+  connectWS(nom);
+}
+
+function connectWS(nom) {
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  ws = new WebSocket(`${proto}://${location.host}`);
+
+  ws.onopen = () => {
+    ws.send(JSON.stringify({ type: 'JOIN', sessionId, nom }));
+  };
+
+  ws.onmessage = (e) => {
+    const msg = JSON.parse(e.data);
+    handleMessage(msg);
+  };
+
+  ws.onclose = () => {
+    setTimeout(() => { if (joueurId) connectWS(document.getElementById('input-nom')?.value || 'Joueur'); }, 2000);
+  };
+}
+
+function handleMessage(msg) {
+  switch(msg.type) {
+    case 'JOIN_OK':
+      joueurId = msg.joueurId;
+      palierActuel = msg.palier || 0;
+      document.getElementById('nom-affiché').textContent = msg.nom;
+      showScreen('lobby-joueur');
+      break;
+
+    case 'GAME_STARTED':
+      showScreen('jeu');
+      updateUI();
+      break;
+
+    case 'ACCORD_REQUIS':
+      accordEnCours = msg.actionId;
+      showAccord(msg.texte, msg.partenaire);
+      break;
+
+    case 'ACCORD_ATTENTE_AUTRE':
+      showAttenteAutre();
+      break;
+
+    case 'ACCORD_OUI':
+    case 'ACCORD_NON':
+      hideAccord();
+      showIdle();
+      if (msg.type === 'ACCORD_OUI' && msg.points) {
+        pointsActuels += msg.points;
+        updateUI();
+        vibratePhone([100, 50, 200]);
+      }
+      break;
+
+    case 'ACTION_SOLO':
+      showSolo(msg.texte, msg.roleGroupe);
+      vibratePhone([200]);
+      break;
+
+    case 'ACTION_ACCOMPLIE':
+      if (msg.joueurId === joueurId) {
+        pointsActuels = msg.points;
+        updateUI();
+      }
+      hideSolo();
+      showIdle();
+      break;
+
+    case 'ACTION_REFUSEE':
+      hideSolo();
+      showIdle();
+      break;
+
+    case 'JOUEUR_PALIER_UP':
+      if (msg.joueurId === joueurId) {
+        palierActuel = msg.palier;
+        updateUI();
+      }
+      break;
+
+    case 'GAME_OVER':
+      const monVerdict = msg.verdicts.find(v => {
+        return v.nom === document.getElementById('nom-affiché').textContent;
+      });
+      showFin(monVerdict);
+      break;
+  }
+}
+
+// ─── ACCORD DUO ──────────────────────────────────────────────────────────
+
+function showAccord(texte, partenaire) {
+  showIdle(false);
+  document.getElementById('accord-texte').textContent = texte;
+  document.getElementById('accord-partenaire').textContent =
+    partenaire ? `Avec : ${partenaire}` : '';
+  document.getElementById('accord-card').classList.add('visible');
+  document.getElementById('attente-autre').classList.remove('visible');
+
+  // Timer visuel
+  const fill = document.getElementById('accord-timer-fill');
+  fill.style.transition = 'none';
+  fill.style.width = '100%';
+  setTimeout(() => {
+    fill.style.transition = 'width 30s linear';
+    fill.style.width = '0%';
+  }, 50);
+}
+
+function hideAccord() {
+  document.getElementById('accord-card').classList.remove('visible');
+  document.getElementById('attente-autre').classList.remove('visible');
+  clearInterval(accordTimerInterval);
+  accordEnCours = null;
+}
+
+function repondreAccord(accepte) {
+  if (!accordEnCours || !ws) return;
+  ws.send(JSON.stringify({
+    type: 'ACCORD_REPONSE',
+    sessionId, actionId: accordEnCours, accepte
+  }));
+  document.getElementById('accord-card').classList.remove('visible');
+  showAttenteAutre();
+  vibratePhone([50]);
+}
+
+function showAttenteAutre() {
+  document.getElementById('attente-autre').classList.add('visible');
+}
+
+// ─── ACTION SOLO ─────────────────────────────────────────────────────────
+
+function showSolo(texte, roleGroupe) {
+  showIdle(false);
+  document.getElementById('solo-texte').textContent = texte || "L'Oracle t'ordonne d'agir.";
+  document.getElementById('solo-role').textContent = roleGroupe || '';
+  document.getElementById('solo-card').classList.add('visible');
+}
+
+function hideSolo() {
+  document.getElementById('solo-card').classList.remove('visible');
+}
+
+function actionSolo(accompli) {
+  if (!ws) return;
+  ws.send(JSON.stringify({ type: 'ACTION_RESULTAT', sessionId, accompli }));
+  hideSolo();
+  showIdle();
+}
+
+// ─── PALIER ───────────────────────────────────────────────────────────────
+
+function monterPalier() {
+  if (palierActuel >= 2) return;
+  if (!confirm(`Passer au niveau "${palierNoms[palierActuel+1]}" ? Tu recevras des défis plus intenses.`)) return;
+  ws.send(JSON.stringify({ type: 'MONTER_PALIER', sessionId }));
+}
+
+// ─── UI ───────────────────────────────────────────────────────────────────
+
+function showIdle(visible = true) {
+  document.getElementById('idle-state').style.display = visible ? 'block' : 'none';
+}
+
+function updateUI() {
+  document.getElementById('stat-pts').textContent = `${pointsActuels} pts`;
+  const palierEl = document.getElementById('stat-palier');
+  palierEl.textContent = palierNoms[palierActuel];
+  palierEl.className = `stat-badge stat-palier ${palierClasses[palierActuel]}`;
+
+  document.getElementById('palier-val').textContent = palierNoms[palierActuel];
+
+  const btnMonter = document.getElementById('btn-monter');
+  if (palierActuel >= 2) {
+    btnMonter.textContent = '💀 Niveau maximum atteint';
+    btnMonter.disabled = true;
+    btnMonter.className = 'btn btn-gris btn-monter';
+  } else {
+    btnMonter.textContent = `Monter en ${palierNoms[palierActuel+1]} →`;
+    btnMonter.disabled = false;
+  }
+}
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(`screen-${name}`);
+  if (el) el.classList.add('active');
+}
+
+function showFin(verdict) {
+  showScreen('fin');
+  document.getElementById('fin-pts').textContent = pointsActuels;
+  document.getElementById('fin-verdict').textContent =
+    verdict?.verdict || "L'Oracle garde son verdict pour lui.";
+}
+
+function vibratePhone(pattern) {
+  if (navigator.vibrate) navigator.vibrate(pattern);
+}
+</script>
+</body>
+</html>
