@@ -241,6 +241,22 @@
       </div>
     </div>
 
+    <!-- Vote de désignation -->
+    <div class="vote-card" id="vote-card" style="display:none;">
+      <div class="solo-label" style="color:var(--orange);">🗳️ Vote secret — désigne quelqu'un</div>
+      <div class="solo-texte" id="vote-question"></div>
+      <div style="font-size:0.8rem;color:var(--gris);margin-bottom:1rem;font-style:italic;">
+        Ton vote est anonyme. Personne ne saura qui tu as choisi.
+      </div>
+      <div id="vote-joueurs-list" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
+    </div>
+
+    <!-- Confirmation vote envoyé -->
+    <div class="attente-autre" id="vote-attente" style="display:none;">
+      <div class="attente-icon">🗳️</div>
+      <div style="font-size:1rem;color:var(--gris);">Vote enregistré.<br>En attente du résultat...</div>
+    </div>
+
     <!-- Action solo -->
     <div class="solo-card" id="solo-card">
       <div class="solo-label">⚡ L'Oracle t'ordonne</div>
@@ -381,6 +397,16 @@ function handleMessage(msg) {
       vibratePhone([200]);
       break;
 
+    case 'VOTE_REQUIS':
+      showVote(msg.voteId, msg.question, msg.joueurs);
+      vibratePhone([100, 50, 100]);
+      break;
+
+    case 'VOTE_RESULTAT':
+      hideVote();
+      showIdle();
+      break;
+
     case 'ACTION_ACCOMPLIE':
       if (msg.joueurId === joueurId) {
         pointsActuels = msg.points;
@@ -466,6 +492,39 @@ function hideSolo() {
   document.getElementById('solo-card').classList.remove('visible');
 }
 
+let currentVoteId = null;
+
+function showVote(voteId, question, joueurs) {
+  currentVoteId = voteId;
+  showIdle(false);
+  document.getElementById('vote-question').textContent = question;
+  const list = document.getElementById('vote-joueurs-list');
+  list.innerHTML = joueurs.map(j => `
+    <button onclick="voterPour('${j.id}')" style="
+      background:var(--noir3);border:2px solid var(--gris);color:var(--blanc);
+      padding:0.8rem 1rem;border-radius:8px;font-size:1rem;cursor:pointer;
+      transition:all 0.2s;text-align:left;
+    " onmouseover="this.style.borderColor='var(--rouge)'" onmouseout="this.style.borderColor='var(--gris)'">
+      ${j.nom}
+    </button>
+  `).join('');
+  document.getElementById('vote-card').style.display = 'block';
+}
+
+function hideVote() {
+  document.getElementById('vote-card').style.display = 'none';
+  document.getElementById('vote-attente').classList.remove('visible');
+  currentVoteId = null;
+}
+
+function voterPour(cibleId) {
+  if (!currentVoteId || !ws) return;
+  ws.send(JSON.stringify({ type: 'VOTE_REPONSE', sessionId, voteId: currentVoteId, cibleId }));
+  document.getElementById('vote-card').style.display = 'none';
+  document.getElementById('vote-attente').classList.add('visible');
+  vibratePhone([50]);
+}
+
 function actionSolo(accompli) {
   if (!ws) return;
   ws.send(JSON.stringify({ type: 'ACTION_RESULTAT', sessionId, accompli }));
@@ -525,5 +584,6 @@ function vibratePhone(pattern) {
 </script>
 </body>
 </html>
+
 
 
