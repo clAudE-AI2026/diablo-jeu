@@ -125,7 +125,10 @@ wss.on('connection', (ws) => {
           session.joueurs[joueurId] = {
             id: joueurId,
             nom: msg.nom || ('Joueur' + (Object.keys(session.joueurs).length + 1)),
-            palier: 0, points: 0, ws: ws
+            sexe: msg.sexe || 'autre',   // 'homme', 'femme', 'autre'
+            palier: 0,
+            points: 0,
+            ws: ws
           };
         }
         ws.joueurId = joueurId;
@@ -164,7 +167,9 @@ wss.on('connection', (ws) => {
         }
 
         else if (carte.type === 'duo') {
-          var duo = getDuoAleatoire(session);
+          // Determiner si la carte est intime (chaud/brulant) pour appliquer le filtre sexe
+          var estIntime = (carte.palierNom === 'chaud' || carte.palierNom === 'brulant');
+          var duo = getDuoAleatoire(session, estIntime);
           if (!duo) return;
           var j1 = duo[0];
           var j2 = duo[1];
@@ -302,6 +307,8 @@ wss.on('connection', (ws) => {
   });
 });
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
 function resolveAccord(session, actionId, raison) {
   var accord = session.accordsEnCours[actionId];
   if (!accord) return;
@@ -373,10 +380,49 @@ function getJoueurAleatoire(session) {
   return joueurs[Math.floor(Math.random() * joueurs.length)];
 }
 
-function getDuoAleatoire(session) {
+/**
+ * Determine si une paire est compatible pour un duo intime.
+ * Regle : si l un des deux est hetero ET qu ils ont le meme sexe declare -> incompatible.
+ * 'autre' est compatible avec tout le monde.
+ * Pour les duos non intimes (tiede) : toujours compatible.
+ */
+function paireCompatible(j1, j2) {
+  var s1 = j1.sexe || 'autre';
+  var s2 = j2.sexe || 'autre';
+  // Si l un est 'autre' -> toujours OK
+  if (s1 === 'autre' || s2 === 'autre') return true;
+  // Si meme sexe declare -> incompatible (on suppose heterosexualite par defaut)
+  if (s1 === s2) return false;
+  return true;
+}
+
+/**
+ * Selectionne un duo aleatoire.
+ * Si estIntime=true, tente de trouver une paire compatible (sexes differents).
+ * Si aucune paire compatible n'existe, fallback sur paire aleatoire pour ne pas bloquer.
+ */
+function getDuoAleatoire(session, estIntime) {
   var joueurs = Object.values(session.joueurs).filter(function(j) { return j.ws; });
   if (joueurs.length < 2) return null;
+
+  // Melanger
   joueurs.sort(function() { return Math.random() - 0.5; });
+
+  if (!estIntime) {
+    // Duo non intime : peu importe la compatibilite
+    return [joueurs[0], joueurs[1]];
+  }
+
+  // Duo intime : chercher une paire compatible
+  for (var i = 0; i < joueurs.length; i++) {
+    for (var k = i + 1; k < joueurs.length; k++) {
+      if (paireCompatible(joueurs[i], joueurs[k])) {
+        return [joueurs[i], joueurs[k]];
+      }
+    }
+  }
+
+  // Aucune paire compatible trouvee (ex: groupe mono-sexe) -> fallback aleatoire
   return [joueurs[0], joueurs[1]];
 }
 
