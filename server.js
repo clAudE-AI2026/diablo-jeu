@@ -82,20 +82,21 @@ app.get('/api/session/:id', function(req, res) {
   if (!s) return res.status(404).json({ error: 'Session introuvable' });
   res.json({
     id: s.id, host: s.host, etat: s.etat,
-    joueurs: Object.values(s.joueurs).map(function(j) { return { id: j.id, nom: j.nom, palier: j.palier, points: j.points }; }),
+    joueurs: Object.values(s.joueurs).map(function(j) {
+      return { id: j.id, nom: j.nom, palier: j.palier, points: j.points };
+    }),
     nbJoueurs: Object.keys(s.joueurs).length
   });
 });
 
 // Ping WebSocket toutes les 25s pour eviter timeout Railway
-var PING_INTERVAL = 25000;
 setInterval(function() {
   wss.clients.forEach(function(ws) {
     if (ws.isAlive === false) { ws.terminate(); return; }
     ws.isAlive = false;
     ws.ping();
   });
-}, PING_INTERVAL);
+}, 25000);
 
 wss.on('connection', function(ws) {
   ws.id = uuidv4();
@@ -128,7 +129,9 @@ wss.on('connection', function(ws) {
         var joueurId = msg.joueurId;
         var isReconnect = false;
         if (joueurId && session.joueurs[joueurId]) {
+          // Reconnexion : mettre a jour le ws et le sexe si fourni
           session.joueurs[joueurId].ws = ws;
+          if (msg.sexe) session.joueurs[joueurId].sexe = msg.sexe;
           isReconnect = true;
         } else {
           joueurId = uuidv4().slice(0, 8);
@@ -145,8 +148,22 @@ wss.on('connection', function(ws) {
         ws.sessionId = msg.sessionId;
         ws.role = 'joueur';
         var joueur = session.joueurs[joueurId];
-        send(ws, { type: 'JOIN_OK', joueurId: joueurId, nom: joueur.nom, palier: joueur.palier, points: joueur.points, etatSession: session.etat, isReconnect: isReconnect });
-        broadcast(session, { type: isReconnect ? 'JOUEUR_RECONNECTED' : 'JOUEUR_JOINED', joueurId: joueurId, nom: joueur.nom, totalJoueurs: Object.keys(session.joueurs).length });
+        send(ws, {
+          type: 'JOIN_OK',
+          joueurId: joueurId,
+          nom: joueur.nom,
+          sexe: joueur.sexe,
+          palier: joueur.palier,
+          points: joueur.points,
+          etatSession: session.etat,
+          isReconnect: isReconnect
+        });
+        broadcast(session, {
+          type: isReconnect ? 'JOUEUR_RECONNECTED' : 'JOUEUR_JOINED',
+          joueurId: joueurId,
+          nom: joueur.nom,
+          totalJoueurs: Object.keys(session.joueurs).length
+        });
         break;
       }
 
@@ -158,7 +175,10 @@ wss.on('connection', function(ws) {
           return;
         }
         session.etat = 'jeu';
-        broadcast(session, { type: 'GAME_STARTED' });
+        // Replique d intro aleatoire
+        var introPool = session.cartes.repliques_oracle.intro;
+        var introMsg = introPool[Math.floor(Math.random() * introPool.length)];
+        broadcast(session, { type: 'GAME_STARTED', introMsg: introMsg });
         break;
       }
 
@@ -175,7 +195,7 @@ wss.on('connection', function(ws) {
           var texte = carte.texte
             .replace(/{joueur}/g, joueurCible.nom)
             .replace(/{joueur2}/g, joueur2 ? joueur2.nom : '');
-          broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texte, joueurCible: joueurCible.nom }) });
+          broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texte, joueurCible: joueurCible.nom, joueurCibleId: joueurCible.id }) });
           if (joueurCible.ws) send(joueurCible.ws, { type: 'ACTION_SOLO', texte: carte.texte_joueur, points: carte.points });
         }
 
@@ -185,9 +205,9 @@ wss.on('connection', function(ws) {
           if (!duoResult) return;
           var j1 = duoResult[0];
           var j2 = duoResult[1];
-          var fallback = duoResult[2]; // true si aucune paire compatible trouvee
+          var fallback = duoResult[2];
           var texte2 = carte.texte.replace(/{joueur1}/g, j1.nom).replace(/{joueur2}/g, j2.nom);
-          broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texte2, joueur1: j1.nom, joueur2: j2.nom, duoFallback: fallback || false }) });
+          broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texte2, joueur1: j1.nom, joueur1Id: j1.id, joueur2: j2.nom, joueur2Id: j2.id, duoFallback: fallback || false }) });
           var actionId = uuidv4().slice(0, 8);
           session.accordsEnCours[actionId] = {
             actionId: actionId, carte: carte, joueur1Id: j1.id, joueur2Id: j2.id, reponses: {},
@@ -221,13 +241,21 @@ wss.on('connection', function(ws) {
           var cible = getJoueurAleatoire(session);
           if (!cible) return;
           var texteGroupe = carte.texte.replace(/{joueur}/g, cible.nom);
-          broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texteGroupe, joueurCible: cible.nom, joueurCibleId: cible.id }) });
+          // Replique de lancement groupe
+          var grpPool = session.cartes.repliques_oracle.groupe_lancement;
+          var grpMsg = grpPool[Math.floor(Math.random() * grpPool.length)].replace(/{joueur}/g, cible.nom);
+          broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texteGroupe, joueurCible: cible.nom, joueurCibleId: cible.id, groupeMsg: grpMsg }) });
           if (cible.ws) send(cible.ws, { type: 'ACTION_GROUPE_CIBLE', texte: carte.texte_joueur, duree: 30 });
-          send(ws, { type: 'GROUPE_EN_ATTENTE', cibleNom: cible.nom, duree: 30 });
+          send(ws, { type: 'GROUPE_EN_ATTENTE', cibleNom: cible.nom, cibleId: cible.id, duree: 30, groupeMsg: grpMsg });
         }
 
         else if (carte.type === 'shot') {
+          // Notifier les joueurs concernes sur leur telephone
           broadcast(session, { type: 'NOUVELLE_CARTE', carte: carte });
+          // Envoyer un ping shot a tous les joueurs (chacun voit si ca le concerne)
+          Object.values(session.joueurs).forEach(function(j) {
+            if (j.ws) send(j.ws, { type: 'SHOT_NOTIF', texte: carte.texte });
+          });
         }
 
         break;
@@ -261,10 +289,21 @@ wss.on('connection', function(ws) {
 
       case 'GROUPE_RESULTAT': {
         if (ws.role !== 'host') return;
+        var repPool;
         if (msg.succes) {
-          broadcast(session, { type: 'GROUPE_SUCCES', cibleNom: msg.cibleNom });
+          repPool = session.cartes.repliques_oracle.groupe_succes;
+          var repMsg = repPool[Math.floor(Math.random() * repPool.length)].replace(/{joueur}/g, msg.cibleNom);
+          broadcast(session, { type: 'GROUPE_SUCCES', cibleNom: msg.cibleNom, cibleId: msg.cibleId, replique: repMsg });
         } else {
-          broadcast(session, { type: 'GROUPE_ECHEC', cibleNom: msg.cibleNom });
+          repPool = session.cartes.repliques_oracle.groupe_echec;
+          var repMsgE = repPool[Math.floor(Math.random() * repPool.length)].replace(/{joueur}/g, msg.cibleNom);
+          // Shot collectif : notifier tous les joueurs sauf la cible
+          Object.values(session.joueurs).forEach(function(j) {
+            if (j.ws && j.id !== msg.cibleId) {
+              send(j.ws, { type: 'SHOT_NOTIF', texte: 'Le groupe a echoue. Tu bois.' });
+            }
+          });
+          broadcast(session, { type: 'GROUPE_ECHEC', cibleNom: msg.cibleNom, replique: repMsgE });
         }
         break;
       }
@@ -276,9 +315,16 @@ wss.on('connection', function(ws) {
         if (!joueurAct) return;
         if (msg.accompli) {
           joueurAct.points += carteAct.points || 0;
-          broadcast(session, { type: 'ACTION_ACCOMPLIE', joueurId: ws.joueurId, nom: joueurAct.nom, points: joueurAct.points });
+          // Replique de felicitations
+          var felPool = session.cartes.repliques_oracle.felicitations;
+          var felMsg = felPool[Math.floor(Math.random() * felPool.length)];
+          broadcast(session, { type: 'ACTION_ACCOMPLIE', joueurId: ws.joueurId, nom: joueurAct.nom, points: joueurAct.points, replique: felMsg });
         } else {
-          broadcast(session, { type: 'ACTION_REFUSEE', joueurId: ws.joueurId, nom: joueurAct.nom, penalite: carteAct.penalite_refus || 'shot' });
+          // Shot au refus : notifier le joueur
+          var refPool = session.cartes.repliques_oracle.refus;
+          var refMsg = refPool[Math.floor(Math.random() * refPool.length)];
+          if (joueurAct.ws) send(joueurAct.ws, { type: 'SHOT_NOTIF', texte: carteAct.penalite_refus || 'shot' });
+          broadcast(session, { type: 'ACTION_REFUSEE', joueurId: ws.joueurId, nom: joueurAct.nom, penalite: carteAct.penalite_refus || 'shot', replique: refMsg });
         }
         break;
       }
@@ -288,7 +334,17 @@ wss.on('connection', function(ws) {
         if (!joueurPal || joueurPal.palier >= 2) return;
         joueurPal.palier++;
         send(ws, { type: 'PALIER_UPDATE', palier: joueurPal.palier });
-        broadcast(session, { type: 'JOUEUR_PALIER_UP', joueurId: ws.joueurId, nom: joueurPal.nom, palier: joueurPal.palier });
+        // Replique de transition si tout le groupe monte
+        var palierMin = Math.min.apply(null, Object.values(session.joueurs).map(function(j) { return j.palier || 0; }));
+        var transitionMsg = null;
+        if (palierMin === 1) {
+          var pool1 = session.cartes.repliques_oracle.transition_chaud;
+          transitionMsg = pool1[Math.floor(Math.random() * pool1.length)];
+        } else if (palierMin === 2) {
+          var pool2 = session.cartes.repliques_oracle.transition_brulant;
+          transitionMsg = pool2[Math.floor(Math.random() * pool2.length)];
+        }
+        broadcast(session, { type: 'JOUEUR_PALIER_UP', joueurId: ws.joueurId, nom: joueurPal.nom, palier: joueurPal.palier, palierMinGroupe: palierMin, transitionMsg: transitionMsg });
         break;
       }
 
@@ -297,10 +353,16 @@ wss.on('connection', function(ws) {
         session.etat = 'fin';
         var joueursFinaux = Object.values(session.joueurs).sort(function(a, b) { return b.points - a.points; });
         var jugements = session.cartes.repliques_oracle.jugement_final;
+        // Melanger les jugements pour eviter les repetitions
+        var jugsCopy = jugements.slice();
+        jugsCopy.sort(function() { return Math.random() - 0.5; });
         var verdicts = joueursFinaux.map(function(j, i) {
           return {
-            nom: j.nom, points: j.points, palier: j.palier,
-            verdict: jugements[i % jugements.length].replace(/{joueur}/g, j.nom)
+            id: j.id,
+            nom: j.nom,
+            points: j.points,
+            palier: j.palier,
+            verdict: jugsCopy[i % jugsCopy.length].replace(/{joueur}/g, j.nom)
           };
         });
         broadcast(session, { type: 'GAME_OVER', verdicts: verdicts });
@@ -332,9 +394,27 @@ function resolveAccord(session, actionId, raison) {
   if (tousAccepte) {
     if (j1) j1.points += accord.carte.points || 0;
     if (j2) j2.points += accord.carte.points || 0;
-    broadcast(session, { type: 'ACCORD_OUI', actionId: actionId, joueur1: j1 ? j1.nom : '', joueur2: j2 ? j2.nom : '', points: accord.carte.points || 0 });
+    var oui = session.cartes.repliques_oracle.double_accord_oui;
+    var ouiMsg = oui[Math.floor(Math.random() * oui.length)];
+    broadcast(session, {
+      type: 'ACCORD_OUI',
+      actionId: actionId,
+      joueur1Id: accord.joueur1Id,
+      joueur2Id: accord.joueur2Id,
+      joueur1: j1 ? j1.nom : '',
+      joueur2: j2 ? j2.nom : '',
+      joueur1Points: j1 ? j1.points : 0,
+      joueur2Points: j2 ? j2.points : 0,
+      points: accord.carte.points || 0,
+      replique: ouiMsg
+    });
   } else {
-    broadcast(session, { type: 'ACCORD_NON', actionId: actionId, penalite: accord.carte.penalite_refus || 'shot chacun' });
+    var non = session.cartes.repliques_oracle.double_accord_non;
+    var nonMsg = non[Math.floor(Math.random() * non.length)];
+    // Shot au refus pour les deux
+    if (j1 && j1.ws) send(j1.ws, { type: 'SHOT_NOTIF', texte: accord.carte.penalite_refus || 'shot' });
+    if (j2 && j2.ws) send(j2.ws, { type: 'SHOT_NOTIF', texte: accord.carte.penalite_refus || 'shot' });
+    broadcast(session, { type: 'ACCORD_NON', actionId: actionId, penalite: accord.carte.penalite_refus || 'shot chacun', replique: nonMsg });
   }
   delete session.accordsEnCours[actionId];
 }
@@ -357,10 +437,10 @@ function resolveVote(session, voteId) {
   }
 
   var designeId;
-  if (finalistes.length === 1) {
+  var isEgalite = finalistes.length > 1;
+  if (!isEgalite) {
     designeId = finalistes[0];
   } else {
-    // Egalite : le joueur avec le moins de points
     var finalJoueurs = finalistes.map(function(id) { return session.joueurs[id]; }).filter(Boolean);
     finalJoueurs.sort(function(a, b) { return (a.points || 0) - (b.points || 0); });
     var minPoints = finalJoueurs[0].points || 0;
@@ -371,11 +451,9 @@ function resolveVote(session, voteId) {
   var designe = session.joueurs[designeId];
   if (!designe) { delete session.votesEnCours[voteId]; return; }
 
-  // Points ajoutes cote serveur uniquement
   designe.points += vote.carte.points || 0;
 
   var repliques = session.cartes.repliques_oracle;
-  var isEgalite = finalistes.length > 1;
   var pool = isEgalite ? repliques.vote_egalite : repliques.vote_resultat;
   var replique = pool[Math.floor(Math.random() * pool.length)].replace(/{joueur}/g, designe.nom);
 
@@ -384,12 +462,13 @@ function resolveVote(session, voteId) {
     voteId: voteId,
     designeId: designeId,
     designeNom: designe.nom,
-    designePoints: designe.points, // envoyer les points mis a jour pour affichage correct
+    designePoints: designe.points,
     replique: replique,
     isEgalite: isEgalite
   });
 
-  if (designe.ws) send(designe.ws, { type: 'ACTION_SOLO', texte: vote.carte.texte_joueur, points: vote.carte.points });
+  // Envoyer l action au designe avec le label correct
+  if (designe.ws) send(designe.ws, { type: 'ACTION_VOTE_DESIGNE', texte: vote.carte.texte_joueur, points: vote.carte.points });
   delete session.votesEnCours[voteId];
 }
 
@@ -401,12 +480,10 @@ function tirerCarte(session) {
   var paliers = ['tiede', 'chaud', 'brulant'];
   var palierNom = paliers[Math.min(palierMin, 2)];
 
-  // cartesUtilisees par palier — reset uniquement le palier courant si epuise
   var used = session.cartesUtilisees[palierNom];
   var cartesDisponibles = session.cartes.cartes[palierNom].filter(function(c) { return !used.has(c.id); });
 
   if (cartesDisponibles.length === 0) {
-    // Reset du palier courant uniquement
     session.cartesUtilisees[palierNom] = new Set();
     cartesDisponibles = session.cartes.cartes[palierNom];
   }
@@ -430,8 +507,6 @@ function getJoueurAleatoireSauf(session, excludeId) {
   return joueurs[Math.floor(Math.random() * joueurs.length)];
 }
 
-// Retourne true si les deux joueurs sont compatibles pour un duo intime
-// Incompatible = meme sexe declare et aucun n'est 'autre'
 function paireCompatible(j1, j2) {
   var s1 = j1.sexe || 'autre';
   var s2 = j2.sexe || 'autre';
@@ -440,27 +515,16 @@ function paireCompatible(j1, j2) {
 }
 
 // Retourne [j1, j2, fallback]
-// fallback=true si aucune paire compatible n'existe (groupe mono-sexe)
 function getDuoAleatoire(session, estIntime) {
   var joueurs = Object.values(session.joueurs).filter(function(j) { return j.ws; });
   if (joueurs.length < 2) return null;
-
   joueurs.sort(function() { return Math.random() - 0.5; });
-
-  if (!estIntime) {
-    return [joueurs[0], joueurs[1], false];
-  }
-
-  // Chercher une paire compatible
+  if (!estIntime) return [joueurs[0], joueurs[1], false];
   for (var i = 0; i < joueurs.length; i++) {
     for (var k = i + 1; k < joueurs.length; k++) {
-      if (paireCompatible(joueurs[i], joueurs[k])) {
-        return [joueurs[i], joueurs[k], false];
-      }
+      if (paireCompatible(joueurs[i], joueurs[k])) return [joueurs[i], joueurs[k], false];
     }
   }
-
-  // Aucune paire compatible : fallback avec flag
   return [joueurs[0], joueurs[1], true];
 }
 
