@@ -1,7 +1,7 @@
 {
   "name": "diablo-jeu",
-  "version": "1.0.0",
-  "description": "DIABLO - Jeu de soirée avec Oracle sadique",
+  "version": "1.0.1",
+  "description": "DIABLO - Jeu de soiree avec Oracle sadique",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
