@@ -1,11 +1,9 @@
 {
   "name": "diablo-jeu",
-  "version": "1.0.1",
-  "description": "DIABLO - Jeu de soiree avec Oracle sadique",
+  "version": "1.0.2",
+  "description": "DIABLO - Le jeu de soiree qui decide pour toi",
   "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
+  "scripts": { "start": "node server.js" },
   "dependencies": {
     "express": "^4.18.2",
     "ws": "^8.14.2",
