@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -388,11 +388,14 @@ function connectWS() {
     handleMessage(msg);
   };
 
-  ws.onclose = () => setTimeout(connectWS, 2000);
+  ws.onclose = () => { if (wsReconnectTimer) clearTimeout(wsReconnectTimer); wsReconnectTimer = setTimeout(connectWS, 2000); };
+  ws.onerror = () => { ws.close(); };
 }
 
 function lancerPartie() {
-  ws.send(JSON.stringify({ type: 'START_GAME', sessionId }));
+  const nb = Object.keys(joueurs).length;
+  if (nb < MIN_JOUEURS) { flash(`⚠️ Il faut au moins ${MIN_JOUEURS} joueurs ! (${nb} connecté${nb>1?"s":""})`); return; }
+  ws.send(JSON.stringify({ type: "START_GAME", sessionId }));
 }
 
 // ─── MESSAGES ─────────────────────────────────────────────────────────────
@@ -408,7 +411,7 @@ function handleMessage(msg) {
     case 'JOUEUR_JOINED':
       joueurs[msg.joueurId] = { id: msg.joueurId, nom: msg.nom, palier: 0, points: 0 };
       renderJoueursLobby();
-      document.getElementById('btn-start-game').classList.add('visible');
+      updateBtnStart();
       flash(`👋 ${msg.nom} a rejoint !`);
       break;
 
@@ -662,6 +665,27 @@ function flash(msg) {
 }
 
 function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function updateBtnStart() {
+  const btn = document.getElementById('btn-start-game');
+  const nb = Object.keys(joueurs).length;
+  if (nb >= MIN_JOUEURS) {
+    btn.classList.add('visible');
+    btn.textContent = 🔴 Lancer DIABLO ( joueur);
+    btn.style.opacity = '1';
+    btn.disabled = false;
+  } else if (nb > 0) {
+    btn.classList.add('visible');
+    btn.textContent = ⏳ Encore  joueur requis...;
+    btn.style.opacity = '0.5';
+    btn.disabled = true;
+  } else {
+    btn.classList.remove('visible');
+  }
+}
 </script>
 </body>
 </html>
+
+
+
