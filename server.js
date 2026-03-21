@@ -161,7 +161,11 @@ wss.on('connection', (ws) => {
         if (carte.type === 'solo') {
           var joueurCible = getJoueurAleatoire(session);
           if (!joueurCible) return;
-          var texte = carte.texte.replace(/{joueur}/g, joueurCible.nom);
+          // Designer un joueur2 different du joueur cible pour les cartes qui en ont besoin
+          var joueur2 = getJoueurAleatoireSauf(session, joueurCible.id);
+          var texte = carte.texte
+            .replace(/{joueur}/g, joueurCible.nom)
+            .replace(/{joueur2}/g, joueur2 ? joueur2.nom : '');
           broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texte, joueurCible: joueurCible.nom }) });
           if (joueurCible.ws) send(joueurCible.ws, { type: 'ACTION_SOLO', texte: carte.texte_joueur, points: carte.points });
         }
@@ -401,6 +405,12 @@ function paireCompatible(j1, j2) {
  * Si estIntime=true, tente de trouver une paire compatible (sexes differents).
  * Si aucune paire compatible n'existe, fallback sur paire aleatoire pour ne pas bloquer.
  */
+function getJoueurAleatoireSauf(session, excludeId) {
+  var joueurs = Object.values(session.joueurs).filter(function(j) { return j.ws && j.id !== excludeId; });
+  if (joueurs.length === 0) return null;
+  return joueurs[Math.floor(Math.random() * joueurs.length)];
+}
+
 function getDuoAleatoire(session, estIntime) {
   var joueurs = Object.values(session.joueurs).filter(function(j) { return j.ws; });
   if (joueurs.length < 2) return null;
