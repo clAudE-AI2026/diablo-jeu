@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -20,48 +20,41 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--noir); color:var(--blanc); font-family:'Segoe UI',system-ui,sans-serif; min-height:100vh; overflow-x:hidden; }
 
+  /* LOBBY */
   #screen-lobby { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:2rem; text-align:center; }
   .logo { font-size:clamp(4rem,12vw,9rem); font-weight:900; letter-spacing:0.1em; background:linear-gradient(135deg,var(--rouge),var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:pulse-logo 2s ease-in-out infinite; }
   @keyframes pulse-logo { 0%,100%{filter:drop-shadow(0 0 20px rgba(255,45,85,0.5))} 50%{filter:drop-shadow(0 0 50px rgba(255,45,85,0.9))} }
   .tagline { color:var(--gris); font-size:1rem; letter-spacing:0.3em; text-transform:uppercase; margin-bottom:3rem; }
-
   .btn-primary { background:linear-gradient(135deg,var(--rouge),var(--rouge-sombre)); color:white; border:none; padding:1rem 2.5rem; border-radius:8px; font-size:1.1rem; font-weight:700; cursor:pointer; letter-spacing:0.1em; text-transform:uppercase; transition:all 0.2s; width:280px; }
   .btn-primary:hover { transform:scale(1.03); filter:brightness(1.2); }
 
   #qr-section { display:none; flex-direction:column; align-items:center; gap:1rem; margin-top:2rem; }
-  #qr-section.visible { display:flex; }
   .session-code { font-size:2.5rem; font-weight:900; letter-spacing:0.3em; color:var(--rouge); background:var(--noir3); padding:0.5rem 1.5rem; border-radius:8px; border:2px solid var(--rouge); }
   #qr-img { border-radius:12px; border:4px solid var(--rouge); }
-  .join-url { color:var(--gris); font-size:0.85rem; }
-  .joueurs-counter { font-size:0.95rem; color:var(--gris); margin-top:0.5rem; }
+  .join-url { color:var(--gris); font-size:0.85rem; word-break:break-all; max-width:400px; }
+  .joueurs-counter { font-size:0.95rem; color:var(--gris); }
   .joueurs-counter span { color:var(--blanc); font-weight:700; }
-  .joueurs-list { display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center; max-width:600px; margin-top:0.5rem; }
+  .joueurs-list { display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center; max-width:600px; }
   .joueur-tag { background:var(--noir3); border:1px solid var(--rouge); padding:0.3rem 0.8rem; border-radius:20px; font-size:0.9rem; }
   .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:4px; vertical-align:middle; }
   .dot-0 { background:var(--vert); } .dot-1 { background:var(--orange); } .dot-2 { background:var(--rouge); }
 
   #btn-start { display:none; margin-top:1.5rem; width:280px; padding:1rem; border-radius:8px; border:none; font-size:1rem; font-weight:900; cursor:pointer; letter-spacing:0.08em; text-transform:uppercase; transition:all 0.2s; }
-  #btn-start.show { display:block; }
-  #btn-start.ready { background:linear-gradient(135deg,var(--vert),#44b5ac); color:#000; }
-  #btn-start.not-ready { background:var(--noir3); color:var(--gris); border:1px solid var(--gris); cursor:not-allowed; opacity:0.7; }
 
-  #screen-jeu { display:none; min-height:100vh; }
-  #screen-jeu.visible { display:flex; flex-direction:column; }
+  /* JEU */
+  #screen-jeu { display:none; flex-direction:column; min-height:100vh; }
   .oracle-header { display:flex; align-items:center; justify-content:space-between; padding:1rem 2rem; border-bottom:1px solid var(--noir3); background:var(--noir2); }
   .oracle-title { font-size:1.5rem; font-weight:900; letter-spacing:0.2em; color:var(--rouge); }
   .scores-bar { display:flex; gap:1rem; flex-wrap:wrap; }
   .score-item { display:flex; align-items:center; gap:0.4rem; font-size:0.85rem; background:var(--noir3); padding:0.3rem 0.7rem; border-radius:20px; }
   .score-pts { color:var(--or); font-weight:700; }
-
   .oracle-arena { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2rem; text-align:center; }
   .oracle-speech { max-width:700px; width:100%; }
   .oracle-icon { font-size:5rem; margin-bottom:1rem; animation:float 3s ease-in-out infinite; }
   @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-
   .oracle-message { font-size:clamp(1.2rem,3vw,1.8rem); line-height:1.5; color:var(--blanc); background:var(--noir3); border:1px solid var(--rouge); border-radius:16px; padding:1.5rem 2rem; margin-bottom:1.5rem; box-shadow:0 0 40px rgba(255,45,85,0.15); min-height:120px; display:flex; align-items:center; justify-content:center; }
   .oracle-message.accord-oui { border-color:var(--vert); }
   .oracle-message.accord-non { border-color:var(--gris); }
-
   .carte-meta { display:flex; gap:1rem; justify-content:center; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; }
   .badge { padding:0.3rem 0.8rem; border-radius:20px; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; }
   .badge-tiede { background:rgba(78,205,196,0.2); color:var(--vert); border:1px solid var(--vert); }
@@ -69,12 +62,17 @@
   .badge-brulant { background:rgba(255,45,85,0.2); color:var(--rouge); border:1px solid var(--rouge); }
   .badge-type { background:var(--noir3); color:var(--gris); border:1px solid var(--gris); }
   .badge-points { background:rgba(255,215,0,0.15); color:var(--or); border:1px solid var(--or); }
-
-  .role-groupe { font-size:0.9rem; color:var(--gris); background:var(--noir2); border-radius:8px; padding:0.6rem 1rem; margin-bottom:1.5rem; border-left:3px solid var(--rouge); max-width:600px; text-align:left; }
+  .badge-fallback { background:rgba(136,136,136,0.2); color:var(--gris); border:1px solid var(--gris); font-size:0.7rem; }
   .accord-attente-bar { display:none; background:var(--noir3); border:1px solid var(--orange); border-radius:12px; padding:1rem 1.5rem; margin-bottom:1rem; max-width:500px; text-align:center; }
   .accord-attente-bar.visible { display:block; }
   .accord-timer { font-size:2rem; font-weight:900; color:var(--orange); }
-
+  .groupe-bar { display:none; background:var(--noir3); border:2px solid var(--orange); border-radius:12px; padding:1rem 1.5rem; margin-bottom:1rem; max-width:500px; text-align:center; }
+  .groupe-bar.visible { display:block; }
+  .groupe-timer { font-size:2.5rem; font-weight:900; color:var(--orange); }
+  .groupe-cible { font-size:1.1rem; color:var(--blanc); margin-bottom:0.5rem; }
+  .groupe-btns { display:flex; gap:1rem; justify-content:center; margin-top:0.8rem; }
+  .btn-succes { background:var(--vert); color:#000; border:none; padding:0.6rem 1.5rem; border-radius:8px; font-weight:900; cursor:pointer; font-size:0.95rem; }
+  .btn-echec { background:var(--rouge); color:#fff; border:none; padding:0.6rem 1.5rem; border-radius:8px; font-weight:900; cursor:pointer; font-size:0.95rem; }
   .btn-group { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
   .btn-action { padding:0.8rem 1.8rem; border-radius:8px; border:none; font-size:1rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
   .btn-tirer { background:linear-gradient(135deg,var(--rouge),var(--rouge-sombre)); color:white; }
@@ -82,8 +80,8 @@
   .btn-tirer:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
   .btn-end { background:var(--noir3); color:var(--gris); border:1px solid var(--gris); }
 
-  #screen-fin { display:none; }
-  #screen-fin.visible { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:2rem; text-align:center; }
+  /* FIN */
+  #screen-fin { display:none; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:2rem; text-align:center; }
   .fin-title { font-size:clamp(2rem,6vw,4rem); font-weight:900; color:var(--rouge); margin-bottom:0.5rem; }
   .verdict-list { max-width:600px; width:100%; margin-top:2rem; }
   .verdict-item { background:var(--noir3); border:1px solid var(--noir2); border-radius:12px; padding:1rem 1.5rem; margin-bottom:1rem; text-align:left; display:flex; align-items:center; gap:1rem; }
@@ -93,15 +91,8 @@
   .verdict-pts { color:var(--or); font-size:0.9rem; }
   .verdict-texte { color:var(--gris); font-size:0.9rem; font-style:italic; margin-top:0.3rem; }
 
-  .groupe-bar { display:none; background:var(--noir3); border:2px solid var(--orange); border-radius:12px; padding:1rem 1.5rem; margin-bottom:1rem; text-align:center; max-width:500px; }
-  .groupe-bar.visible { display:block; }
-  .groupe-timer { font-size:2.5rem; font-weight:900; color:var(--orange); }
-  .groupe-cible { font-size:1.1rem; color:var(--blanc); margin-bottom:0.5rem; }
-  .groupe-btns { display:flex; gap:1rem; justify-content:center; margin-top:0.8rem; }
-  .btn-succes { background:var(--vert); color:#000; border:none; padding:0.6rem 1.5rem; border-radius:8px; font-weight:900; cursor:pointer; }
-  .btn-echec  { background:var(--rouge); color:#fff; border:none; padding:0.6rem 1.5rem; border-radius:8px; font-weight:900; cursor:pointer; }
-
-  .flash-notif { position:fixed; top:1rem; right:1rem; background:var(--noir3); border:1px solid var(--rouge); color:var(--blanc); padding:0.8rem 1.2rem; border-radius:10px; font-size:0.9rem; z-index:999; animation:slide-in 0.3s ease; }
+  /* Flash */
+  .flash-notif { position:fixed; top:1rem; right:1rem; background:var(--noir3); border:1px solid var(--rouge); color:var(--blanc); padding:0.8rem 1.2rem; border-radius:10px; font-size:0.9rem; z-index:999; animation:slide-in 0.3s ease; max-width:300px; }
   @keyframes slide-in { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
 </style>
 </head>
@@ -134,24 +125,26 @@
       <div class="oracle-icon" id="oracle-icon">👁️</div>
       <div class="carte-meta" id="carte-meta" style="display:none"></div>
       <div class="oracle-message" id="oracle-message">Je vous observe. La partie va commencer.</div>
-      <div class="role-groupe" id="role-groupe" style="display:none"></div>
-      <!-- GROUPE contre joueur -->
+
+      <!-- Groupe contre joueur -->
       <div class="groupe-bar" id="groupe-bar">
         <div class="groupe-cible" id="groupe-cible-label">Le groupe convainc...</div>
-        <div style="font-size:0.85rem;color:var(--gris);margin-bottom:0.5rem;">Le groupe a 30s pour convaincre. Arguments, seduction, negociation.</div>
+        <div style="font-size:0.85rem;color:var(--gris);margin-bottom:0.5rem;">30s pour convaincre. Arguments, seduction, negociation.</div>
         <div class="groupe-timer" id="groupe-timer">30</div>
         <div class="groupe-btns">
           <button class="btn-succes" onclick="groupeResultat(true)">Le joueur a cede !</button>
-          <button class="btn-echec"  onclick="groupeResultat(false)">Il a resiste</button>
+          <button class="btn-echec" onclick="groupeResultat(false)">Il a resiste</button>
         </div>
       </div>
 
+      <!-- Accord / vote en attente -->
       <div class="accord-attente-bar" id="accord-attente-bar">
         <div id="accord-label">En attente...</div>
         <div class="accord-timer" id="accord-timer">30</div>
       </div>
+
       <div class="btn-group">
-        <button class="btn-action btn-tirer" id="btn-tirer" onclick="tirerCarte()">L'Oracle decide</button>
+        <button class="btn-action btn-tirer" id="btn-tirer" onclick="tirerCarte()">L Oracle decide</button>
         <button class="btn-action btn-end" onclick="terminerPartie()">Jugement final</button>
       </div>
     </div>
@@ -161,7 +154,7 @@
 <!-- FIN -->
 <div id="screen-fin">
   <div class="fin-title">JUGEMENT FINAL</div>
-  <div style="color:var(--gris);margin-bottom:1rem">L'Oracle a tout vu. Tout retenu.</div>
+  <div style="color:var(--gris);margin-bottom:1rem">L Oracle a tout vu. Tout retenu.</div>
   <div class="verdict-list" id="verdict-list"></div>
   <button class="btn-primary" style="margin-top:2rem" onclick="location.reload()">Nouvelle soiree</button>
 </div>
@@ -171,13 +164,11 @@ var MIN_JOUEURS = 2;
 var ws = null;
 var sessionId = null;
 var joueurs = {};
-var accordTimer = null;
-var accordSecondes = 30;
-var voteTimerInterval = null;
-var voteSecondes = 20;
 var wsReconnectTimer = null;
+var timerInterval = null;
+var groupeTimerInterval = null;
+var groupeCibleNom = null;
 
-// SESSION
 async function creerSession() {
   try {
     var res = await fetch('/api/session', {
@@ -187,18 +178,14 @@ async function creerSession() {
     });
     var data = await res.json();
     sessionId = data.sessionId;
-
-    var qrRes = await fetch('/api/qr/' + sessionId);
-    var qrData = await qrRes.json();
-
+    var qrData = await (await fetch('/api/qr/' + sessionId)).json();
     document.getElementById('session-code').textContent = sessionId;
     document.getElementById('qr-img').src = qrData.qr;
     document.getElementById('join-url').textContent = qrData.url;
     document.getElementById('qr-section').style.display = 'flex';
-
     connectWS();
   } catch(e) {
-    alert('Erreur connexion: ' + e.message);
+    alert('Erreur connexion : ' + e.message);
   }
 }
 
@@ -208,7 +195,7 @@ function connectWS() {
   ws = new WebSocket(proto + '://' + location.host);
   ws.onopen = function() { ws.send(JSON.stringify({type: 'HOST_CONNECT', sessionId: sessionId})); };
   ws.onmessage = function(e) { try { handleMessage(JSON.parse(e.data)); } catch(err) {} };
-  ws.onclose = function() { wsReconnectTimer = setTimeout(connectWS, 2000); };
+  ws.onclose = function() { if (sessionId) wsReconnectTimer = setTimeout(connectWS, 2000); };
   ws.onerror = function() { ws.close(); };
 }
 
@@ -224,13 +211,13 @@ function updateBtnStart() {
   document.getElementById('nb-joueurs').textContent = nb;
   if (nb >= MIN_JOUEURS) {
     btn.style.display = 'block';
-    btn.className = 'btn-start show ready';
     btn.textContent = 'LANCER DIABLO (' + nb + ' joueurs)';
-    btn.disabled = false;
     btn.style.background = 'linear-gradient(135deg,var(--vert),#44b5ac)';
     btn.style.color = '#000';
     btn.style.opacity = '1';
     btn.style.cursor = 'pointer';
+    btn.style.border = 'none';
+    btn.disabled = false;
   } else if (nb > 0) {
     btn.style.display = 'block';
     btn.textContent = 'Encore ' + (MIN_JOUEURS - nb) + ' joueur(s) requis...';
@@ -245,9 +232,9 @@ function updateBtnStart() {
   }
 }
 
-// MESSAGES
 function handleMessage(msg) {
   switch(msg.type) {
+
     case 'HOST_CONNECTED':
       joueurs = {};
       (msg.joueurs || []).forEach(function(j) { joueurs[j.id] = j; });
@@ -283,34 +270,26 @@ function handleMessage(msg) {
 
     case 'ACCORD_EN_ATTENTE':
       document.getElementById('accord-label').textContent = 'Double accord en attente...';
-      startTimerGeneric(30, 'accord');
-      break;
-
-    case 'GROUPE_EN_ATTENTE':
-      startGroupeTimer(msg.cibleNom, msg.cibleId, msg.duree || 30);
-      break;
-
-    case 'GROUPE_SUCCES':
-      stopGroupeTimer();
-      setOracleMessage(msg.cibleNom + ' a cede. Le groupe a gagne !', 'accord-oui');
-      flash('Le groupe a convaincu ' + msg.cibleNom + ' !');
-      break;
-
-    case 'GROUPE_ECHEC':
-      stopGroupeTimer();
-      setOracleMessage(msg.cibleNom + ' a resiste. Shot pour tout le groupe.', 'accord-non');
-      flash('Shot collectif - ' + msg.cibleNom + ' a tenu bon.');
+      if (msg.duoFallback) flash('Aucune paire compatible — fallback aleatoire');
+      startTimer(30);
       break;
 
     case 'VOTE_EN_ATTENTE':
       document.getElementById('accord-label').textContent = 'Vote en cours...';
-      startTimerGeneric(msg.duree || 20, 'vote');
+      startTimer(msg.duree || 20);
+      break;
+
+    case 'GROUPE_EN_ATTENTE':
+      startGroupeTimer(msg.cibleNom, msg.duree || 30);
       break;
 
     case 'ACCORD_OUI':
       stopTimer();
       setOracleMessage('Les deux ont dit oui. Executez.', 'accord-oui');
       if (msg.points) flash('+' + msg.points + ' pts pour les deux !');
+      if (msg.joueur1 && joueurs[findIdByNom(msg.joueur1)]) { joueurs[findIdByNom(msg.joueur1)].points += msg.points || 0; }
+      if (msg.joueur2 && joueurs[findIdByNom(msg.joueur2)]) { joueurs[findIdByNom(msg.joueur2)].points += msg.points || 0; }
+      renderScores();
       break;
 
     case 'ACCORD_NON':
@@ -323,7 +302,23 @@ function handleMessage(msg) {
       stopTimer();
       setOracleMessage(msg.replique || (msg.designeNom + ' a ete designe(e).'), 'accord-oui');
       flash(msg.designeNom + ' designe(e) par le groupe !');
-      if (joueurs[msg.designeId]) { joueurs[msg.designeId].points = (joueurs[msg.designeId].points || 0) + (msg.points || 0); renderScores(); }
+      // Utiliser les points envoyes par le serveur (pas de calcul cote client)
+      if (joueurs[msg.designeId]) {
+        joueurs[msg.designeId].points = msg.designePoints;
+        renderScores();
+      }
+      break;
+
+    case 'GROUPE_SUCCES':
+      stopGroupeTimer();
+      setOracleMessage(msg.cibleNom + ' a cede. Le groupe a gagne !', 'accord-oui');
+      flash('Le groupe a convaincu ' + msg.cibleNom + ' !');
+      break;
+
+    case 'GROUPE_ECHEC':
+      stopGroupeTimer();
+      setOracleMessage(msg.cibleNom + ' a resiste. Shot pour tout le groupe.', 'accord-non');
+      flash('Shot collectif — ' + msg.cibleNom + ' a tenu bon.');
       break;
 
     case 'ACTION_ACCOMPLIE':
@@ -348,79 +343,43 @@ function handleMessage(msg) {
   }
 }
 
-// CARTE
 function tirerCarte() {
   if (!ws) return;
   document.getElementById('btn-tirer').disabled = true;
   setTimeout(function() { document.getElementById('btn-tirer').disabled = false; }, 2000);
-  setOracleMessage(pickRandom(['Je consulte les abysses...', 'Le sort se tisse...', 'La decision est prise...', 'Obeissez.']));
+  setOracleMessage(pickRandom(['Je consulte les abysses...', 'Le sort se tisse...', 'La decision est prise...', 'Obeissez.', 'Le destin choisit.']));
   ws.send(JSON.stringify({type: 'TIRER_CARTE', sessionId: sessionId}));
 }
 
 function afficherCarte(carte) {
-  var palierNoms = {tiede: 'Tiede', chaud: 'Chaud', brulant: 'Brulant'};
-  var typeNoms = {defi: 'Defi', confession: 'Confession', jugement: 'Jugement', duo: 'Duo', shot: 'Shot', solo: 'Solo', vote: 'Vote'};
+  var palierLabels = {tiede: 'Tiede', chaud: 'Chaud', brulant: 'Brulant'};
+  var typeLabels = {solo: 'Solo', duo: 'Duo', vote: 'Vote', groupe: 'Groupe', shot: 'Shot'};
   var meta = '';
-  if (carte.palierNom) meta += '<span class="badge badge-' + carte.palierNom + '">' + (palierNoms[carte.palierNom] || carte.palierNom) + '</span>';
-  if (carte.type) meta += '<span class="badge badge-type">' + (typeNoms[carte.type] || carte.type) + '</span>';
+  if (carte.palierNom) meta += '<span class="badge badge-' + carte.palierNom + '">' + (palierLabels[carte.palierNom] || carte.palierNom) + '</span>';
+  if (carte.type) meta += '<span class="badge badge-type">' + (typeLabels[carte.type] || carte.type) + '</span>';
   if (carte.points) meta += '<span class="badge badge-points">+' + carte.points + ' pts</span>';
-  document.getElementById('carte-meta').innerHTML = meta;
-  document.getElementById('carte-meta').style.display = 'flex';
-  var icons = {confession: '🗣️', defi: '⚡', duo: '🔀', shot: '🥃', solo: '👁️', vote: '🗳️'};
+  if (carte.duoFallback) meta += '<span class="badge badge-fallback">Fallback</span>';
+  var metaEl = document.getElementById('carte-meta');
+  metaEl.innerHTML = meta;
+  metaEl.style.display = 'flex';
+
+  var icons = {solo: '👁️', duo: '🔀', vote: '🗳️', groupe: '👥', shot: '🥃'};
   document.getElementById('oracle-icon').textContent = icons[carte.type] || '👁️';
   setOracleMessage(carte.texte || '...');
-  if (carte.role_groupe) {
-    document.getElementById('role-groupe').textContent = carte.role_groupe;
-    document.getElementById('role-groupe').style.display = 'block';
-  } else {
-    document.getElementById('role-groupe').style.display = 'none';
-  }
 }
 
 // TIMERS
-var timerInterval = null;
-var timerSecondes = 30;
-var groupeTimerInterval = null;
-var groupeCibleNom = null;
-var groupeCibleId = null;
-
-function startGroupeTimer(cibleNom, cibleId, duree) {
-  groupeCibleNom = cibleNom;
-  groupeCibleId = cibleId;
-  var t = duree || 30;
-  document.getElementById("groupe-cible-label").textContent = "Le groupe convainc " + cibleNom + "...";
-  document.getElementById("groupe-timer").textContent = t;
-  document.getElementById("groupe-bar").classList.add("visible");
-  groupeTimerInterval = setInterval(function() {
-    t--;
-    document.getElementById("groupe-timer").textContent = t;
-    if (t <= 0) {
-      clearInterval(groupeTimerInterval);
-    }
-  }, 1000);
-}
-
-function stopGroupeTimer() {
-  clearInterval(groupeTimerInterval);
-  document.getElementById("groupe-bar").classList.remove("visible");
-}
-
-function groupeResultat(succes) {
-  stopGroupeTimer();
-  ws.send(JSON.stringify({ type: "GROUPE_RESULTAT", sessionId: sessionId, succes: succes, cibleNom: groupeCibleNom }));
-}
-
-function startTimerGeneric(duree, type) {
+function startTimer(duree) {
   stopTimer();
-  timerSecondes = duree;
+  var t = duree;
   var bar = document.getElementById('accord-attente-bar');
-  var timer = document.getElementById('accord-timer');
+  var timerEl = document.getElementById('accord-timer');
   bar.classList.add('visible');
-  timer.textContent = timerSecondes;
+  timerEl.textContent = t;
   timerInterval = setInterval(function() {
-    timerSecondes--;
-    timer.textContent = timerSecondes;
-    if (timerSecondes <= 0) stopTimer();
+    t--;
+    timerEl.textContent = t;
+    if (t <= 0) stopTimer();
   }, 1000);
 }
 
@@ -429,26 +388,52 @@ function stopTimer() {
   document.getElementById('accord-attente-bar').classList.remove('visible');
 }
 
+function startGroupeTimer(cibleNom, duree) {
+  groupeCibleNom = cibleNom;
+  var t = duree;
+  document.getElementById('groupe-cible-label').textContent = 'Le groupe convainc ' + cibleNom + '...';
+  document.getElementById('groupe-timer').textContent = t;
+  document.getElementById('groupe-bar').classList.add('visible');
+  groupeTimerInterval = setInterval(function() {
+    t--;
+    document.getElementById('groupe-timer').textContent = t;
+    if (t <= 0) clearInterval(groupeTimerInterval);
+  }, 1000);
+}
+
+function stopGroupeTimer() {
+  clearInterval(groupeTimerInterval);
+  document.getElementById('groupe-bar').classList.remove('visible');
+}
+
+function groupeResultat(succes) {
+  stopGroupeTimer();
+  ws.send(JSON.stringify({type: 'GROUPE_RESULTAT', sessionId: sessionId, succes: succes, cibleNom: groupeCibleNom}));
+}
+
 // UI
 function renderJoueursLobby() {
-  var el = document.getElementById('joueurs-lobby');
-  el.innerHTML = Object.values(joueurs).map(function(j) {
+  document.getElementById('joueurs-lobby').innerHTML = Object.values(joueurs).map(function(j) {
     return '<span class="joueur-tag"><span class="dot dot-' + (j.palier || 0) + '"></span>' + j.nom + '</span>';
   }).join('');
 }
 
 function renderScores() {
-  var el = document.getElementById('scores-bar');
-  var icons = ['🌊', '🔥', '💀'];
-  el.innerHTML = Object.values(joueurs).sort(function(a, b) { return (b.points || 0) - (a.points || 0); }).map(function(j) {
-    return '<div class="score-item">' + (icons[j.palier || 0] || '') + ' ' + j.nom + ' <span class="score-pts">' + (j.points || 0) + '</span></div>';
-  }).join('');
+  document.getElementById('scores-bar').innerHTML = Object.values(joueurs)
+    .sort(function(a, b) { return (b.points || 0) - (a.points || 0); })
+    .map(function(j) {
+      var icons = ['🌊', '🔥', '💀'];
+      return '<div class="score-item">' + (icons[j.palier || 0] || '') + ' ' + j.nom + ' <span class="score-pts">' + (j.points || 0) + '</span></div>';
+    }).join('');
 }
 
 function renderFin(verdicts) {
   var ranks = ['🥇', '🥈', '🥉', '4', '5', '6', '7', '8', '9', '10'];
   document.getElementById('verdict-list').innerHTML = verdicts.map(function(v, i) {
-    return '<div class="verdict-item"><div class="verdict-rank">' + (ranks[i] || '·') + '</div><div><div class="verdict-nom">' + v.nom + ' <span class="verdict-pts">' + v.points + ' pts</span></div><div class="verdict-texte">' + v.verdict + '</div></div></div>';
+    return '<div class="verdict-item">' +
+      '<div class="verdict-rank">' + (ranks[i] || '·') + '</div>' +
+      '<div><div class="verdict-nom">' + v.nom + ' <span class="verdict-pts">' + v.points + ' pts</span></div>' +
+      '<div class="verdict-texte">' + v.verdict + '</div></div></div>';
   }).join('');
 }
 
@@ -459,12 +444,16 @@ function setOracleMessage(txt, cls) {
 }
 
 function showScreen(name) {
-  ['lobby', 'jeu', 'fin'].forEach(function(s) {
+  var screens = ['lobby', 'jeu', 'fin'];
+  screens.forEach(function(s) {
     var el = document.getElementById('screen-' + s);
-    if (el) { el.style.display = 'none'; }
+    if (!el) return;
+    if (s === name) {
+      el.style.display = (s === 'lobby') ? 'flex' : 'flex';
+    } else {
+      el.style.display = 'none';
+    }
   });
-  var target = document.getElementById('screen-' + name);
-  if (target) { target.style.display = name === 'jeu' ? 'flex' : (name === 'fin' ? 'flex' : 'flex'); }
 }
 
 function terminerPartie() {
@@ -477,14 +466,15 @@ function flash(msg) {
   el.className = 'flash-notif';
   el.textContent = msg;
   document.body.appendChild(el);
-  setTimeout(function() { el.remove(); }, 3000);
+  setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 3000);
+}
+
+function findIdByNom(nom) {
+  var found = Object.values(joueurs).find(function(j) { return j.nom === nom; });
+  return found ? found.id : null;
 }
 
 function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 </script>
 </body>
 </html>
-
-
-
-
