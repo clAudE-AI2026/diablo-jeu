@@ -303,22 +303,32 @@ function rejoindre() {
   connectWS(nom);
 }
 
+let wsReconnectTimer = null;
+
 function connectWS(nom) {
+  if (wsReconnectTimer) { clearTimeout(wsReconnectTimer); wsReconnectTimer = null; }
   const proto = location.protocol === 'https:' ? 'wss' : 'ws';
   ws = new WebSocket(`${proto}://${location.host}`);
 
   ws.onopen = () => {
-    ws.send(JSON.stringify({ type: 'JOIN', sessionId, nom }));
+    const storedId = sessionStorage.getItem('diablo_joueurId');
+    ws.send(JSON.stringify({ type: 'JOIN', sessionId, nom, joueurId: storedId || null }));
   };
 
   ws.onmessage = (e) => {
-    const msg = JSON.parse(e.data);
-    handleMessage(msg);
+    try { handleMessage(JSON.parse(e.data)); } catch(err) {}
   };
 
   ws.onclose = () => {
-    setTimeout(() => { if (joueurId) connectWS(document.getElementById('input-nom')?.value || 'Joueur'); }, 2000);
+    if (joueurId || sessionId) {
+      wsReconnectTimer = setTimeout(() => {
+        const n = document.getElementById('input-nom')?.value || sessionStorage.getItem('diablo_nom') || 'Joueur';
+        connectWS(n);
+      }, 2000);
+    }
   };
+
+  ws.onerror = () => { ws.close(); };
 }
 
 function handleMessage(msg) {
@@ -515,4 +525,5 @@ function vibratePhone(pattern) {
 </script>
 </body>
 </html>
+
 
