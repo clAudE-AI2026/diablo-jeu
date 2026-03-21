@@ -1,4 +1,4 @@
-﻿const express = require('express');
+﻿onst express = require('express');
 const { WebSocketServer } = require('ws');
 const { createServer } = require('http');
 const QRCode = require('qrcode');
@@ -203,6 +203,17 @@ wss.on('connection', (ws) => {
 
         else if (carte.type === 'shot') {
           broadcast(session, { type: 'NOUVELLE_CARTE', carte });
+        }
+
+        else if (carte.type === 'groupe') {
+          // Carte groupe : Oracle designe une cible, le groupe a 30s pour convaincre
+          const cible = getJoueurAleatoire(session);
+          if (!cible) return;
+          const texte = carte.texte.replace(/{joueur}/g, cible.nom).replace(/{joueur1}/g, cible.nom);
+          const texteGroupe = carte.texte_joueur;
+          broadcast(session, { type: 'NOUVELLE_CARTE', carte: { ...carte, texte, joueurCible: cible.nom, joueurCibleId: cible.id } });
+          if (cible.ws) send(cible.ws, { type: 'ACTION_GROUPE_CIBLE', texte: texteGroupe, duree: 30 });
+          send(ws, { type: 'GROUPE_EN_ATTENTE', cibleNom: cible.nom, duree: 30 });
         }
 
         break;
@@ -432,4 +443,5 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🔴 DIABLO v2.0 en ligne sur http://localhost:${PORT}\n`);
 });
+
 
