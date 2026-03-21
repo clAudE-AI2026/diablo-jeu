@@ -6,44 +6,32 @@
 <title>DIABLO - Joueur</title>
 <style>
   :root {
-    --rouge: #ff2d55;
-    --rouge-sombre: #c0142b;
-    --orange: #ff6b35;
-    --noir: #0a0a0f;
-    --noir2: #12121a;
-    --noir3: #1e1e2e;
-    --blanc: #f0e6ff;
-    --gris: #888;
-    --or: #ffd700;
-    --vert: #4ecdc4;
+    --rouge:#ff2d55; --rouge-sombre:#c0142b; --orange:#ff6b35;
+    --noir:#0a0a0f; --noir2:#12121a; --noir3:#1e1e2e;
+    --blanc:#f0e6ff; --gris:#888; --or:#ffd700; --vert:#4ecdc4;
   }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html, body { height:100%; background:var(--noir); color:var(--blanc); font-family:'Segoe UI',system-ui,sans-serif; overflow:hidden; }
-
   .screen { height:100vh; width:100vw; display:none; flex-direction:column; align-items:center; justify-content:center; padding:1.5rem; text-align:center; }
   .screen.active { display:flex; }
 
-  /* ── JOIN ── */
+  /* JOIN */
   #screen-join .logo { font-size:3.5rem; font-weight:900; letter-spacing:0.1em; background:linear-gradient(135deg,var(--rouge),var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.3rem; }
   .tagline { color:var(--gris); font-size:0.8rem; letter-spacing:0.3em; margin-bottom:2rem; text-transform:uppercase; }
-
   .input-field { background:var(--noir3); border:1px solid var(--rouge); color:var(--blanc); padding:1rem 1.2rem; border-radius:10px; font-size:1.1rem; width:100%; max-width:320px; margin-bottom:0.8rem; text-align:center; outline:none; -webkit-text-fill-color:var(--blanc); }
   .input-field::placeholder { color:var(--gris); }
-
-  /* Sexe selector */
   .sexe-row { display:flex; gap:0.6rem; width:100%; max-width:320px; margin-bottom:0.8rem; }
   .sexe-btn { flex:1; padding:0.8rem 0.5rem; border-radius:10px; border:2px solid var(--gris); background:var(--noir3); color:var(--gris); font-size:0.95rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
   .sexe-btn.selected { border-color:var(--rouge); color:var(--blanc); background:rgba(255,45,85,0.15); }
-
-  .btn { width:100%; max-width:320px; padding:1.1rem; border-radius:12px; border:none; font-size:1.05rem; font-weight:700; cursor:pointer; letter-spacing:0.08em; text-transform:uppercase; transition:all 0.15s; -webkit-tap-highlight-color:transparent; }
+  .btn { width:100%; max-width:320px; padding:1.1rem; border-radius:12px; border:none; font-size:1.05rem; font-weight:700; cursor:pointer; letter-spacing:0.08em; text-transform:uppercase; transition:all 0.15s; }
   .btn-rouge { background:linear-gradient(135deg,var(--rouge),var(--rouge-sombre)); color:white; box-shadow:0 4px 20px rgba(255,45,85,0.3); }
   .btn-rouge:active { transform:scale(0.97); }
   .btn-vert { background:linear-gradient(135deg,var(--vert),#44b5ac); color:#000; font-weight:900; }
   .btn-vert:active { transform:scale(0.97); }
   .btn-gris { background:var(--noir3); color:var(--gris); border:1px solid var(--gris); }
-  .btn-orange { background:linear-gradient(135deg,var(--orange),#e05a28); color:white; }
+  .erreur-join { color:var(--rouge); font-size:0.85rem; margin-top:0.5rem; min-height:1.2rem; }
 
-  /* ── LOBBY ── */
+  /* LOBBY */
   #screen-lobby-joueur .big-icon { font-size:4rem; margin-bottom:1rem; animation:float 3s ease-in-out infinite; }
   @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
   .status-text { font-size:1rem; color:var(--gris); margin-bottom:0.4rem; }
@@ -51,7 +39,7 @@
   .wait-pulse { color:var(--rouge); margin-top:1.5rem; font-size:0.85rem; animation:pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
 
-  /* ── JEU ── */
+  /* JEU */
   #screen-jeu { justify-content:space-between; padding:1rem 1rem 1.5rem; }
   .jeu-header { display:flex; align-items:center; justify-content:space-between; width:100%; padding-bottom:0.8rem; border-bottom:1px solid var(--noir3); margin-bottom:0.8rem; }
   .jeu-logo { font-size:1.1rem; font-weight:900; color:var(--rouge); letter-spacing:0.2em; }
@@ -62,7 +50,6 @@
   .palier-tiede { background:rgba(78,205,196,0.15); color:var(--vert); }
   .palier-chaud { background:rgba(255,107,53,0.15); color:var(--orange); }
   .palier-brulant { background:rgba(255,45,85,0.15); color:var(--rouge); }
-
   .jeu-content { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; gap:0.8rem; }
 
   /* Idle */
@@ -71,9 +58,14 @@
   .idle-text { color:var(--gris); font-size:1rem; line-height:1.6; }
   .idle-hint { font-size:0.75rem; color:var(--noir3); margin-top:0.5rem; animation:pulse 3s infinite; }
 
-  /* Carte generique */
-  .carte { width:100%; background:var(--noir3); border-radius:16px; padding:1.5rem; animation:pop-in 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+  /* Shot notif */
+  .shot-notif { display:none; text-align:center; padding:2rem 1.5rem; background:rgba(255,45,85,0.1); border:2px solid var(--rouge); border-radius:16px; width:100%; animation:pop-in 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+  .shot-icon { font-size:3rem; margin-bottom:0.5rem; }
+  .shot-texte { font-size:1rem; color:var(--blanc); line-height:1.5; margin-bottom:1rem; }
   @keyframes pop-in { from{transform:scale(0.85) translateY(20px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+
+  /* Carte */
+  .carte { width:100%; background:var(--noir3); border-radius:16px; padding:1.5rem; animation:pop-in 0.35s cubic-bezier(0.34,1.56,0.64,1); }
   .carte-label { font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; font-weight:700; margin-bottom:0.6rem; }
   .carte-texte { font-size:1.05rem; line-height:1.55; color:var(--blanc); margin-bottom:1.2rem; }
   .carte-btns { display:flex; gap:0.8rem; }
@@ -97,7 +89,7 @@
   .vote-btn:active { border-color:var(--rouge); background:rgba(255,45,85,0.1); transform:scale(0.98); }
   .vote-dot { width:8px; height:8px; border-radius:50%; background:var(--rouge); flex-shrink:0; }
 
-  /* Footer palier */
+  /* Footer */
   .jeu-footer { width:100%; }
   .palier-row { display:flex; align-items:center; justify-content:space-between; background:var(--noir3); border-radius:10px; padding:0.7rem 1rem; }
   .palier-label { font-size:0.8rem; color:var(--gris); }
@@ -120,19 +112,17 @@
 <div class="screen active" id="screen-join">
   <div class="logo">DIABLO</div>
   <div class="tagline">Le jeu qui decide pour toi</div>
-
   <input class="input-field" id="input-nom" type="text" placeholder="Ton prenom" maxlength="20" autocomplete="off" enterkeyhint="next">
   <br>
-
   <div class="sexe-row">
     <button class="sexe-btn selected" id="btn-homme" onclick="selectSexe('homme')">Homme</button>
     <button class="sexe-btn" id="btn-femme" onclick="selectSexe('femme')">Femme</button>
     <button class="sexe-btn" id="btn-autre" onclick="selectSexe('autre')">Autre</button>
   </div>
-
   <input class="input-field" id="input-code" type="text" placeholder="Code session (ex: A1B2C3)" maxlength="6" style="text-transform:uppercase;letter-spacing:0.3em" autocomplete="off" enterkeyhint="go">
   <br>
   <button class="btn btn-rouge" onclick="rejoindre()" style="margin-top:0.5rem">Rejoindre DIABLO</button>
+  <div class="erreur-join" id="erreur-join"></div>
 </div>
 
 <!-- LOBBY -->
@@ -158,12 +148,18 @@
   </div>
 
   <div class="jeu-content" id="jeu-content">
-
     <!-- Idle -->
     <div class="idle-state" id="idle-state">
       <div class="idle-icon">👁️</div>
       <div class="idle-text">L Oracle observe.<br>Reste attentif.</div>
       <div class="idle-hint">Tu recevras une notification quand c est ton tour.</div>
+    </div>
+
+    <!-- Shot notification -->
+    <div class="shot-notif" id="shot-notif">
+      <div class="shot-icon">🥃</div>
+      <div class="shot-texte" id="shot-texte">Tu bois.</div>
+      <button class="btn btn-gris" onclick="dismissShot()" style="max-width:200px;padding:0.7rem">OK j ai bu</button>
     </div>
 
     <!-- Accord duo -->
@@ -178,7 +174,7 @@
       </div>
     </div>
 
-    <!-- Attente apres accord -->
+    <!-- Attente accord -->
     <div class="attente-card" id="attente-autre" style="display:none;">
       <div class="attente-icon">⏳</div>
       <div class="attente-text">Reponse enregistree.<br>En attente de l autre joueur...</div>
@@ -203,12 +199,11 @@
       <div class="vote-liste" id="vote-liste"></div>
     </div>
 
-    <!-- Confirmation vote -->
+    <!-- Attente vote -->
     <div class="attente-card" id="vote-attente" style="display:none;">
       <div class="attente-icon">🗳️</div>
       <div class="attente-text">Vote enregistre.<br>En attente du resultat...</div>
     </div>
-
   </div>
 
   <div class="jeu-footer">
@@ -240,32 +235,41 @@ var pointsActuels = 0;
 var accordEnCours = null;
 var currentVoteId = null;
 var wsReconnectTimer = null;
+var shotTimeout = null;
 
-var palierNoms = ['Tiede', 'Chaud', 'Brulant'];
-var palierIcons = ['🌊', '🔥', '💀'];
-var palierClasses = ['palier-tiede', 'palier-chaud', 'palier-brulant'];
+var palierNoms = ['Tiede','Chaud','Brulant'];
+var palierIcons = ['🌊','🔥','💀'];
+var palierClasses = ['palier-tiede','palier-chaud','palier-brulant'];
 
-// Recuperer code depuis URL (QR code)
 window.addEventListener('load', function() {
   var params = new URLSearchParams(location.search);
   var s = params.get('s');
   if (s) document.getElementById('input-code').value = s.toUpperCase();
+  // Restaurer le sexe sauvegarde
+  var savedSexe = sessionStorage.getItem('diablo_sexe');
+  if (savedSexe) selectSexe(savedSexe);
 });
 
 function selectSexe(sexe) {
   joueurSexe = sexe;
-  document.getElementById('btn-homme').className = 'sexe-btn' + (sexe === 'homme' ? ' selected' : '');
-  document.getElementById('btn-femme').className = 'sexe-btn' + (sexe === 'femme' ? ' selected' : '');
-  document.getElementById('btn-autre').className = 'sexe-btn' + (sexe === 'autre' ? ' selected' : '');
+  ['homme','femme','autre'].forEach(function(s) {
+    document.getElementById('btn-' + s).className = 'sexe-btn' + (s === sexe ? ' selected' : '');
+  });
+}
+
+function setErreur(msg) {
+  document.getElementById('erreur-join').textContent = msg || '';
 }
 
 function rejoindre() {
   var nom = document.getElementById('input-nom').value.trim();
   var code = document.getElementById('input-code').value.trim().toUpperCase();
-  if (!nom) { alert('Entre ton prenom !'); return; }
-  if (!code || code.length < 4) { alert('Entre le code de session !'); return; }
+  if (!nom) { setErreur('Entre ton prenom !'); return; }
+  if (!code || code.length < 4) { setErreur('Entre le code de session !'); return; }
+  setErreur('');
   joueurNom = nom;
   sessionId = code;
+  sessionStorage.setItem('diablo_sexe', joueurSexe);
   connectWS(nom);
 }
 
@@ -276,7 +280,8 @@ function connectWS(nom) {
 
   ws.onopen = function() {
     var storedId = sessionStorage.getItem('diablo_joueurId');
-    ws.send(JSON.stringify({ type: 'JOIN', sessionId: sessionId, nom: nom, sexe: joueurSexe, joueurId: storedId || null }));
+    var storedSexe = sessionStorage.getItem('diablo_sexe') || joueurSexe;
+    ws.send(JSON.stringify({ type:'JOIN', sessionId:sessionId, nom:nom, sexe:storedSexe, joueurId:storedId || null }));
   };
 
   ws.onmessage = function(e) {
@@ -286,8 +291,7 @@ function connectWS(nom) {
   ws.onclose = function() {
     if (joueurId || sessionId) {
       wsReconnectTimer = setTimeout(function() {
-        var n = sessionStorage.getItem('diablo_nom') || joueurNom || 'Joueur';
-        connectWS(n);
+        connectWS(sessionStorage.getItem('diablo_nom') || joueurNom || 'Joueur');
       }, 2000);
     }
   };
@@ -305,16 +309,19 @@ function handleMessage(msg) {
       pointsActuels = msg.points || 0;
       sessionStorage.setItem('diablo_joueurId', joueurId);
       sessionStorage.setItem('diablo_nom', msg.nom);
-      // Afficher le nom correctement
+      if (msg.sexe) sessionStorage.setItem('diablo_sexe', msg.sexe);
       document.getElementById('nom-joueur').textContent = msg.nom;
       document.getElementById('jeu-nom-display').textContent = msg.nom;
-      if (msg.isReconnect && msg.etatSession === 'jeu') {
-        showScreen('jeu'); updateUI();
-      } else if (msg.isReconnect && msg.etatSession === 'fin') {
-        showScreen('fin');
-      } else {
-        showScreen('lobby-joueur');
-      }
+      setErreur('');
+      if (msg.isReconnect && msg.etatSession === 'jeu') { showScreen('jeu'); updateUI(); }
+      else if (msg.isReconnect && msg.etatSession === 'fin') { showScreen('fin'); }
+      else { showScreen('lobby-joueur'); }
+      break;
+
+    // Erreur de connexion visible — session inexistante
+    case 'ERROR':
+      if (msg.code === 'NOT_ENOUGH_PLAYERS') break; // gere par l hote
+      setErreur(msg.msg || 'Erreur de connexion');
       break;
 
     case 'GAME_STARTED':
@@ -325,7 +332,7 @@ function handleMessage(msg) {
     case 'ACCORD_REQUIS':
       accordEnCours = msg.actionId;
       showAccord(msg.texte, msg.partenaire);
-      vibratePhone([200, 100, 200]);
+      vibratePhone([200,100,200]);
       break;
 
     case 'ACCORD_ATTENTE_AUTRE':
@@ -336,7 +343,13 @@ function handleMessage(msg) {
     case 'ACCORD_OUI':
       hideAll();
       showIdle();
-      if (msg.points) { pointsActuels += msg.points; updateUI(); vibratePhone([100,50,200]); }
+      // Mise a jour des points par ID
+      if (msg.joueur1Id === joueurId || msg.joueur2Id === joueurId) {
+        var newPts = (msg.joueur1Id === joueurId) ? msg.joueur1Points : msg.joueur2Points;
+        pointsActuels = newPts;
+        updateUI();
+        vibratePhone([100,50,200]);
+      }
       accordEnCours = null;
       break;
 
@@ -351,9 +364,15 @@ function handleMessage(msg) {
       vibratePhone([300]);
       break;
 
+    // Designe par un vote — label different
+    case 'ACTION_VOTE_DESIGNE':
+      showSolo(msg.texte, 'Le groupe t a designe');
+      vibratePhone([200,100,200]);
+      break;
+
     case 'ACTION_GROUPE_CIBLE':
       showSolo(msg.texte, 'Le groupe essaie de te convaincre...');
-      vibratePhone([100, 50, 100, 50, 200]);
+      vibratePhone([100,50,100,50,200]);
       break;
 
     case 'GROUPE_SUCCES':
@@ -364,12 +383,18 @@ function handleMessage(msg) {
 
     case 'VOTE_REQUIS':
       showVote(msg.voteId, msg.question, msg.joueurs);
-      vibratePhone([100, 50, 100]);
+      vibratePhone([100,50,100]);
       break;
 
     case 'VOTE_RESULTAT':
       hideAll();
       showIdle();
+      break;
+
+    // Shot notification sur le telephone
+    case 'SHOT_NOTIF':
+      showShot(msg.texte);
+      vibratePhone([300,100,300]);
       break;
 
     case 'ACTION_ACCOMPLIE':
@@ -390,7 +415,7 @@ function handleMessage(msg) {
     case 'GAME_OVER':
       var monVerdict = null;
       for (var i = 0; i < msg.verdicts.length; i++) {
-        if (msg.verdicts[i].nom === joueurNom) { monVerdict = msg.verdicts[i]; break; }
+        if (msg.verdicts[i].id === joueurId) { monVerdict = msg.verdicts[i]; break; }
       }
       showFin(monVerdict);
       break;
@@ -410,10 +435,8 @@ function showAccord(texte, partenaire) {
 }
 
 function repondreAccord(accepte) {
-  if (!accordEnCours) return;
-  var id = accordEnCours;
-  if (!id || !ws) return;
-  ws.send(JSON.stringify({ type: 'ACCORD_REPONSE', sessionId: sessionId, actionId: id, accepte: accepte }));
+  if (!accordEnCours || !ws) return;
+  ws.send(JSON.stringify({ type:'ACCORD_REPONSE', sessionId:sessionId, actionId:accordEnCours, accepte:accepte }));
   hideAll();
   show('attente-autre');
   vibratePhone([50]);
@@ -429,7 +452,7 @@ function showSolo(texte, label) {
 
 function actionSolo(accompli) {
   if (!ws) return;
-  ws.send(JSON.stringify({ type: 'ACTION_RESULTAT', sessionId: sessionId, accompli: accompli }));
+  ws.send(JSON.stringify({ type:'ACTION_RESULTAT', sessionId:sessionId, accompli:accompli }));
   hideAll();
   showIdle();
 }
@@ -453,38 +476,45 @@ function showVote(voteId, question, joueurs) {
 
 function voterPour(cibleId) {
   if (!currentVoteId || !ws) return;
-  ws.send(JSON.stringify({ type: 'VOTE_REPONSE', sessionId: sessionId, voteId: currentVoteId, cibleId: cibleId }));
+  ws.send(JSON.stringify({ type:'VOTE_REPONSE', sessionId:sessionId, voteId:currentVoteId, cibleId:cibleId }));
   hideAll();
   show('vote-attente');
   vibratePhone([50]);
 }
 
+// SHOT
+function showShot(texte) {
+  hideAll();
+  document.getElementById('shot-texte').textContent = texte || 'Tu bois.';
+  document.getElementById('shot-notif').style.display = 'block';
+  // Disparait automatiquement apres 8s si pas clique
+  if (shotTimeout) clearTimeout(shotTimeout);
+  shotTimeout = setTimeout(dismissShot, 8000);
+}
+
+function dismissShot() {
+  document.getElementById('shot-notif').style.display = 'none';
+  showIdle();
+}
+
 // PALIER
 function monterPalier() {
   if (palierActuel >= 2) return;
-  var suivant = palierNoms[palierActuel + 1];
-  if (!confirm('Passer au niveau ' + suivant + ' ? Les defis seront plus intenses.')) return;
-  ws.send(JSON.stringify({ type: 'MONTER_PALIER', sessionId: sessionId }));
+  if (!confirm('Passer au niveau ' + palierNoms[palierActuel + 1] + ' ? Les defis seront plus intenses.')) return;
+  ws.send(JSON.stringify({ type:'MONTER_PALIER', sessionId:sessionId }));
 }
 
 // UI
-function show(id) {
-  var el = document.getElementById(id);
-  if (el) el.style.display = 'block';
-}
+function show(id) { var el = document.getElementById(id); if (el) el.style.display = 'block'; }
 
 function hideAll() {
-  var ids = ['idle-state','accord-card','attente-autre','solo-card','vote-card','vote-attente'];
-  ids.forEach(function(id) {
+  ['idle-state','shot-notif','accord-card','attente-autre','solo-card','vote-card','vote-attente'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
 }
 
-function showIdle() {
-  hideAll();
-  document.getElementById('idle-state').style.display = 'block';
-}
+function showIdle() { hideAll(); document.getElementById('idle-state').style.display = 'block'; }
 
 function updateUI() {
   document.getElementById('stat-pts').textContent = pointsActuels + ' pts';
@@ -493,15 +523,8 @@ function updateUI() {
   palierEl.className = 'stat-badge ' + palierClasses[palierActuel];
   document.getElementById('palier-val').textContent = palierIcons[palierActuel] + ' ' + palierNoms[palierActuel];
   var btnMonter = document.getElementById('btn-monter');
-  if (palierActuel >= 2) {
-    btnMonter.textContent = 'Max';
-    btnMonter.disabled = true;
-    btnMonter.style.opacity = '0.3';
-  } else {
-    btnMonter.textContent = 'Monter';
-    btnMonter.disabled = false;
-    btnMonter.style.opacity = '1';
-  }
+  if (palierActuel >= 2) { btnMonter.textContent = 'Max'; btnMonter.disabled = true; btnMonter.style.opacity = '0.3'; }
+  else { btnMonter.textContent = 'Monter'; btnMonter.disabled = false; btnMonter.style.opacity = '1'; }
 }
 
 function showScreen(name) {
@@ -513,12 +536,11 @@ function showScreen(name) {
 function showFin(verdict) {
   showScreen('fin');
   document.getElementById('fin-pts').textContent = pointsActuels;
+  // Utiliser l ID pour trouver le verdict — pas le nom
   document.getElementById('fin-verdict').textContent = verdict ? verdict.verdict : "L Oracle garde son verdict pour lui.";
 }
 
-function vibratePhone(pattern) {
-  if (navigator.vibrate) navigator.vibrate(pattern);
-}
+function vibratePhone(pattern) { if (navigator.vibrate) navigator.vibrate(pattern); }
 </script>
 </body>
 </html>
