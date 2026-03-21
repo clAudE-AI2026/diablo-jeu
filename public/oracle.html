@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -377,6 +377,21 @@ function handleMessage(msg) {
       startAccordTimer();
       break;
 
+    case 'VOTE_EN_ATTENTE':
+      startVoteTimer(msg.duree || 20);
+      break;
+
+    case 'VOTE_RESULTAT':
+      stopVoteTimer();
+      const replique = msg.replique || Le groupe a désigné : ;
+      setOracleMessage(replique, msg.isEgalite ? '' : 'accord-oui');
+      flash(🎯  a été désigné(e) !);
+      if (joueurs[msg.designeId]) {
+        joueurs[msg.designeId].points = (joueurs[msg.designeId].points || 0) + (session?.carte?.points || 0);
+        renderScores();
+      }
+      break;
+
     case 'ACCORD_OUI':
       stopAccordTimer();
       setOracleMessage(pickRandom([
@@ -431,9 +446,10 @@ function handleMessage(msg) {
 function tirerCarte() {
   if (!ws) return;
   document.getElementById('btn-tirer').disabled = true;
-  setTimeout(() => document.getElementById('btn-tirer').disabled = false, 1500);
-  setOracleMessage(pickRandom(["Je consulte les abysses...", "Le sort se tisse...", "La décision est prise...", "Obéissez."]));
-  ws.send(JSON.stringify({ type: 'TIRER_CARTE', sessionId, joueurCible: selectedJoueur1 || null, joueur2: selectedJoueur2 || null }));
+  setTimeout(() => document.getElementById('btn-tirer').disabled = false, 2000);
+  setOracleMessage(pickRandom(["Je consulte les abysses...", "Le sort se tisse...", "La décision est prise...", "Obéissez.", "Le destin se choisit lui-même...", "Je vois...", "Intéressant choix du sort."]));
+  // L'Oracle décide seul — plus de sélection manuelle
+  ws.send(JSON.stringify({ type: 'TIRER_CARTE', sessionId }));
 }
 
 function afficherCarte(carte) {
@@ -461,6 +477,30 @@ function afficherCarte(carte) {
 }
 
 // ─── ACCORD TIMER ─────────────────────────────────────────────────────────
+
+let voteTimerInterval = null;
+let voteSecondes = 20;
+
+function startVoteTimer(duree) {
+  voteSecondes = duree;
+  const bar = document.getElementById('accord-attente-bar');
+  const timer = document.getElementById('accord-timer');
+  if (bar) bar.classList.add('visible');
+  if (timer) timer.textContent = voteSecondes;
+  document.getElementById('oracle-message').classList.add('attente');
+  voteTimerInterval = setInterval(() => {
+    voteSecondes--;
+    if (timer) timer.textContent = voteSecondes;
+    if (voteSecondes <= 0) stopVoteTimer();
+  }, 1000);
+}
+
+function stopVoteTimer() {
+  clearInterval(voteTimerInterval);
+  const bar = document.getElementById('accord-attente-bar');
+  if (bar) bar.classList.remove('visible');
+  document.getElementById('oracle-message').classList.remove('attente');
+}
 
 function startAccordTimer() {
   accordSecondes = 30;
@@ -570,3 +610,5 @@ function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 </script>
 </body>
 </html>
+
+
