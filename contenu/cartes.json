@@ -1,911 +1,874 @@
 {
   "meta": {
-    "version": "2.0",
+    "version": "3.0",
     "jeu": "DIABLO",
     "niveaux": ["tiede", "chaud", "brulant"],
     "types": ["solo", "duo", "vote", "shot"],
-    "note": "Solo=Oracle designe aleatoirement | Duo=double accord anonyme | Vote=groupe vote sur telephone | Shot=alcool"
+    "note": "v3.0 - 40% actions physiques, defis max 30s, zero complexite cognitive"
   },
   "repliques_oracle": {
     "intro": [
-      "Bonsoir, mortels. Je suis DIABLO. Ce soir, vous n'avez plus le choix.",
-      "Ah, des volontaires. Fascinant. Commençons.",
-      "Je vous observe depuis longtemps. Ce soir, je parle.",
-      "Bienvenue en enfer. L'entrée est gratuite. La sortie... on verra.",
-      "Des humains qui veulent s'amuser. Laissez-moi vous aider avec ça.",
-      "Vous êtes venus de votre plein gré. Je m'en souviendrai.",
-      "La soirée commence. Vos regrets, eux, commenceront plus tard.",
-      "Je connais vos secrets. Ce soir, certains seront révélés.",
-      "Chacun d'entre vous cache quelque chose. Je suis là pour ça.",
-      "L'Oracle est patient. L'Oracle est cruel. L'Oracle commence."
+      "Bonsoir mortels. Ce soir vous obeissez.",
+      "Ah des volontaires. Fascinant. Commenceons.",
+      "Je vous observe depuis longtemps. Ce soir je parle.",
+      "Bienvenue en enfer. L entree est gratuite.",
+      "Des humains qui veulent s amuser. Laissez-moi vous aider.",
+      "Vous etes venus de votre plein gre. Je m en souviendrai.",
+      "La soiree commence. Vos regrets commenceront plus tard.",
+      "L Oracle est patient. L Oracle est cruel. L Oracle commence."
     ],
     "transition_chaud": [
-      "Bien. Vous avez survécu au réchauffement. Les choses sérieuses commencent.",
-      "Intéressant. Vous êtes encore là. Voyons si ça dure.",
-      "Le niveau monte. Votre dignité, elle, risque de descendre.",
-      "Ah, vous voulez aller plus loin ? Comme c'est... prévisible.",
-      "La zone tiède est derrière vous. Vous l'avez voulu.",
-      "Je remarque que personne n'est parti. Courageux... ou inconscients.",
-      "Phase deux. Mes questions favorites commencent maintenant.",
-      "Vous pensiez que c'était terminé ? Je commence à peine."
+      "Bien. Vous avez survecu au rechauffement. Ca devient serieux.",
+      "Interessant. Vous etes encore la. Voyons si ca dure.",
+      "Le niveau monte. Votre dignite risque de descendre.",
+      "La zone tiede est derriere vous. Vous l avez voulu.",
+      "Je remarque que personne n est parti. Courageux ou inconscients.",
+      "Phase deux. Mes questions favorites commencent.",
+      "Vous pensiez que c etait termine ? Je commence a peine."
     ],
     "transition_brulant": [
-      "Plus de retour en arrière possible. Vous l'avez voulu.",
-      "Ce niveau n'est pas pour les timides. Prouvez-moi que vous n'en êtes pas.",
-      "Bienvenue dans la zone rouge. Je vous avais prévenus.",
-      "Ah. Les braves. Ou les inconscients. Je ne fais pas la différence.",
-      "Zone brûlante activée. Ce qui se passe ici reste ici. Peut-être.",
-      "Dernier palier. Je garde le meilleur pour la fin.",
-      "Vous avez choisi d'aller jusqu'au bout. Fascinant courage.",
-      "La zone brûlante. Certaines soirées commencent ici. Les vôtres se terminent là."
+      "Plus de retour arriere. Vous l avez voulu.",
+      "Ce niveau n est pas pour les timides.",
+      "Bienvenue dans la zone rouge. Je vous avais prevenus.",
+      "Les braves. Ou les inconscients. Je ne fais pas la difference.",
+      "Zone brulante activee. Ce qui se passe ici reste ici.",
+      "Dernier palier. Je garde le meilleur pour la fin."
     ],
     "refus": [
-      "Lâche ? Non non, disons... prudent. Le groupe assume pour toi.",
-      "Le destin a parlé. Il dit non. Fascinant comme choix.",
-      "Très bien. La prochaine fois, peut-être. Ou pas.",
-      "Je prends note. Je me souviens de tout, moi.",
-      "Un refus. Charmant. Je trouverai quelque chose de pire.",
-      "Ah. La sagesse. Ou la peur. Difficile à distinguer ce soir.",
-      "Refus enregistré. L'Oracle ne juge pas. L'Oracle attend.",
-      "Interessant choix. Je le note quelque part.",
+      "Prudent. Le groupe assume pour toi.",
+      "Le destin a parle. Il dit non.",
+      "Je prends note. Je me souviens de tout.",
+      "Tres bien. La prochaine fois quelque chose de pire.",
+      "Refus enregistre. L Oracle attend.",
       "Le courage a ses limites. Je les connais maintenant.",
-      "Pas ce soir. Une autre soirée, peut-être. Je serai là."
+      "Pas ce soir. Une autre soiree peut-etre.",
+      "Interesse par quelque chose de pire ? Non ? Alors execute."
     ],
     "vote_lancement": [
-      "Votez en secret. L'Oracle désignera celui que le groupe aura choisi.",
-      "Chacun vote sur son téléphone. Personne ne sait qui vous désignez.",
-      "Le vote est ouvert. Qui mérite ce gage ce soir ?",
-      "Téléphones en main. Désignez. Anonymement.",
-      "Le groupe décide. L'Oracle exécute. Votez.",
-      "Votez en silence. Le destin se tisse dans l'ombre.",
-      "Qui ? Le groupe sait. Votez maintenant.",
-      "La démocratie version DIABLO. Votez."
+      "Votez en secret. L Oracle designe celui que le groupe aura choisi.",
+      "Chacun vote sur son telephone. Personne ne sait qui vous designez.",
+      "Le vote est ouvert. Qui merite ce gage ce soir ?",
+      "Telephones en main. Designez. Anonymement.",
+      "Le groupe decide. L Oracle execute. Votez.",
+      "Votez en silence. Le destin se tisse dans l ombre.",
+      "La democratie version DIABLO. Votez."
     ],
     "vote_resultat": [
-      "Le groupe a parlé. {joueur}, c'est toi.",
-      "Le verdict est tombé. {joueur}, l'Oracle te désigne.",
+      "Le groupe a parle. {joueur} c est toi.",
+      "Le verdict est tombe. {joueur} l Oracle te designe.",
       "Fascinant. Le groupe est unanime. {joueur}.",
-      "{joueur}. Le destin a un sens de l'humour.",
-      "Surprise ou pas ? {joueur}, c'est pour toi.",
-      "L'Oracle révèle... {joueur}. Le groupe a choisi.",
-      "{joueur}. Tu savais que ça allait arriver.",
-      "Le vote est sans appel. {joueur}, en avant."
+      "{joueur}. Le destin a un sens de l humour.",
+      "{joueur}. Tu savais que ca allait arriver.",
+      "L Oracle revele... {joueur}. Le groupe a choisi.",
+      "{joueur}. En avant."
     ],
     "vote_egalite": [
-      "Égalité parfaite. Le moins chanceux ce soir décide. {joueur}, c'est toi.",
-      "Parité totale. Les points parlent. {joueur}.",
-      "Le sort doit trancher. {joueur}, l'Oracle a choisi.",
-      "Indécision collective. L'Oracle tranche. {joueur}."
+      "Egalite parfaite. Le moins chanceux decide. {joueur} c est toi.",
+      "Parite totale. Les points parlent. {joueur}.",
+      "Le sort doit trancher. {joueur} l Oracle a choisi.",
+      "Indecision collective. L Oracle tranche. {joueur}."
     ],
     "double_accord_attente": [
-      "Les deux concernés réfléchissent... le suspense est délicieux.",
-      "J'attends. Je suis patient. Vous, moins.",
-      "Tick tock. L'Oracle n'aime pas attendre.",
-      "Que se passe-t-il dans ces petits cerveaux ? Je me le demande.",
-      "Le double accord anonyme. Personne ne saura qui a dit non.",
-      "Deux décisions en secret. Deux destins en jeu.",
-      "L'un d'eux va dire oui. Lequel ? Mystère.",
-      "Ils réfléchissent. Je les regarde réfléchir. C'est délicieux."
+      "Les deux reflechissent... le suspense est delicieux.",
+      "J attends. Je suis patient.",
+      "Deux decisions en secret. Deux destins en jeu.",
+      "L un d eux va dire oui. Lequel ? Mystere.",
+      "Ils reflechissent. Je les regarde. C est delicieux."
     ],
     "double_accord_oui": [
-      "Les deux ont dit oui. Ce qui se passe maintenant, c'est votre faute.",
-      "Accord conclu. Ce qui se passe maintenant, je m'en réjouis.",
-      "Deux oui. Magnifique. Procédons.",
-      "Oh, tous les deux courageux ce soir. Je suis... impressionné.",
-      "Accord unanime. L'Oracle sourit. C'est rare.",
-      "Ils ont tous les deux accepté. Fascinant courage.",
-      "Double oui. La soirée mérite son nom.",
-      "Les deux ont choisi d'aller plus loin. Bien."
+      "Les deux ont dit oui. Ce qui se passe c est votre faute.",
+      "Accord conclu. Procedeeons.",
+      "Deux oui. Magnifique.",
+      "Ils ont tous les deux accepte. Fascinant courage.",
+      "Double oui. La soiree merite son nom."
     ],
     "double_accord_non": [
-      "Le destin en a décidé autrement. L'Oracle protège.",
-      "Quelqu'un a dit non. On ne saura jamais qui. L'Oracle garde le secret.",
-      "Refus enregistré. Alternative en cours de sélection.",
-      "Pas ce soir. Une autre fois, sûrement.",
-      "Le destin protège. Ou quelqu'un a eu peur. Même chose.",
-      "Non. L'anonymat préserve tout le monde. C'est bien ainsi.",
-      "L'accord n'a pas eu lieu. L'Oracle n'insiste pas.",
-      "Quelqu'un a dit non. L'Oracle efface les traces."
+      "Quelqu un a dit non. On ne saura jamais qui.",
+      "Refus enregistre. L Oracle protege.",
+      "Non. L anonymat preserve tout le monde.",
+      "Le destin protege. Ou quelqu un a eu peur. Meme chose."
     ],
     "felicitations": [
-      "Accompli avec brio. Je suis presque... fier.",
-      "Voilà ce que j'appelle du courage. Ou de l'alcool. Les deux marchent.",
-      "Exceptionnel. Points accordés. Ne vous habituez pas aux compliments.",
-      "Bien joué. J'espérais un échec, mais je reconnais le talent.",
-      "L'Oracle approuve. Profitez de ce moment, il ne durera pas.",
-      "Impressionnant. Je notais un échec probable. Je me suis trompé.",
-      "C'est fait. Bien fait, en plus. Points mérités.",
-      "Le groupe a été témoin. L'Oracle valide.",
-      "Accompli. Avec style, en plus. Points bonus dans mon cœur.",
-      "Je n'attendais pas ça. Agréablement surpris. Rarement."
+      "Accompli. Je suis presque fier.",
+      "Voila ce que j appelle du courage. Ou de l alcool.",
+      "Bien joue. Points accordes.",
+      "L Oracle approuve. Profitez de ce moment.",
+      "Impressionnant. Je notais un echec probable.",
+      "C est fait. Bien fait en plus. Points merites."
     ],
     "jugement_final": [
-      "Ce soir, {joueur} a prouvé que la dignité est surestimée. Je suis impressionné.",
-      "{joueur} — courageux au début, prudent à la fin. L'équilibre parfait.",
-      "{joueur} a dit non plus souvent que oui. Mais il/elle était là. C'est déjà ça.",
-      "{joueur} — mon favori ce soir. Ne le répétez pas.",
-      "{joueur} a surpris tout le monde, y compris moi. Et je sais tout.",
-      "{joueur} a joué le jeu jusqu'au bout. Respect. Reluctant, mais respect.",
-      "Pour {joueur}, j'ai une question : tu reviens quand ?",
-      "{joueur} a maintenu sa réputation intacte. Pour l'instant.",
-      "Ce soir, {joueur} a été exactement ce que j'espérais. Chaotique et magnifique.",
-      "{joueur} — la prochaine fois, va plus loin. Tu en as la capacité.",
-      "{joueur} a refusé avec style. C'est un talent aussi.",
-      "Je garde un œil sur {joueur}. Toujours.",
-      "{joueur} restera dans mes archives comme... intéressant.",
-      "Verdict pour {joueur} : courageux quand ça comptait. Rare.",
-      "{joueur} — le groupe a appris des choses ce soir. Grâce à toi.",
-      "Je ne dirai pas ce que {joueur} a fait. Mais je m'en souviendrai.",
-      "{joueur} a été honnête ce soir. Plus que prévu. Bien.",
-      "Le bilan de {joueur} : quelques refus, beaucoup de moments. Pas mal.",
-      "{joueur} — tu as les pointes. Les points, aussi.",
-      "L'Oracle ferme les yeux sur {joueur}. Cette fois."
-    ],
-    "commentaires_bavards": [
-      "Silence. Je parle, pas toi.",
-      "Intéressant commentaire. Je m'en fous.",
-      "Tu voulais dire quelque chose ? Non. Continue de regarder.",
-      "Les commentaires non sollicités coûtent un shot. Retiens-toi.",
-      "Je t'entends. Je n'écoute pas. Nuance.",
-      "Très drôle. Non.",
-      "L'Oracle parle. Les autres se taisent. Règle de base.",
-      "Tu interromps l'Oracle. C'est courageux. Et inutile."
+      "Ce soir {joueur} a prouve que la dignite est surestime.",
+      "{joueur} courageux au debut prudent a la fin. L equilibre parfait.",
+      "{joueur} a dit non plus souvent que oui. Mais il etait la.",
+      "{joueur} mon favori ce soir. Ne le repetez pas.",
+      "{joueur} a surpris tout le monde y compris moi.",
+      "{joueur} a joue le jeu jusqu au bout. Respect reluctant.",
+      "Pour {joueur} j ai une question : tu reviens quand ?",
+      "{joueur} a maintenu sa reputation intacte. Pour l instant.",
+      "{joueur} chaotique et magnifique. Exactement ce que j esperais.",
+      "{joueur} la prochaine fois va plus loin. Tu en as la capacite.",
+      "{joueur} a refuse avec style. C est un talent aussi.",
+      "Je garde un oeil sur {joueur}. Toujours.",
+      "{joueur} le groupe a appris des choses ce soir. Grace a toi.",
+      "{joueur} courageux quand ca comptait. Rare.",
+      "Verdict pour {joueur} : interessant. Dans tous les sens du terme.",
+      "Le bilan de {joueur} : quelques refus beaucoup de moments. Pas mal.",
+      "{joueur} tu as les points. Et les cicatrices emotionnelles.",
+      "L Oracle ferme les yeux sur {joueur}. Cette fois."
     ]
   },
   "cartes": {
     "tiede": [
       {
         "id": "T001", "type": "solo",
-        "texte": "L'Oracle désigne {joueur}. Il/elle doit révéler la chose la plus embarrassante qu'il/elle ait faite lors d'une soirée.",
-        "texte_joueur": "DIABLO veut savoir : quelle est la chose la plus embarrassante que tu aies faite lors d'une soirée ?",
+        "texte": "L Oracle designe {joueur}. Il doit faire la danse du robot pendant 15 secondes. Le groupe juge.",
+        "texte_joueur": "DIABLO ordonne : danse du robot, 15 secondes. Le groupe chronometre.",
         "points": 10, "penalite_refus": "shot"
       },
       {
         "id": "T002", "type": "solo",
-        "texte": "L'Oracle désigne {joueur}. Il/elle doit imiter la personne à sa gauche pendant 30 secondes.",
-        "texte_joueur": "DIABLO ordonne : imite la personne à ta gauche pendant 30 secondes. Le groupe juge.",
+        "texte": "L Oracle ordonne a {joueur} d imiter la personne a sa gauche pendant 20 secondes. Gestes, voix, tout.",
+        "texte_joueur": "DIABLO ordonne : imite la personne a ta gauche. Gestes et voix. 20 secondes.",
         "points": 10, "penalite_refus": "shot"
       },
       {
         "id": "T003", "type": "vote",
-        "texte": "L'Oracle pose la question : qui dans ce groupe serait le pire sur une île déserte ? Le groupe vote.",
-        "texte_vote": "Vote : qui serait le pire sur une île déserte ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Explique comment tu survivrais malgré tout.",
+        "texte": "L Oracle veut savoir : qui dans ce groupe serait le pire sur une ile deserte ? Le groupe vote.",
+        "texte_vote": "Vote : qui serait le pire sur une ile deserte ?",
+        "texte_joueur": "DIABLO t a designe. Explique comment tu survivrais quand meme.",
         "points": 8, "penalite_refus": "shot"
       },
       {
         "id": "T004", "type": "solo",
-        "texte": "L'Oracle désigne {joueur}. Il/elle doit révéler le mensonge qu'il/elle répète le plus souvent.",
-        "texte_joueur": "DIABLO veut ton mensonge préféré, celui que tu répètes souvent.",
-        "points": 12, "penalite_refus": "shot"
+        "texte": "L Oracle condamne {joueur} a marcher comme un mannequin entre deux points de la piece.",
+        "texte_joueur": "DIABLO ordonne : catwalk entre deux points de la piece. Le groupe applaudit ou siffle.",
+        "points": 8, "penalite_refus": "shot"
       },
       {
         "id": "T005", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à parler avec un accent au choix pendant 3 tours.",
-        "texte_joueur": "DIABLO te condamne : accent de ton choix pendant 3 tours. Viole la règle = shot.",
+        "texte": "L Oracle exige que {joueur} fasse le bruit d un animal qui correspond a son humeur ce soir.",
+        "texte_joueur": "DIABLO veut savoir comment tu te sens. En bruit d animal. Maintenant.",
         "points": 8, "penalite_refus": "shot"
       },
       {
-        "id": "T006", "type": "solo",
-        "texte": "L'Oracle demande à {joueur} quelle appli sur son téléphone il/elle serait le plus gêné(e) de montrer.",
-        "texte_joueur": "DIABLO demande : quelle appli sur ton téléphone serais-tu le plus gêné(e) de montrer ? Dis le nom.",
-        "points": 10, "penalite_refus": "shot"
-      },
-      {
-        "id": "T007", "type": "shot",
-        "texte": "L'Oracle décrète : celui qui a le moins mangé aujourd'hui boit.",
+        "id": "T006", "type": "shot",
+        "texte": "L Oracle decrete : celui qui a le fond d ecran le plus embarrassant boit.",
         "texte_joueur": null,
         "points": 0, "penalite_refus": null
       },
       {
-        "id": "T008", "type": "solo",
-        "texte": "L'Oracle ordonne à {joueur} de faire une déclaration dramatique sur n'importe quel sujet pendant 20 secondes.",
-        "texte_joueur": "DIABLO t'ordonne : discours dramatique de 20 secondes sur n'importe quel sujet. Convaincs-nous.",
+        "id": "T007", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a faire une blague. Elle doit faire rire au moins une personne. Sinon shot.",
+        "texte_joueur": "DIABLO ordonne : une blague. Au moins une personne rit. Sinon shot.",
         "points": 10, "penalite_refus": "shot"
       },
       {
-        "id": "T009", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe est le plus susceptible d'envoyer un SMS à son/sa ex ce soir ? Le groupe vote.",
-        "texte_vote": "Vote : qui enverrait un SMS à son ex ce soir ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Commente ce verdict.",
+        "id": "T008", "type": "vote",
+        "texte": "L Oracle veut savoir : qui serait le plus susceptible d envoyer un SMS a son ex ce soir ? Le groupe vote.",
+        "texte_vote": "Vote : qui enverrait un SMS a son ex ce soir ?",
+        "texte_joueur": "DIABLO t a designe. Commente ce verdict.",
         "points": 8, "penalite_refus": "shot"
+      },
+      {
+        "id": "T009", "type": "solo",
+        "texte": "L Oracle exige que {joueur} revele sa derniere recherche Google. Montre ou dit.",
+        "texte_joueur": "DIABLO veut ta derniere recherche Google. Montre ou dis.",
+        "points": 15, "penalite_refus": "shot"
       },
       {
         "id": "T010", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle son emoji le plus utilisé et pourquoi.",
-        "texte_joueur": "DIABLO veut ton emoji le plus utilisé et l'histoire derrière.",
-        "points": 8, "penalite_refus": "shot"
-      },
-      {
-        "id": "T011", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à envoyer un emoji au dernier contact de ses messages sans explication.",
-        "texte_joueur": "DIABLO ordonne : envoie un emoji (au choix) au dernier contact de tes messages. Maintenant.",
-        "points": 15, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "T012", "type": "solo",
-        "texte": "L'Oracle ordonne à {joueur} de révéler sa dernière recherche Google.",
-        "texte_joueur": "DIABLO veut voir ta dernière recherche Google. Montre ou dis.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T013", "type": "shot",
-        "texte": "L'Oracle décrète : celui qui a regardé une télé-réalité cette semaine boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": null
-      },
-      {
-        "id": "T014", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à faire 10 pompes ou boire.",
-        "texte_joueur": "DIABLO ordonne : 10 pompes ou 1 shot. À toi de choisir.",
+        "texte": "L Oracle ordonne a {joueur} de faire 10 pompes ou boire un shot.",
+        "texte_joueur": "DIABLO ordonne : 10 pompes ou 1 shot. Choisis.",
         "points": 10, "penalite_refus": "shot double"
       },
       {
-        "id": "T015", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe ment le mieux ? Le groupe vote.",
-        "texte_vote": "Vote : qui ment le mieux dans ce groupe ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Prouve-le en racontant un mensonge convaincant.",
-        "points": 12, "penalite_refus": "shot"
-      },
-      {
-        "id": "T016", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à changer son statut WhatsApp en 'DIABLO me contrôle' pendant 10 minutes.",
-        "texte_joueur": "DIABLO ordonne : change ton statut WhatsApp en 'DIABLO me contrôle'. 10 minutes. On vérifie.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T017", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} imite le bruit qu'il/elle ferait en tombant dans un escalier.",
-        "texte_joueur": "DIABLO exige : imite le bruit que tu ferais en tombant dans un escalier. Maintenant.",
-        "points": 8, "penalite_refus": "shot"
-      },
-      {
-        "id": "T018", "type": "shot",
-        "texte": "L'Oracle décrète : celui qui a le fond d'écran le plus embarrassant boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": null
-      },
-      {
-        "id": "T019", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à décrire la pièce entière comme si c'était un musée d'art contemporain.",
-        "texte_joueur": "DIABLO ordonne : décris cette pièce comme un guide de musée d'art contemporain. 30 secondes.",
-        "points": 10, "penalite_refus": "shot"
-      },
-      {
-        "id": "T020", "type": "solo",
-        "texte": "L'Oracle demande à {joueur} de révéler son talent caché le plus inutile, avec démonstration.",
-        "texte_joueur": "DIABLO veut ton talent caché le plus inutile. Et une démonstration.",
-        "points": 10, "penalite_refus": "shot"
-      },
-      {
-        "id": "T021", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe est le plus susceptible d'être en retard à son propre mariage ? Le groupe vote.",
-        "texte_vote": "Vote : qui serait en retard à son propre mariage ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Défends-toi ou assume.",
-        "points": 8, "penalite_refus": "shot"
-      },
-      {
-        "id": "T022", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à parler en rimes pendant 2 tours complets.",
-        "texte_joueur": "DIABLO condamne : tu parles en rimes pendant 2 tours. Chaque faute = shot.",
-        "points": 12, "penalite_refus": "shot"
-      },
-      {
-        "id": "T023", "type": "solo",
-        "texte": "L'Oracle ordonne à {joueur} de faire le bruit d'un animal qui correspond à son humeur ce soir.",
-        "texte_joueur": "DIABLO veut savoir comment tu te sens ce soir. En bruit d'animal.",
-        "points": 8, "penalite_refus": "shot"
-      },
-      {
-        "id": "T024", "type": "shot",
-        "texte": "L'Oracle décrète : tout le monde boit à la santé du joueur avec le moins de points.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": null
-      },
-      {
-        "id": "T025", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle son surnom secret pour son/sa boss.",
-        "texte_joueur": "DIABLO veut le surnom que tu as en secret pour ton/ta boss. Dis-le.",
-        "points": 12, "penalite_refus": "shot"
-      },
-      {
-        "id": "T026", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à marcher comme un mannequin entre deux points de la pièce.",
-        "texte_joueur": "DIABLO ordonne : catwalk entre deux points de la pièce. Le groupe applaudit ou siffle.",
-        "points": 8, "penalite_refus": "shot"
-      },
-      {
-        "id": "T027", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe est le plus charismatique ce soir ? Le groupe vote.",
-        "texte_vote": "Vote : qui est le plus charismatique ce soir ?",
-        "texte_joueur": "DIABLO t'a désigné(e) comme le plus charismatique. Dis un mot.",
-        "points": 5, "penalite_refus": null
-      },
-      {
-        "id": "T028", "type": "solo",
-        "texte": "L'Oracle ordonne à {joueur} de faire une blague. Elle doit faire rire au moins une personne.",
-        "texte_joueur": "DIABLO ordonne : fais une blague. Au moins une personne doit rire. Sinon, shot.",
-        "points": 10, "penalite_refus": "shot"
-      },
-      {
-        "id": "T029", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle la chanson honte qu'il/elle écoute en secret.",
-        "texte_joueur": "DIABLO veut ta chanson honte. Celle que tu écoutes en secret.",
-        "points": 10, "penalite_refus": "shot"
-      },
-      {
-        "id": "T030", "type": "shot",
-        "texte": "L'Oracle décrète : celui qui a dit 'je rentre tôt ce soir' boit double.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": null
-      },
-      {
-        "id": "T031", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à nommer 5 capitales en 10 secondes ou boire.",
-        "texte_joueur": "DIABLO ordonne : 5 capitales, 10 secondes. Le groupe chronomètre.",
-        "points": 10, "penalite_refus": "shot"
-      },
-      {
-        "id": "T032", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle son type parfait en 3 adjectifs.",
-        "texte_joueur": "DIABLO veut ton type parfait en exactement 3 adjectifs.",
-        "points": 10, "penalite_refus": "shot"
-      },
-      {
-        "id": "T033", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe passerait le plus mal une nuit en camping ? Le groupe vote.",
-        "texte_vote": "Vote : qui passerait le plus mal une nuit en camping ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Décris comment tu survivrais à cette nuit.",
-        "points": 8, "penalite_refus": "shot"
-      },
-      {
-        "id": "T034", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à danser 15 secondes sans musique.",
+        "id": "T011", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a danser 15 secondes sans musique.",
         "texte_joueur": "DIABLO ordonne : 15 secondes de danse. Pas de musique. Maintenant.",
         "points": 10, "penalite_refus": "shot"
       },
       {
-        "id": "T035", "type": "solo",
-        "texte": "L'Oracle demande à {joueur} de révéler la dernière fois qu'il/elle a vraiment pleuré et pourquoi.",
-        "texte_joueur": "DIABLO demande : la dernière fois que tu as pleuré. Quand et pourquoi.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T036", "type": "shot",
-        "texte": "L'Oracle décrète : celui qui a le plus de notifications non lues boit.",
+        "id": "T012", "type": "shot",
+        "texte": "L Oracle decrete : celui qui a regarde une tele-realite cette semaine boit.",
         "texte_joueur": null,
         "points": 0, "penalite_refus": null
       },
       {
-        "id": "T037", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} propose un toast en une phrase poétique. Si c'est bien, tout le monde boit.",
-        "texte_joueur": "DIABLO ordonne : un toast. Une phrase. Poétique. Tout le monde boit si c'est bien.",
+        "id": "T013", "type": "solo",
+        "texte": "L Oracle exige que {joueur} imite quelqu un dans le groupe sans dire son nom. Le groupe devine.",
+        "texte_joueur": "DIABLO ordonne : imite quelqu un du groupe pendant 20 secondes. Le groupe devine qui.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T014", "type": "vote",
+        "texte": "L Oracle veut savoir : qui ment le mieux dans ce groupe ? Le groupe vote.",
+        "texte_vote": "Vote : qui ment le mieux ?",
+        "texte_joueur": "DIABLO t a designe. Prouve-le en racontant un mensonge convaincant au groupe.",
         "points": 12, "penalite_refus": "shot"
       },
       {
-        "id": "T038", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe est le plus susceptible de finir la nuit par terre ? Le groupe vote.",
+        "id": "T015", "type": "solo",
+        "texte": "L Oracle ordonne a {joueur} de faire une declaration dramatique sur n importe quel sujet. 15 secondes.",
+        "texte_joueur": "DIABLO ordonne : discours dramatique sur n importe quoi. 15 secondes. Convaincs-nous.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T016", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a faire le moonwalk ou equivalent pendant 10 secondes.",
+        "texte_joueur": "DIABLO ordonne : moonwalk ou glissade style. 10 secondes. Le groupe juge.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T017", "type": "shot",
+        "texte": "L Oracle decrete : celui qui a le plus de notifications non lues sur son telephone boit.",
+        "texte_joueur": null,
+        "points": 0, "penalite_refus": null
+      },
+      {
+        "id": "T018", "type": "solo",
+        "texte": "L Oracle exige que {joueur} revele sa chanson honte. Celle qu il ecoute en secret.",
+        "texte_joueur": "DIABLO veut ta chanson honte. Celle que tu assumes pas.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T019", "type": "vote",
+        "texte": "L Oracle veut savoir : qui finira la nuit par terre ? Le groupe vote.",
         "texte_vote": "Vote : qui finira la nuit par terre ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Commente ce pronostic.",
+        "texte_joueur": "DIABLO t a designe. Commente ce pronostic.",
+        "points": 8, "penalite_refus": "shot"
+      },
+      {
+        "id": "T020", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a faire une sequence yoga inventee par le groupe pendant 20 secondes.",
+        "texte_joueur": "DIABLO ordonne : le groupe invente une posture de yoga impossible. Tu l executes.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T021", "type": "solo",
+        "texte": "L Oracle ordonne a {joueur} d imiter le bruit qu il ferait en tombant dans un escalier.",
+        "texte_joueur": "DIABLO exige : imite le bruit de toi tombant dans un escalier. Maintenant.",
+        "points": 8, "penalite_refus": "shot"
+      },
+      {
+        "id": "T022", "type": "shot",
+        "texte": "L Oracle decrete : celui qui a dit je rentre tot ce soir boit double.",
+        "texte_joueur": null,
+        "points": 0, "penalite_refus": null
+      },
+      {
+        "id": "T023", "type": "solo",
+        "texte": "L Oracle exige que {joueur} revele l appli sur son telephone qu il serait le plus gene de montrer.",
+        "texte_joueur": "DIABLO veut savoir : quelle appli sur ton telephone te gene le plus ? Dis le nom.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T024", "type": "vote",
+        "texte": "L Oracle veut savoir : qui serait le meilleur colocataire ? Le groupe vote.",
+        "texte_vote": "Vote : qui serait le meilleur colocataire ?",
+        "texte_joueur": "DIABLO t a designe. Presente tes arguments.",
+        "points": 8, "penalite_refus": "shot"
+      },
+      {
+        "id": "T025", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a faire un portrait de la piece comme un guide de musee. 20 secondes.",
+        "texte_joueur": "DIABLO ordonne : decris cette piece comme un guide de musee. 20 secondes.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T026", "type": "solo",
+        "texte": "L Oracle exige que {joueur} montre son talent cache le plus inutile avec demonstration.",
+        "texte_joueur": "DIABLO veut ton talent cache le plus inutile. Et une demonstration.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T027", "type": "shot",
+        "texte": "L Oracle decrete : celui qui a le plus de contacts dans son telephone boit.",
+        "texte_joueur": null,
+        "points": 0, "penalite_refus": null
+      },
+      {
+        "id": "T028", "type": "solo",
+        "texte": "L Oracle ordonne a {joueur} de faire un toast en une phrase. Si c est bien tout le monde boit.",
+        "texte_joueur": "DIABLO ordonne : un toast. Une phrase. Tout le monde boit si c est bien.",
+        "points": 12, "penalite_refus": "shot"
+      },
+      {
+        "id": "T029", "type": "vote",
+        "texte": "L Oracle veut savoir : qui est le plus mysterieux dans ce groupe ? Le groupe vote.",
+        "texte_vote": "Vote : qui est le plus mysterieux ?",
+        "texte_joueur": "DIABLO t a designe. Revele quelque chose que personne ne sait.",
+        "points": 12, "penalite_refus": "shot"
+      },
+      {
+        "id": "T030", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a envoyer un emoji au dernier contact de ses messages sans explication.",
+        "texte_joueur": "DIABLO ordonne : envoie un emoji au dernier contact de tes messages. Maintenant.",
+        "points": 15, "penalite_refus": "2 shots"
+      },
+      {
+        "id": "T031", "type": "solo",
+        "texte": "L Oracle exige que {joueur} imite un personnage de dessin anime de son choix pendant 15 secondes.",
+        "texte_joueur": "DIABLO ordonne : imite un personnage de dessin anime. 15 secondes. Le groupe devine lequel.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T032", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a faire 5 squats ou boire.",
+        "texte_joueur": "DIABLO ordonne : 5 squats ou 1 shot. Choisis.",
+        "points": 8, "penalite_refus": "shot double"
+      },
+      {
+        "id": "T033", "type": "vote",
+        "texte": "L Oracle veut savoir : qui passerait le plus mal une nuit en camping ? Le groupe vote.",
+        "texte_vote": "Vote : qui passerait le pire en camping ?",
+        "texte_joueur": "DIABLO t a designe. Decris ta nuit de survie catastrophique.",
+        "points": 8, "penalite_refus": "shot"
+      },
+      {
+        "id": "T034", "type": "solo",
+        "texte": "L Oracle ordonne a {joueur} de faire une grimace pour chaque personne du groupe. Une differente par personne.",
+        "texte_joueur": "DIABLO ordonne : une grimace unique pour chaque personne du groupe. Maintenant.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T035", "type": "shot",
+        "texte": "L Oracle decrete : celui qui a regarde son telephone plus de 5 fois depuis le debut boit.",
+        "texte_joueur": null,
+        "points": 0, "penalite_refus": null
+      },
+      {
+        "id": "T036", "type": "solo",
+        "texte": "L Oracle exige que {joueur} marche comme si le sol etait de la lave pendant 20 secondes.",
+        "texte_joueur": "DIABLO ordonne : le sol est de la lave. Tu marches quand meme. 20 secondes.",
+        "points": 10, "penalite_refus": "shot"
+      },
+      {
+        "id": "T037", "type": "vote",
+        "texte": "L Oracle veut savoir : qui est le plus susceptible d etre en retard a son propre mariage ? Vote.",
+        "texte_vote": "Vote : qui serait en retard a son propre mariage ?",
+        "texte_joueur": "DIABLO t a designe. Defend-toi ou assume.",
+        "points": 8, "penalite_refus": "shot"
+      },
+      {
+        "id": "T038", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a faire le bruit de la personne en face de lui qui mange bruyamment.",
+        "texte_joueur": "DIABLO ordonne : imite quelqu un qui mange bruyamment. La personne en face. 10 secondes.",
         "points": 8, "penalite_refus": "shot"
       },
       {
         "id": "T039", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à faire une séquence de yoga impossible pendant 20 secondes.",
-        "texte_joueur": "DIABLO ordonne : 20 secondes de yoga. Le groupe invente la posture.",
+        "texte": "L Oracle exige que {joueur} revele sa pire habitude en soiree. La vraie.",
+        "texte_joueur": "DIABLO veut ta pire habitude en soiree. Celle que tu assumes ou pas.",
         "points": 10, "penalite_refus": "shot"
       },
       {
-        "id": "T040", "type": "solo",
-        "texte": "L'Oracle demande à {joueur} sa pire habitude en soirée.",
-        "texte_joueur": "DIABLO veut ta pire habitude en soirée. Celle que tu assumes ou pas.",
-        "points": 10, "penalite_refus": "shot"
-      },
-      {
-        "id": "T041", "type": "shot",
-        "texte": "L'Oracle décrète : celui qui a le plus de contacts dans son téléphone boit.",
+        "id": "T040", "type": "shot",
+        "texte": "L Oracle decrete : tout le monde boit a la sante du joueur avec le moins de points.",
         "texte_joueur": null,
         "points": 0, "penalite_refus": null
       },
       {
-        "id": "T042", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle la chose la plus folle qu'il/elle ait faite pour impressionner quelqu'un.",
-        "texte_joueur": "DIABLO veut la chose la plus folle que tu aies faite pour impressionner quelqu'un.",
+        "id": "T041", "type": "solo",
+        "texte": "L Oracle ordonne a {joueur} de mimer une scene de film d action sans parler. Le groupe devine le film.",
+        "texte_joueur": "DIABLO ordonne : mime une scene de film d action. Pas de paroles. Le groupe devine.",
         "points": 12, "penalite_refus": "shot"
       },
       {
-        "id": "T043", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe serait le meilleur colocataire ? Le groupe vote.",
-        "texte_vote": "Vote : qui serait le meilleur colocataire ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Présente tes arguments.",
-        "points": 8, "penalite_refus": "shot"
+        "id": "T042", "type": "vote",
+        "texte": "L Oracle veut savoir : qui est le plus charismatique ce soir ? Le groupe vote.",
+        "texte_vote": "Vote : qui est le plus charismatique ce soir ?",
+        "texte_joueur": "DIABLO t a designe. Tu peux dire un mot.",
+        "points": 5, "penalite_refus": null
+      },
+      {
+        "id": "T043", "type": "solo",
+        "texte": "L Oracle exige que {joueur} revele ce qu il faisait samedi dernier a minuit.",
+        "texte_joueur": "DIABLO veut savoir ce que tu faisais samedi dernier a minuit. Precisement.",
+        "points": 10, "penalite_refus": "shot"
       },
       {
         "id": "T044", "type": "solo",
-        "texte": "L'Oracle ordonne à {joueur} de décrire sa vie amoureuse uniquement avec des titres de films.",
-        "texte_joueur": "DIABLO veut que tu décrites ta vie amoureuse uniquement avec des titres de films.",
-        "points": 15, "penalite_refus": "shot"
+        "texte": "L Oracle condamne {joueur} a faire 3 tours sur lui-meme les yeux fermes puis marcher en ligne droite.",
+        "texte_joueur": "DIABLO ordonne : 3 tours sur toi-meme yeux fermes. Puis marche en ligne droite.",
+        "points": 10, "penalite_refus": "shot"
       },
       {
         "id": "T045", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à appeler quelqu'un et lui dire 'je pense souvent à toi' puis raccrocher.",
-        "texte_joueur": "DIABLO ordonne : appelle quelqu'un, dis 'je pense souvent à toi', raccroche. Le groupe regarde.",
-        "points": 25, "penalite_refus": "3 shots"
+        "texte": "L Oracle exige que {joueur} fasse la chenille sur 3 metres. Seul ou accompagne.",
+        "texte_joueur": "DIABLO ordonne : la chenille. 3 metres. Seul ou tu recrutes quelqu un.",
+        "points": 12, "penalite_refus": "shot"
       },
       {
         "id": "T046", "type": "shot",
-        "texte": "L'Oracle décrète : celui qui a regardé son téléphone plus de 5 fois depuis le début de la partie boit.",
+        "texte": "L Oracle decrete : celui qui a menti au moins une fois ce soir boit.",
         "texte_joueur": null,
         "points": 0, "penalite_refus": null
       },
       {
         "id": "T047", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle ce qu'il/elle faisait exactement samedi dernier à minuit.",
-        "texte_joueur": "DIABLO veut savoir ce que tu faisais samedi dernier à minuit. Précisément.",
+        "texte": "L Oracle ordonne a {joueur} de mimer une emojieen entier. Le groupe vote le bon emoji.",
+        "texte_joueur": "DIABLO ordonne : mime un emoji. Le groupe vote lequel.",
         "points": 10, "penalite_refus": "shot"
       },
       {
         "id": "T048", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe est le plus mystérieux ? Le groupe vote.",
-        "texte_vote": "Vote : qui est le plus mystérieux dans ce groupe ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Révèle quelque chose que personne ne sait.",
-        "points": 12, "penalite_refus": "shot"
+        "texte": "L Oracle veut savoir : qui serait le meilleur partenaire de crime dans ce groupe ? Le groupe vote.",
+        "texte_vote": "Vote : qui serait le meilleur partenaire de crime ?",
+        "texte_joueur": "DIABLO t a designe. Propose le crime fictif que vous commettriez ensemble.",
+        "points": 15, "penalite_refus": "shot"
       },
       {
         "id": "T049", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à imiter quelqu'un dans le groupe sans dire son nom. Le groupe devine.",
-        "texte_joueur": "DIABLO ordonne : imite quelqu'un dans ce groupe pendant 30 secondes. Le groupe devine qui.",
-        "points": 10, "penalite_refus": "shot"
+        "texte": "L Oracle exige que {joueur} appelle quelqu un et dise je pense souvent a toi puis raccroche.",
+        "texte_joueur": "DIABLO ordonne : appelle quelqu un, dis je pense souvent a toi, raccroche.",
+        "points": 25, "penalite_refus": "3 shots"
       },
       {
         "id": "T050", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle son application de rencontre préférée ou avoue n'en avoir aucune.",
-        "texte_joueur": "DIABLO veut savoir : tu as des applis de rencontre sur ton téléphone ? Lesquelles ?",
-        "points": 10, "penalite_refus": "shot"
+        "texte": "L Oracle condamne {joueur} a faire le poirier contre un mur ou tenter de le faire pendant 15 secondes.",
+        "texte_joueur": "DIABLO ordonne : poirier contre le mur. Ou la tentative. 15 secondes.",
+        "points": 15, "penalite_refus": "shot"
       }
     ],
     "chaud": [
       {
         "id": "C001", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2}. Il leur soumet une proposition secrète.",
-        "texte_joueur": "DIABLO vous soumet ceci en secret : regardez-vous dans les yeux sans rire pendant 30 secondes. Le groupe peut tout faire pour vous faire craquer.",
+        "texte": "L Oracle designe {joueur1} et {joueur2}. Ils doivent se regarder dans les yeux sans rire pendant 30 secondes. Le groupe peut tout faire pour les faire craquer.",
+        "texte_joueur": "DIABLO : regard dans les yeux sans rire. 30 secondes. Le groupe peut tout faire.",
         "points": 20, "penalite_refus": "shot chacun"
       },
       {
         "id": "C002", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle le DM le plus gênant qu'il/elle ait jamais envoyé.",
-        "texte_joueur": "DIABLO veut le DM le plus embarrassant que tu aies jamais envoyé. Lis-le ou décris-le.",
+        "texte": "L Oracle exige que {joueur} revele le DM le plus gene qu il ait jamais envoye. Lit ou decrit.",
+        "texte_joueur": "DIABLO veut le DM le plus embarrassant que tu aies envoye. Lis-le ou decris-le.",
         "points": 20, "penalite_refus": "shot"
       },
       {
         "id": "C003", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe est le plus flirteur/euse ? Le groupe vote.",
-        "texte_vote": "Vote : qui est le plus flirteur/euse du groupe ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Assume ou conteste avec un exemple.",
+        "texte": "L Oracle veut savoir : qui est le plus flirteur dans ce groupe ? Le groupe vote.",
+        "texte_vote": "Vote : qui est le plus flirteur du groupe ?",
+        "texte_joueur": "DIABLO t a designe. Assume ou conteste avec un exemple.",
         "points": 15, "penalite_refus": "shot"
       },
       {
         "id": "C004", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à lire les 3 derniers messages de sa conversation la plus active.",
-        "texte_joueur": "DIABLO veut tes 3 derniers messages de ta conv la plus active. Lis-les à voix haute.",
+        "texte": "L Oracle condamne {joueur} a lire les 3 derniers messages de sa conversation la plus active.",
+        "texte_joueur": "DIABLO veut tes 3 derniers messages de ta conv la plus active. A voix haute.",
         "points": 20, "penalite_refus": "2 shots"
       },
       {
         "id": "C005", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un défi de complicité.",
-        "texte_joueur": "DIABLO ordonne : échangez un compliment sincère sur l'apparence de l'autre. Les deux acceptent ou les deux refusent.",
+        "texte": "L Oracle designe {joueur1} et {joueur2}. L un fait un massage des epaules a l autre pendant 30 secondes.",
+        "texte_joueur": "DIABLO ordonne : massage des epaules 30 secondes. Vous decidez qui masse qui.",
         "points": 25, "penalite_refus": "shot chacun"
       },
       {
         "id": "C006", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à choisir une personne dans le groupe et lui dire ce qu'il/elle trouve de plus attirant chez elle.",
-        "texte_joueur": "DIABLO ordonne : choisis quelqu'un dans le groupe. Dis-lui ce que tu trouves de plus attirant chez lui/elle.",
+        "texte": "L Oracle condamne {joueur} a choisir quelqu un et dire ce qu il trouve de plus attirant chez cette personne.",
+        "texte_joueur": "DIABLO ordonne : choisis quelqu un. Dis ce que tu trouves de plus attirant chez lui.",
         "points": 25, "penalite_refus": "2 shots"
       },
       {
         "id": "C007", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe donnerait le meilleur baiser selon vous ? Le groupe vote.",
+        "texte": "L Oracle veut savoir : qui donnerait le meilleur baiser selon vous ? Le groupe vote.",
         "texte_vote": "Vote : qui donnerait le meilleur baiser ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Tu peux commenter ou pas. L'Oracle te regarde.",
+        "texte_joueur": "DIABLO t a designe. Tu peux commenter ou pas.",
         "points": 15, "penalite_refus": null
       },
       {
-        "id": "C008", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un défi de confiance.",
-        "texte_joueur": "DIABLO ordonne : l'un de vous chuchote un secret à l'oreille de l'autre. L'autre ne peut JAMAIS le répéter ce soir.",
-        "points": 30, "penalite_refus": "shot chacun"
+        "id": "C008", "type": "solo",
+        "texte": "L Oracle exige que {joueur} revele sa technique de seduction la plus pathethique avec demonstration.",
+        "texte_joueur": "DIABLO veut ta technique de seduction la plus pathethique. Avec demonstration.",
+        "points": 20, "penalite_refus": "shot"
       },
       {
         "id": "C009", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle sa technique de séduction la plus pathétique, avec démonstration.",
-        "texte_joueur": "DIABLO veut ta technique de séduction la plus pathétique. Avec démonstration si possible.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C010", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à envoyer un GIF romantique au dernier contact de ses messages. Le groupe choisit le GIF.",
-        "texte_joueur": "DIABLO ordonne : GIF romantique au dernier contact de tes messages. Le groupe choisit lequel.",
+        "texte": "L Oracle condamne {joueur} a envoyer un GIF romantique au dernier contact de ses messages. Le groupe choisit le GIF.",
+        "texte_joueur": "DIABLO ordonne : GIF romantique au dernier contact. Le groupe choisit lequel.",
         "points": 25, "penalite_refus": "2 shots"
       },
       {
-        "id": "C011", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un jeu de miroir.",
-        "texte_joueur": "DIABLO ordonne : face à face, l'un bouge lentement, l'autre copie exactement. 30 secondes. Puis inversez.",
+        "id": "C010", "type": "duo",
+        "texte": "L Oracle designe {joueur1} et {joueur2} pour un jeu de miroir. L un bouge lentement l autre copie. 30 secondes puis inversez.",
+        "texte_joueur": "DIABLO ordonne : jeu de miroir. L un bouge l autre copie exactement. 30s puis inversez.",
         "points": 25, "penalite_refus": "shot chacun"
       },
       {
-        "id": "C012", "type": "vote",
-        "texte": "L'Oracle veut savoir : si vous deviez fuir avec quelqu'un ce soir, qui ce serait ? Le groupe vote.",
+        "id": "C011", "type": "vote",
+        "texte": "L Oracle veut savoir : si vous deviez fuir avec quelqu un ce soir qui ce serait ? Le groupe vote.",
         "texte_vote": "Vote : avec qui fuirais-tu si tu devais partir ce soir ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Réagis à ce choix collectif.",
+        "texte_joueur": "DIABLO t a designe. Reagis a ce choix collectif.",
         "points": 15, "penalite_refus": "shot"
       },
       {
-        "id": "C013", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à faire un massage des épaules à la personne à sa droite pendant 30 secondes.",
-        "texte_joueur": "DIABLO ordonne : 30 secondes de massage des épaules à la personne à ta droite.",
-        "points": 20, "penalite_refus": "shot"
+        "id": "C012", "type": "solo",
+        "texte": "L Oracle exige que {joueur} fasse une declaration passionnee a un objet de la piece choisi par le groupe.",
+        "texte_joueur": "DIABLO ordonne : declaration d amour passionnee a l objet que le groupe a choisi. 15 secondes.",
+        "points": 15, "penalite_refus": "shot"
       },
       {
-        "id": "C014", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour tenir secret un accord pendant 2 minutes.",
-        "texte_joueur": "DIABLO ordonne : tenez-vous la main pendant 2 minutes pendant que la partie continue. Personne ne peut le signaler.",
-        "points": 35, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C015", "type": "solo",
-        "texte": "L'Oracle demande à {joueur} : si tu devais fuir avec quelqu'un dans ce groupe, qui ce serait et pourquoi ?",
-        "texte_joueur": "DIABLO demande : si tu devais fuir avec quelqu'un dans cette pièce, qui et pourquoi ?",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C016", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe est le plus susceptible d'avoir un double fond dans ses bagages ? Le groupe vote.",
-        "texte_vote": "Vote : qui aurait un double fond dans ses bagages ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Révèle un secret ou conteste.",
-        "points": 12, "penalite_refus": "shot"
-      },
-      {
-        "id": "C017", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à écrire un SMS flirty à quelqu'un dans le groupe. Le groupe choisit la cible.",
-        "texte_joueur": "DIABLO ordonne : SMS flirty à quelqu'un dans le groupe. Le groupe choisit qui. Tu envoies.",
-        "points": 30, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "C018", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un jeu d'éloquence.",
-        "texte_joueur": "DIABLO ordonne : l'un convainc l'autre de faire quelque chose d'absurde. 45 secondes de temps de parole.",
+        "id": "C013", "type": "duo",
+        "texte": "L Oracle designe {joueur1} et {joueur2}. Dos a dos l un decrit l autre au groupe comme un personnage de roman.",
+        "texte_joueur": "DIABLO ordonne : dos a dos. L un decrit l autre comme un personnage de roman au groupe.",
         "points": 25, "penalite_refus": "shot chacun"
       },
       {
-        "id": "C019", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle le moment le plus audacieux qu'il/elle ait vécu en soirée.",
-        "texte_joueur": "DIABLO veut ta chose la plus audacieuse en soirée. Vraie histoire.",
+        "id": "C014", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a faire un debranchement complet : montre comment tu danses quand personne ne regarde. 15 secondes.",
+        "texte_joueur": "DIABLO ordonne : montre comment tu danses quand personne ne regarde. 15 secondes.",
         "points": 20, "penalite_refus": "shot"
       },
       {
-        "id": "C020", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe serait le meilleur partenaire de crime ? Le groupe vote.",
-        "texte_vote": "Vote : qui serait le meilleur partenaire de crime ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Propose le crime fictif que vous commettriez ensemble.",
+        "id": "C015", "type": "vote",
+        "texte": "L Oracle veut savoir : qui a le plus de charme naturel ce soir ? Le groupe vote.",
+        "texte_vote": "Vote : qui a le plus de charme naturel ce soir ?",
+        "texte_joueur": "DIABLO t a designe. Le groupe a choisi. Dis un mot.",
+        "points": 10, "penalite_refus": null
+      },
+      {
+        "id": "C016", "type": "solo",
+        "texte": "L Oracle demande a {joueur} de reveler le dernier mensonge qu il a dit a quelqu un present ce soir.",
+        "texte_joueur": "DIABLO veut le dernier mensonge que tu as dit a quelqu un present ce soir.",
+        "points": 25, "penalite_refus": "2 shots"
+      },
+      {
+        "id": "C017", "type": "duo",
+        "texte": "L Oracle designe {joueur1} et {joueur2} pour tenir une position de yoga ensemble pendant 20 secondes. Le groupe choisit la posture.",
+        "texte_joueur": "DIABLO ordonne : le groupe a choisi une posture de yoga. Vous la tenez ensemble 20 secondes.",
+        "points": 25, "penalite_refus": "shot chacun"
+      },
+      {
+        "id": "C018", "type": "solo",
+        "texte": "L Oracle exige que {joueur} fasse un debrouillard complet : mime un metier sans parler. Le groupe devine.",
+        "texte_joueur": "DIABLO ordonne : mime un metier sans parler. Le groupe devine lequel.",
         "points": 15, "penalite_refus": "shot"
+      },
+      {
+        "id": "C019", "type": "vote",
+        "texte": "L Oracle veut savoir : qui a les meilleures chances de seduire quelqu un ce soir ? Le groupe vote.",
+        "texte_vote": "Vote : qui a les meilleures chances de seduire ce soir ?",
+        "texte_joueur": "DIABLO t a designe. Prouve-le ou assume.",
+        "points": 15, "penalite_refus": "shot"
+      },
+      {
+        "id": "C020", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a choisir quelqu un et lui fredonner une dedicace musicale. Le groupe identifie la chanson.",
+        "texte_joueur": "DIABLO ordonne : fredonne une dedicace musicale a quelqu un. 10 secondes. Le groupe identifie.",
+        "points": 20, "penalite_refus": "shot"
       },
       {
         "id": "C021", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un jeu de regard intense.",
-        "texte_joueur": "DIABLO ordonne : regardez-vous dans les yeux. Pas de sourire. Le premier qui sourit boit. Le groupe chronomètre.",
-        "points": 20, "penalite_refus": "shot chacun"
+        "texte": "L Oracle designe {joueur1} et {joueur2} pour un slow de 20 secondes sans musique.",
+        "texte_joueur": "DIABLO ordonne : 20 secondes de slow sans musique. Main dans la main.",
+        "points": 40, "penalite_refus": "shot chacun"
       },
       {
         "id": "C022", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle son vrai avis sur la soirée jusqu'ici. Aucune diplomatie autorisée.",
-        "texte_joueur": "DIABLO veut ton avis honnête sur cette soirée jusqu'ici. Aucune diplomatie autorisée.",
-        "points": 15, "penalite_refus": "shot"
+        "texte": "L Oracle exige que {joueur} imite la personne qu il trouve la plus charismatique dans le groupe. Sans dire son nom.",
+        "texte_joueur": "DIABLO ordonne : imite la personne la plus charismatique du groupe selon toi. Sans dire son nom.",
+        "points": 20, "penalite_refus": "shot"
       },
       {
         "id": "C023", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe est le plus mystérieux en amour ? Le groupe vote.",
-        "texte_vote": "Vote : qui est le plus mystérieux en amour ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Confirme ou infirme ce jugement.",
-        "points": 15, "penalite_refus": "shot"
+        "texte": "L Oracle veut savoir : qui cache le mieux ses emotions dans ce groupe ? Le groupe vote.",
+        "texte_vote": "Vote : qui cache le mieux ses emotions ?",
+        "texte_joueur": "DIABLO t a designe. Revele une emotion que tu as cachee ce soir.",
+        "points": 20, "penalite_refus": "shot"
       },
       {
         "id": "C024", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à faire une déclaration passionnée à un objet de la pièce choisi par le groupe.",
-        "texte_joueur": "DIABLO ordonne : l'objet a été choisi. Fais-lui une déclaration d'amour passionnée. 20 secondes.",
+        "texte": "L Oracle condamne {joueur} a faire un accent etranger de son choix pendant 3 phrases. Le groupe devine la nationalite.",
+        "texte_joueur": "DIABLO ordonne : accent etranger de ton choix. 3 phrases. Le groupe devine la nationalite.",
         "points": 15, "penalite_refus": "shot"
       },
       {
         "id": "C025", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2}. L'un devine la couleur de sous-vêtements de l'autre.",
-        "texte_joueur": "DIABLO ordonne : l'un de vous deux doit deviner la couleur de sous-vêtements de l'autre. L'autre confirme ou infirme.",
-        "points": 30, "penalite_refus": "shot chacun"
+        "texte": "L Oracle designe {joueur1} et {joueur2} pour un regard intense. Pas de sourire. Le premier qui sourit boit.",
+        "texte_joueur": "DIABLO ordonne : regard intense face a face. Pas de sourire. Le premier qui sourit boit.",
+        "points": 20, "penalite_refus": "shot chacun"
       },
       {
         "id": "C026", "type": "solo",
-        "texte": "L'Oracle demande à {joueur} de révéler le dernier mensonge qu'il/elle a dit à quelqu'un présent ce soir.",
-        "texte_joueur": "DIABLO veut le dernier mensonge que tu as dit à quelqu'un présent ce soir. La vérité maintenant.",
-        "points": 25, "penalite_refus": "2 shots"
+        "texte": "L Oracle exige que {joueur} fasse une entree dans la piece comme une star de cinema. 15 secondes.",
+        "texte_joueur": "DIABLO ordonne : sors de la piece et rentres-y comme une star de cinema. 15 secondes.",
+        "points": 15, "penalite_refus": "shot"
       },
       {
         "id": "C027", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe a le plus de charme naturel ? Le groupe vote.",
-        "texte_vote": "Vote : qui a le plus de charme naturel ce soir ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Le groupe t'a choisi. Dis un mot.",
-        "points": 10, "penalite_refus": null
+        "texte": "L Oracle veut savoir : qui a la meilleure histoire romantique secrete dans ce groupe ? Vote.",
+        "texte_vote": "Vote : qui a la meilleure histoire romantique secrete ?",
+        "texte_joueur": "DIABLO t a designe. Revele quelque chose. Pas tout. Quelque chose.",
+        "points": 20, "penalite_refus": "shot"
       },
       {
-        "id": "C028", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un défi de description.",
-        "texte_joueur": "DIABLO ordonne : dos à dos, l'un décrit l'autre au groupe comme un personnage de roman. L'autre écoute.",
-        "points": 25, "penalite_refus": "shot chacun"
+        "id": "C028", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a mimer un combat de boxe contre un adversaire invisible pendant 15 secondes.",
+        "texte_joueur": "DIABLO ordonne : combat de boxe contre un adversaire invisible. 15 secondes. Plein effort.",
+        "points": 15, "penalite_refus": "shot"
       },
       {
         "id": "C029", "type": "solo",
-        "texte": "L'Oracle ordonne à {joueur} de choisir quelqu'un et de lui fredonner une dédicace musicale. Le groupe identifie la chanson.",
-        "texte_joueur": "DIABLO ordonne : choisis quelqu'un, dédie-lui une chanson en la fredonnant 10 secondes.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C030", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe a la meilleure histoire d'amour secrète ? Le groupe vote.",
-        "texte_vote": "Vote : qui a la meilleure histoire d'amour secrète ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Tu dois révéler quelque chose. Pas tout. Quelque chose.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C031", "type": "shot",
-        "texte": "L'Oracle décrète : shot collectif pour célébrer d'être encore là.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": null
-      },
-      {
-        "id": "C032", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle sa limite ce soir. Clairement.",
-        "texte_joueur": "DIABLO te demande : quelle est ta limite ce soir ? Dis-la au groupe. Elle sera respectée.",
-        "points": 10, "penalite_refus": null
-      },
-      {
-        "id": "C033", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un échange de vérité privé.",
-        "texte_joueur": "DIABLO ordonne : chacun révèle à l'autre, en privé, ce qu'il/elle a pensé de lui/elle au cours de cette soirée. Honnêtement.",
-        "points": 50, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C034", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe mérite un shot gratuit ce soir ? Le groupe vote.",
-        "texte_vote": "Vote : qui mérite un shot gratuit ce soir ?",
-        "texte_joueur": "DIABLO t'a récompensé(e). Le groupe t'offre un shot.",
-        "points": 0, "penalite_refus": null
-      },
-      {
-        "id": "C035", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à révéler ce qu'il/elle pensait de la soirée avant d'arriver.",
-        "texte_joueur": "DIABLO veut savoir : qu'est-ce que tu espérais de cette soirée avant d'arriver ?",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "C036", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} raconte la soirée la plus folle de sa vie en 30 secondes.",
-        "texte_joueur": "DIABLO veut ta soirée la plus folle. 30 secondes. Version condensée.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "C037", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe a les meilleures chances de séduire quelqu'un ce soir ? Le groupe vote.",
-        "texte_vote": "Vote : qui a les meilleures chances de séduire quelqu'un ce soir ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Prouve-le ou assume.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "C038", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un défi de proximité.",
-        "texte_joueur": "DIABLO ordonne : l'un glisse un compliment coquin à l'oreille de l'autre. Le groupe ne doit pas entendre.",
-        "points": 40, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C039", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à révéler son fantasme de soirée le plus innocent.",
-        "texte_joueur": "DIABLO demande : ton fantasme de soirée le plus innocent. Ce que tu voudrais qu'il se passe ce soir version sage.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "C040", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe serait le plus désastreux en cuisine pour un dîner romantique ? Le groupe vote.",
-        "texte_vote": "Vote : qui serait le plus désastreux pour un dîner romantique ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Décris le désastre culinaire que tu aurais provoqué.",
-        "points": 10, "penalite_refus": "shot"
-      },
-      {
-        "id": "C041", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle la personne qu'il/elle a le plus souvent cherchée sur les réseaux sociaux sans jamais lui parler.",
-        "texte_joueur": "DIABLO veut savoir : qui stalkes-tu en secret sur les réseaux ? Juste le prénom.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C042", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un défi artistique.",
-        "texte_joueur": "DIABLO ordonne : l'un choisit un endroit sur le corps de l'autre où il voudrait un tatouage. Il le dessine avec un doigt.",
-        "points": 45, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C043", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe est le plus susceptible d'avoir un crush secret sur quelqu'un dans cette pièce ? Le groupe vote.",
-        "texte_vote": "Vote : qui a un crush secret sur quelqu'un dans cette pièce ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Confirme ou infirme. L'Oracle sait déjà.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C044", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à révéler le moment le plus hot de sa vie en une phrase cryptique.",
-        "texte_joueur": "DIABLO veut ton moment le plus hot en une seule phrase cryptique. Le groupe essaie de déchiffrer.",
-        "points": 25, "penalite_refus": "shot"
-      },
-      {
-        "id": "C045", "type": "shot",
-        "texte": "L'Oracle décrète : celui qui s'est rendu aux toilettes le plus souvent ce soir boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": null
-      },
-      {
-        "id": "C046", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} choisisse quelqu'un et lui murmure à l'oreille ce qu'il/elle apprécie le plus chez lui/elle.",
-        "texte_joueur": "DIABLO ordonne : choisis quelqu'un. Murmure-lui ce que tu apprécie le plus chez lui/elle. Sois direct(e).",
-        "points": 35, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "C047", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe cache le mieux ses émotions ? Le groupe vote.",
-        "texte_vote": "Vote : qui cache le mieux ses émotions ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Révèle une émotion que tu as cachée ce soir.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C048", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un slow mémorable.",
-        "texte_joueur": "DIABLO ordonne : 30 secondes de slow, sans musique. Main dans la main.",
-        "points": 50, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C049", "type": "solo",
-        "texte": "L'Oracle demande à {joueur} de révéler sa premiere impression sur quelqu'un dans ce groupe en arrivant ce soir.",
-        "texte_joueur": "DIABLO veut savoir : en arrivant ce soir, quelle a été ta première pensée sur quelqu'un dans cette pièce ?",
+        "texte": "L Oracle exige que {joueur} revele sa premiere impression sur quelqu un dans ce groupe en arrivant ce soir.",
+        "texte_joueur": "DIABLO veut ta premiere pensee sur quelqu un dans cette piece en arrivant ce soir.",
         "points": 30, "penalite_refus": "shot"
       },
       {
-        "id": "C050", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe semble le plus innocent mais ne l'est probablement pas ? Le groupe vote.",
-        "texte_vote": "Vote : qui semble le plus innocent mais ne l'est pas ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Prouve-leur qu'ils ont raison ou tort.",
+        "id": "C030", "type": "shot",
+        "texte": "L Oracle decrete : shot collectif pour celebrer d etre encore la.",
+        "texte_joueur": null,
+        "points": 0, "penalite_refus": null
+      },
+      {
+        "id": "C031", "type": "duo",
+        "texte": "L Oracle designe {joueur1} et {joueur2}. L un glisse un compliment coquin a l oreille de l autre. Le groupe ne doit pas entendre.",
+        "texte_joueur": "DIABLO ordonne : compliment coquin a l oreille. Le groupe ne doit pas entendre.",
+        "points": 40, "penalite_refus": "shot chacun"
+      },
+      {
+        "id": "C032", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a faire sa plus belle chute au ralenti sans se blesser.",
+        "texte_joueur": "DIABLO ordonne : chute dramatique au ralenti. Le plus beau possible.",
         "points": 20, "penalite_refus": "shot"
+      },
+      {
+        "id": "C033", "type": "vote",
+        "texte": "L Oracle veut savoir : qui semble le plus innocent mais ne l est probablement pas ? Vote.",
+        "texte_vote": "Vote : qui semble le plus innocent mais ne l est pas ?",
+        "texte_joueur": "DIABLO t a designe. Prouve-leur qu ils ont raison ou tort.",
+        "points": 20, "penalite_refus": "shot"
+      },
+      {
+        "id": "C034", "type": "solo",
+        "texte": "L Oracle exige que {joueur} fasse une publicite improvisee pour un objet de la piece. 20 secondes.",
+        "texte_joueur": "DIABLO ordonne : publicite improvisee pour l objet que le groupe choisit. 20 secondes.",
+        "points": 15, "penalite_refus": "shot"
+      },
+      {
+        "id": "C035", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a mimer une scene de rupture dramatique avec une chaise.",
+        "texte_joueur": "DIABLO ordonne : rupture dramatique avec cette chaise. Sans paroles si possible.",
+        "points": 20, "penalite_refus": "shot"
+      },
+      {
+        "id": "C036", "type": "vote",
+        "texte": "L Oracle veut savoir : qui a un crush secret sur quelqu un dans cette piece ? Vote.",
+        "texte_vote": "Vote : qui a un crush secret sur quelqu un ici ?",
+        "texte_joueur": "DIABLO t a designe. Confirme ou infirme. L Oracle sait deja.",
+        "points": 20, "penalite_refus": "shot"
+      },
+      {
+        "id": "C037", "type": "duo",
+        "texte": "L Oracle designe {joueur1} et {joueur2}. Face a face aussi proches que possible sans se toucher. 15 secondes.",
+        "texte_joueur": "DIABLO ordonne : face a face aussi proches que possible sans se toucher. 15 secondes.",
+        "points": 45, "penalite_refus": "shot chacun"
+      },
+      {
+        "id": "C038", "type": "solo",
+        "texte": "L Oracle exige que {joueur} choisisse quelqu un et murmure a son oreille ce qu il apprecie le plus chez lui.",
+        "texte_joueur": "DIABLO ordonne : choisis quelqu un. Murmure ce que tu apprecies le plus chez lui.",
+        "points": 35, "penalite_refus": "2 shots"
+      },
+      {
+        "id": "C039", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a imiter la facon de marcher de quelqu un dans le groupe. Sans dire son nom.",
+        "texte_joueur": "DIABLO ordonne : imite la facon de marcher de quelqu un ici. Sans le nommer. Le groupe devine.",
+        "points": 20, "penalite_refus": "shot"
+      },
+      {
+        "id": "C040", "type": "shot",
+        "texte": "L Oracle decrete : celui qui s est rendu aux toilettes le plus souvent ce soir boit.",
+        "texte_joueur": null,
+        "points": 0, "penalite_refus": null
+      },
+      {
+        "id": "C041", "type": "solo",
+        "texte": "L Oracle exige que {joueur} revele la soiree la plus folle de sa vie en 20 secondes.",
+        "texte_joueur": "DIABLO veut ta soiree la plus folle. 20 secondes. Version condensee.",
+        "points": 15, "penalite_refus": "shot"
+      },
+      {
+        "id": "C042", "type": "duo",
+        "texte": "L Oracle designe {joueur1} et {joueur2} pour se dessiner mutuellement un tatouage imaginaire avec un doigt.",
+        "texte_joueur": "DIABLO ordonne : dessine avec un doigt un tatouage imaginaire quelque part sur l autre.",
+        "points": 40, "penalite_refus": "shot chacun"
+      },
+      {
+        "id": "C043", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a mimer un moment de peur extreme en slow motion.",
+        "texte_joueur": "DIABLO ordonne : peur extreme en slow motion. Le groupe choisit la situation.",
+        "points": 15, "penalite_refus": "shot"
+      },
+      {
+        "id": "C044", "type": "vote",
+        "texte": "L Oracle veut savoir : qui merite un shot gratuit ce soir ? Le groupe vote.",
+        "texte_vote": "Vote : qui merite un shot gratuit ce soir ?",
+        "texte_joueur": "DIABLO t a recompense. Le groupe t offre un shot.",
+        "points": 0, "penalite_refus": null
+      },
+      {
+        "id": "C045", "type": "solo",
+        "texte": "L Oracle exige que {joueur} appelle quelqu un et dise je pense a toi ce soir avant de raccrocher.",
+        "texte_joueur": "DIABLO ordonne : appelle quelqu un. Dis je pense a toi ce soir. Raccroche.",
+        "points": 45, "penalite_refus": "3 shots"
+      },
+      {
+        "id": "C046", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a mimer quelqu un qui apprend une tres mauvaise nouvelle. Puis une tres bonne. Enchainees.",
+        "texte_joueur": "DIABLO ordonne : tres mauvaise nouvelle puis tres bonne nouvelle. Mime les deux enchainees.",
+        "points": 20, "penalite_refus": "shot"
+      },
+      {
+        "id": "C047", "type": "duo",
+        "texte": "L Oracle designe {joueur1} et {joueur2}. Chacun dit a l autre en prive ce qu il pensait de lui en arrivant ce soir.",
+        "texte_joueur": "DIABLO ordonne : dis a l autre en prive ce que tu pensais de lui en arrivant ce soir. Honnêtement.",
+        "points": 50, "penalite_refus": "shot chacun"
+      },
+      {
+        "id": "C048", "type": "vote",
+        "texte": "L Oracle veut savoir : qui a ete le plus courageux dans les defis ce soir ? Le groupe vote.",
+        "texte_vote": "Vote : qui a ete le plus courageux ce soir ?",
+        "texte_joueur": "DIABLO t a designe champion de la soiree. Un shot offert par le groupe.",
+        "points": 0, "penalite_refus": null
+      },
+      {
+        "id": "C049", "type": "solo",
+        "texte": "L Oracle exige que {joueur} fasse une entree dans la piece comme s il arrivait aux Oscars. 15 secondes.",
+        "texte_joueur": "DIABLO ordonne : sors. Rentre comme si tu arrivais aux Oscars. Discours inclus si tu veux.",
+        "points": 20, "penalite_refus": "shot"
+      },
+      {
+        "id": "C050", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a faire sa plus belle glissade en chaussettes si sol le permet. Sinon en slow motion.",
+        "texte_joueur": "DIABLO ordonne : glissade en chaussettes. Ou slow motion si pas possible. Le groupe juge.",
+        "points": 15, "penalite_refus": "shot"
       }
     ],
     "brulant": [
       {
         "id": "B001", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour une proposition secrète de niveau maximal.",
-        "texte_joueur": "DIABLO vous soumet ceci en secret : l'un de vous deux embrasse l'autre sur la joue. Si les deux acceptent, c'est exécuté. Si l'un refuse, personne ne sait qui.",
+        "texte": "L Oracle designe {joueur1} et {joueur2}. En secret il leur propose : embrasser l autre sur la joue.",
+        "texte_joueur": "DIABLO vous soumet ceci en secret : embrasse l autre sur la joue. Si les deux oui c est execute. Si l un refuse personne ne sait.",
         "points": 50, "penalite_refus": "shot chacun"
       },
       {
         "id": "B002", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle son fantasme de soirée. La vraie version.",
-        "texte_joueur": "DIABLO exige : ton fantasme de soirée. La vraie version. Pas la sage.",
+        "texte": "L Oracle exige que {joueur} revele son fantasme de soiree. La vraie version.",
+        "texte_joueur": "DIABLO exige : ton fantasme de soiree. La vraie version.",
         "points": 40, "penalite_refus": "2 shots"
       },
       {
         "id": "B003", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe est le plus attirant physiquement ce soir ? Le groupe vote en secret.",
+        "texte": "L Oracle veut savoir : qui est le plus attirant physiquement ce soir ? Le groupe vote en secret.",
         "texte_vote": "Vote : qui est le plus attirant physiquement ce soir ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Le groupe a voté. Tu peux juste sourire.",
+        "texte_joueur": "DIABLO t a designe. Le groupe a vote. Tu peux juste sourire.",
         "points": 20, "penalite_refus": null
       },
       {
         "id": "B004", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour 10 secondes de danse collée.",
-        "texte_joueur": "DIABLO ordonne : 10 secondes de danse face à face. Les deux acceptent ou les deux refusent.",
+        "texte": "L Oracle designe {joueur1} et {joueur2} pour 15 secondes de danse collee face a face.",
+        "texte_joueur": "DIABLO ordonne : 15 secondes de danse face a face collee. Les deux acceptent ou les deux refusent.",
         "points": 55, "penalite_refus": "shot chacun"
       },
       {
         "id": "B005", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à appeler quelqu'un et lui dire 'je pense à toi ce soir' avant de raccrocher.",
-        "texte_joueur": "DIABLO ordonne : appelle quelqu'un. Dis 'je pense à toi ce soir.' Raccroche. Le groupe regarde.",
+        "texte": "L Oracle condamne {joueur} a appeler quelqu un et dire je pense a toi ce soir avant de raccrocher.",
+        "texte_joueur": "DIABLO ordonne : appelle quelqu un. Dis je pense a toi ce soir. Raccroche. Le groupe regarde.",
         "points": 45, "penalite_refus": "3 shots"
       },
       {
         "id": "B006", "type": "vote",
-        "texte": "L'Oracle veut savoir : si cette soirée se terminait maintenant, avec qui voudrais-tu continuer ? Le groupe vote en secret.",
-        "texte_vote": "Vote : avec qui continuerais-tu si la soirée se terminait maintenant ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Le groupe a voté pour toi. Ça mérite un commentaire.",
+        "texte": "L Oracle veut savoir : si cette soiree se terminait maintenant avec qui voudrais-tu continuer ? Vote en secret.",
+        "texte_vote": "Vote : avec qui continuerais-tu si la soiree se terminait maintenant ?",
+        "texte_joueur": "DIABLO t a designe. Le groupe a vote pour toi. Ca merite un commentaire.",
         "points": 25, "penalite_refus": null
       },
       {
         "id": "B007", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un défi de regard et de contact.",
-        "texte_joueur": "DIABLO ordonne : face à face. Un des deux pose sa main sur le visage de l'autre. 10 secondes.",
+        "texte": "L Oracle designe {joueur1} et {joueur2}. Face a face. Un des deux pose sa main sur le visage de l autre. 10 secondes.",
+        "texte_joueur": "DIABLO ordonne : face a face. Un de vous pose sa main sur le visage de l autre. 10 secondes.",
         "points": 55, "penalite_refus": "shot chacun"
       },
       {
         "id": "B008", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à désigner la personne du groupe qu'il/elle aimerait embrasser ce soir, les yeux dans les yeux.",
-        "texte_joueur": "DIABLO ordonne : désigne la personne que tu aimerais embrasser ce soir. Regarde-la en le disant.",
+        "texte": "L Oracle condamne {joueur} a designer la personne qu il aimerait embrasser ce soir. Les yeux dans les yeux.",
+        "texte_joueur": "DIABLO ordonne : designe la personne que tu aimerais embrasser ce soir. Regarde-la en le disant.",
         "points": 50, "penalite_refus": "3 shots"
       },
       {
         "id": "B009", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe mérite qu'on l'embrasse ce soir ? Le groupe vote en secret.",
-        "texte_vote": "Vote : qui mérite qu'on l'embrasse ce soir ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Le groupe a parlé. Que dis-tu ?",
+        "texte": "L Oracle veut savoir : qui merite qu on l embrasse ce soir ? Le groupe vote en secret.",
+        "texte_vote": "Vote : qui merite qu on l embrasse ce soir ?",
+        "texte_joueur": "DIABLO t a designe. Le groupe a parle. Que dis-tu ?",
         "points": 25, "penalite_refus": null
       },
       {
         "id": "B010", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour le défi ultime.",
-        "texte_joueur": "DIABLO soumet sa proposition ultime : si les deux acceptent, ils s'embrassent. Sur la joue ou les lèvres — chacun décide au dernier moment.",
+        "texte": "L Oracle designe {joueur1} et {joueur2} pour le defi ultime de la soiree.",
+        "texte_joueur": "DIABLO soumet sa proposition ultime : si les deux acceptent ils s embrassent. Joue ou levres chacun decide au dernier moment.",
         "points": 100, "penalite_refus": "shot chacun"
       },
       {
         "id": "B011", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle sa technique de drague préférée. Avec démonstration sur volontaire.",
-        "texte_joueur": "DIABLO ordonne : révèle ta technique de drague préférée. Et démontre-la sur quelqu'un qui lève la main.",
+        "texte": "L Oracle exige que {joueur} revele sa technique de drague preferee avec demonstration sur volontaire.",
+        "texte_joueur": "DIABLO ordonne : technique de drague preferee avec demonstration sur quelqu un qui leve la main.",
         "points": 45, "penalite_refus": "2 shots"
       },
       {
         "id": "B012", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe a le plus d'audace en amour ? Le groupe vote.",
-        "texte_vote": "Vote : qui a le plus d'audace en amour ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Prouve-le avec un aveu ou une action.",
+        "texte": "L Oracle veut savoir : qui a le plus d audace en amour dans ce groupe ? Le groupe vote.",
+        "texte_vote": "Vote : qui a le plus d audace en amour ?",
+        "texte_joueur": "DIABLO t a designe. Prouve-le avec un aveu ou une action.",
         "points": 30, "penalite_refus": "shot"
       },
       {
         "id": "B013", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un défi de vérité ultime.",
-        "texte_joueur": "DIABLO ordonne : chacun explique à l'autre ce qu'il/elle l'attire chez lui/elle. Honnêtement. En privé.",
+        "texte": "L Oracle designe {joueur1} et {joueur2}. Chacun explique a l autre en prive en quoi il l attire.",
+        "texte_joueur": "DIABLO ordonne : chacun explique a l autre en prive en quoi il l attire. Honnêtement.",
         "points": 60, "penalite_refus": "shot chacun"
       },
       {
         "id": "B014", "type": "solo",
-        "texte": "L'Oracle condamne {joueur} à choisir quelqu'un et expliquer en quoi cette personne l'attire, sans filtre.",
-        "texte_joueur": "DIABLO ordonne : choisis quelqu'un. Explique-lui en quoi il/elle t'attire. Sans filtre. Devant tout le monde.",
+        "texte": "L Oracle condamne {joueur} a choisir quelqu un et expliquer en quoi cette personne l attire. Sans filtre. Devant tous.",
+        "texte_joueur": "DIABLO ordonne : choisis quelqu un. Explique en quoi il t attire. Sans filtre. Devant tout le monde.",
         "points": 55, "penalite_refus": "3 shots"
       },
       {
         "id": "B015", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe serait le meilleur partenaire pour une nuit ? Le groupe vote en secret.",
+        "texte": "L Oracle veut savoir : qui serait le meilleur partenaire pour une nuit ? Vote en secret.",
         "texte_vote": "Vote : qui serait le meilleur partenaire pour une nuit ?",
-        "texte_joueur": "DIABLO t'a désigné(e). Le groupe a voté. L'Oracle protège l'anonymat du vote.",
+        "texte_joueur": "DIABLO t a designe. L Oracle protege l anonymat du vote.",
         "points": 30, "penalite_refus": null
       },
       {
-        "id": "B016", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour un défi de souffle.",
-        "texte_joueur": "DIABLO ordonne : face à face, aussi proches que possible sans se toucher. Tenez 15 secondes.",
-        "points": 60, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "B017", "type": "solo",
-        "texte": "L'Oracle exige que {joueur} révèle son plus grand regret amoureux en une phrase.",
+        "id": "B016", "type": "solo",
+        "texte": "L Oracle exige que {joueur} revele son plus grand regret amoureux en une phrase.",
         "texte_joueur": "DIABLO veut ton plus grand regret amoureux. Une phrase. Honnêtement.",
         "points": 40, "penalite_refus": "shot"
       },
       {
-        "id": "B018", "type": "vote",
-        "texte": "L'Oracle veut savoir : qui dans ce groupe a été le plus courageux ce soir ? Le groupe vote.",
-        "texte_vote": "Vote : qui a été le plus courageux ce soir ?",
-        "texte_joueur": "DIABLO t'a désigné(e) champion(ne) de la soirée. Un shot offert par le groupe.",
+        "id": "B017", "type": "vote",
+        "texte": "L Oracle veut savoir : qui a ete le plus courageux de toute la soiree ? Le groupe vote.",
+        "texte_vote": "Vote : qui a ete le plus courageux de toute la soiree ?",
+        "texte_joueur": "DIABLO t a designe champion de la soiree. Un shot offert par tout le groupe.",
         "points": 0, "penalite_refus": null
       },
       {
+        "id": "B018", "type": "duo",
+        "texte": "L Oracle designe {joueur1} et {joueur2} pour une conversation de 60 secondes en total prive.",
+        "texte_joueur": "DIABLO ordonne : 60 secondes de conversation totalement privee. Le groupe ne sait jamais ce qui s est dit.",
+        "points": 45, "penalite_refus": "shot chacun"
+      },
+      {
         "id": "B019", "type": "solo",
-        "texte": "L'Oracle demande à {joueur} : vérité ou défi ? Le groupe choisit ce qu'il doit faire.",
-        "texte_joueur": "DIABLO te donne le choix mais c'est le groupe qui décide. Vérité ou défi — le groupe tranche.",
+        "texte": "L Oracle demande a {joueur} : verite ou defi ? Le groupe choisit ce qu il doit faire.",
+        "texte_joueur": "DIABLO te donne le choix mais c est le groupe qui decide. Verite ou defi — le groupe tranche.",
         "points": 35, "penalite_refus": "3 shots"
       },
       {
-        "id": "B020", "type": "duo",
-        "texte": "L'Oracle désigne {joueur1} et {joueur2} pour une conversation de 60 secondes en secret complet.",
-        "texte_joueur": "DIABLO ordonne : 60 secondes de conversation en totale privée. Le groupe ne sait pas ce qui se dit. Jamais.",
-        "points": 45, "penalite_refus": "shot chacun"
+        "id": "B020", "type": "solo",
+        "texte": "L Oracle condamne {joueur} a faire le defi que le groupe va lui inventer maintenant. Tout est permis dans les limites du raisonnable.",
+        "texte_joueur": "DIABLO a donne le pouvoir au groupe. Ils inventent ton defi maintenant. Tu as 30 secondes.",
+        "points": 60, "penalite_refus": "3 shots"
       }
     ]
   }
