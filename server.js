@@ -20,10 +20,11 @@ function createSession(hostName) {
   sessions[id] = {
     id,
     host: hostName,
-    joueurs: {},       // joueurs seulement — PAS l'hôte
+    joueurs: {},
     etat: 'lobby',
     tourActuel: null,
     accordsEnCours: {},
+    votesEnCours: {},      // NEW: votes de désignation
     historique: [],
     cartes: loadCartes(),
     cartesUtilisees: new Set(),
@@ -44,7 +45,7 @@ app.get('/joueur', (req, res) => res.sendFile(path.join(__dirname, 'public', 'jo
 
 app.post('/api/session', (req, res) => {
   const { hostName } = req.body;
-  const session = createSession(hostName || 'Hôte');
+  const session = createSession(hostName || 'Oracle');
   res.json({ sessionId: session.id });
 });
 
@@ -66,7 +67,6 @@ app.get('/api/session/:id', (req, res) => {
   if (!s) return res.status(404).json({ error: 'Session introuvable' });
   res.json({
     id: s.id, host: s.host, etat: s.etat,
-    // FIX 1 : l'hôte n'est pas dans joueurs, donc ce tableau ne contient que les vrais joueurs
     joueurs: Object.values(s.joueurs).map(j => ({ id: j.id, nom: j.nom, palier: j.palier, points: j.points })),
     nbJoueurs: Object.keys(s.joueurs).length
   });
@@ -74,8 +74,7 @@ app.get('/api/session/:id', (req, res) => {
 
 // ─── WebSocket ────────────────────────────────────────────────────────────────
 
-// FIX 3 : ping/pong pour détecter les déconnexions silencieuses
-const PING_INTERVAL = 25000; // 25s — Railway coupe les WS inactifs après 30s
+const PING_INTERVAL = 25000;
 setInterval(() => {
   wss.clients.forEach(ws => {
     if (ws.isAlive === false) { ws.terminate(); return; }
@@ -87,24 +86,20 @@ setInterval(() => {
 wss.on('connection', (ws) => {
   ws.id = uuidv4();
   ws.isAlive = true;
-
   ws.on('pong', () => { ws.isAlive = true; });
 
   ws.on('message', (raw) => {
     let msg;
     try { msg = JSON.parse(raw); } catch { return; }
-
     const session = sessions[msg.sessionId];
     if (!session) return;
 
     switch (msg.type) {
 
-      // ── Hôte se connecte ──────────────────────────────────────────────────
       case 'HOST_CONNECT': {
         session.hostWs = ws;
         ws.sessionId = msg.sessionId;
         ws.role = 'host';
-        // FIX 3 : confirmer avec l'état actuel pour permettre la reconnexion
         send(ws, {
           type: 'HOST_CONNECTED',
           sessionId: session.id,
@@ -115,102 +110,96 @@ wss.on('connection', (ws) => {
         break;
       }
 
-      // ── Joueur rejoint ────────────────────────────────────────────────────
       case 'JOIN': {
-        // FIX 3 : si le joueurId existe déjà (reconnexion), réutiliser le même slot
         let joueurId = msg.joueurId;
         let isReconnect = false;
-
         if (joueurId && session.joueurs[joueurId]) {
-          // Reconnexion : mettre à jour le WS
           session.joueurs[joueurId].ws = ws;
           isReconnect = true;
         } else {
-          // Nouveau joueur
           joueurId = uuidv4().slice(0, 8);
-          session.joueurs[joueurId] = {
-            id: joueurId,
-            nom: msg.nom || `Joueur${Object.keys(session.joueurs).length + 1}`,
-            palier: 0, points: 0, ws
-          };
+          session.joueurs[joueurId] = { id: joueurId, nom: msg.nom || `Joueur${Object.keys(session.joueurs).length + 1}`, palier: 0, points: 0, ws };
         }
-
         ws.joueurId = joueurId;
         ws.sessionId = msg.sessionId;
         ws.role = 'joueur';
-
         const joueur = session.joueurs[joueurId];
-        send(ws, {
-          type: 'JOIN_OK',
-          joueurId,
-          nom: joueur.nom,
-          palier: joueur.palier,
-          points: joueur.points,
-          etatSession: session.etat,
-          isReconnect
-        });
-
-        // Notifier tout le monde
-        broadcast(session, {
-          type: isReconnect ? 'JOUEUR_RECONNECTED' : 'JOUEUR_JOINED',
-          joueurId,
-          nom: joueur.nom,
-          // FIX 1 : totalJoueurs = nb de joueurs SANS l'hôte
-          totalJoueurs: Object.keys(session.joueurs).length
-        });
+        send(ws, { type: 'JOIN_OK', joueurId, nom: joueur.nom, palier: joueur.palier, points: joueur.points, etatSession: session.etat, isReconnect });
+        broadcast(session, { type: isReconnect ? 'JOUEUR_RECONNECTED' : 'JOUEUR_JOINED', joueurId, nom: joueur.nom, totalJoueurs: Object.keys(session.joueurs).length });
         break;
       }
 
-      // ── Hôte lance la partie ──────────────────────────────────────────────
       case 'START_GAME': {
         if (ws.role !== 'host') return;
-        // FIX 2 : vérifier minimum 2 joueurs AVANT de démarrer
-        const nbJoueurs = Object.keys(session.joueurs).length;
-        if (nbJoueurs < 2) {
-          send(ws, {
-            type: 'ERROR',
-            code: 'NOT_ENOUGH_PLAYERS',
-            msg: `Il faut au moins 2 joueurs pour lancer DIABLO. Actuellement : ${nbJoueurs} joueur${nbJoueurs > 1 ? 's' : ''}.`
-          });
-          return;
-        }
+        const nb = Object.keys(session.joueurs).length;
+        if (nb < 2) { send(ws, { type: 'ERROR', code: 'NOT_ENOUGH_PLAYERS', msg: `Il faut au moins 2 joueurs. Actuellement : ${nb}.` }); return; }
         session.etat = 'jeu';
         broadcast(session, { type: 'GAME_STARTED' });
         break;
       }
 
-      // ── Hôte tire une carte ───────────────────────────────────────────────
       case 'TIRER_CARTE': {
         if (ws.role !== 'host') return;
-        const carte = tirerCarte(session, msg.joueurCible, msg.joueur2);
+        const carte = tirerCarte(session);
         if (!carte) { send(ws, { type: 'ERROR', msg: 'Plus de cartes disponibles' }); return; }
-
         session.tourActuel = carte;
-        broadcast(session, { type: 'NOUVELLE_CARTE', carte: sanitizeCarte(carte) });
 
-        if (carte.cible === 'duo' && msg.joueurCible && msg.joueur2) {
+        if (carte.type === 'solo') {
+          // Désignation aléatoire par l'Oracle
+          const joueurCible = getJoueurAleatoire(session);
+          if (!joueurCible) return;
+          const texte = carte.texte.replace(/{joueur}/g, joueurCible.nom);
+          broadcast(session, { type: 'NOUVELLE_CARTE', carte: { ...carte, texte, joueurCible: joueurCible.nom } });
+          if (joueurCible.ws) send(joueurCible.ws, { type: 'ACTION_SOLO', texte: carte.texte_joueur, points: carte.points });
+        }
+
+        else if (carte.type === 'duo') {
+          // Désignation aléatoire de 2 joueurs par l'Oracle
+          const duo = getDuoAleatoire(session);
+          if (!duo) return;
+          const [j1, j2] = duo;
+          const texte = carte.texte.replace(/{joueur1}/g, j1.nom).replace(/{joueur2}/g, j2.nom);
+          broadcast(session, { type: 'NOUVELLE_CARTE', carte: { ...carte, texte, joueur1: j1.nom, joueur2: j2.nom } });
+
           const actionId = uuidv4().slice(0, 8);
           session.accordsEnCours[actionId] = {
-            actionId, carte,
-            joueur1Id: msg.joueurCible,
-            joueur2Id: msg.joueur2,
-            reponses: {},
+            actionId, carte, joueur1Id: j1.id, joueur2Id: j2.id, reponses: {},
             timeout: setTimeout(() => resolveAccord(session, actionId, 'timeout'), 30000)
           };
-          const j1 = session.joueurs[msg.joueurCible];
-          const j2 = session.joueurs[msg.joueur2];
-          if (j1?.ws) send(j1.ws, { type: 'ACCORD_REQUIS', actionId, texte: carte.texte_joueur, partenaire: j2?.nom || '???' });
-          if (j2?.ws) send(j2.ws, { type: 'ACCORD_REQUIS', actionId, texte: carte.texte_joueur, partenaire: j1?.nom || '???' });
+          if (j1.ws) send(j1.ws, { type: 'ACCORD_REQUIS', actionId, texte: carte.texte_joueur, partenaire: j2.nom });
+          if (j2.ws) send(j2.ws, { type: 'ACCORD_REQUIS', actionId, texte: carte.texte_joueur, partenaire: j1.nom });
           send(ws, { type: 'ACCORD_EN_ATTENTE', actionId });
         }
 
-        if (carte.cible === 'solo' && msg.joueurCible) {
-          const j = session.joueurs[msg.joueurCible];
-          if (j?.ws) send(j.ws, { type: 'ACTION_SOLO', texte: carte.texte_joueur, roleGroupe: carte.role_groupe, points: carte.points });
+        else if (carte.type === 'vote') {
+          // Lancer un vote de désignation sur tous les téléphones
+          const voteId = uuidv4().slice(0, 8);
+          const joueursList = getJoueursList(session);
+          session.votesEnCours[voteId] = {
+            voteId, carte, votes: {}, // joueurId -> joueurIdCible
+            timeout: setTimeout(() => resolveVote(session, voteId), 20000)
+          };
+          broadcast(session, { type: 'NOUVELLE_CARTE', carte: { ...carte } });
+          // Envoyer le vote à tous les joueurs
+          Object.values(session.joueurs).forEach(j => {
+            if (j.ws) send(j.ws, {
+              type: 'VOTE_REQUIS',
+              voteId,
+              question: carte.texte_vote,
+              joueurs: joueursList.map(jj => ({ id: jj.id, nom: jj.nom }))
+            });
+          });
+          send(ws, { type: 'VOTE_EN_ATTENTE', voteId, duree: 20 });
         }
+
+        else if (carte.type === 'shot') {
+          broadcast(session, { type: 'NOUVELLE_CARTE', carte });
+        }
+
         break;
       }
 
+      // ── Accord duo ────────────────────────────────────────────────────────
       case 'ACCORD_REPONSE': {
         const accord = session.accordsEnCours[msg.actionId];
         if (!accord) return;
@@ -224,6 +213,22 @@ wss.on('connection', (ws) => {
         break;
       }
 
+      // ── Vote de désignation ───────────────────────────────────────────────
+      case 'VOTE_REPONSE': {
+        const vote = session.votesEnCours[msg.voteId];
+        if (!vote) return;
+        vote.votes[ws.joueurId] = msg.cibleId; // le joueur vote pour une cible
+        const nbJoueurs = Object.keys(session.joueurs).length;
+        const nbVotes = Object.keys(vote.votes).length;
+        // Si tout le monde a voté, on résout immédiatement
+        if (nbVotes >= nbJoueurs) {
+          clearTimeout(vote.timeout);
+          resolveVote(session, msg.voteId);
+        }
+        break;
+      }
+
+      // ── Action solo ───────────────────────────────────────────────────────
       case 'ACTION_RESULTAT': {
         const carte = session.tourActuel;
         if (!carte) return;
@@ -251,7 +256,7 @@ wss.on('connection', (ws) => {
         if (ws.role !== 'host') return;
         session.etat = 'fin';
         const joueurs = Object.values(session.joueurs).sort((a, b) => b.points - a.points);
-        const jugements = session.cartes.jugements_finaux;
+        const jugements = session.cartes.repliques_oracle.jugement_final;
         const verdicts = joueurs.map((j, i) => ({
           nom: j.nom, points: j.points, palier: j.palier,
           verdict: jugements[i % jugements.length].replace(/{joueur}/g, j.nom)
@@ -262,17 +267,13 @@ wss.on('connection', (ws) => {
     }
   });
 
-  // FIX 3 : à la déconnexion, marquer le joueur comme déconnecté MAIS le garder en mémoire
   ws.on('close', () => {
     for (const session of Object.values(sessions)) {
       if (ws.joueurId && session.joueurs[ws.joueurId]) {
         session.joueurs[ws.joueurId].ws = null;
         broadcast(session, { type: 'JOUEUR_DISCONNECTED', joueurId: ws.joueurId, nom: session.joueurs[ws.joueurId].nom });
       }
-      // Si l'hôte se déconnecte, le notifier sur reconnexion
-      if (session.hostWs === ws) {
-        session.hostWs = null;
-      }
+      if (session.hostWs === ws) session.hostWs = null;
     }
   });
 });
@@ -295,34 +296,113 @@ function resolveAccord(session, actionId, raison) {
   delete session.accordsEnCours[actionId];
 }
 
-function tirerCarte(session, joueur1Id, joueur2Id) {
-  const joueur1 = session.joueurs[joueur1Id];
-  const joueur2 = joueur2Id ? session.joueurs[joueur2Id] : null;
-  let palierMax = joueur1 ? joueur1.palier : 0;
-  if (joueur2) palierMax = Math.min(palierMax, joueur2.palier);
+function resolveVote(session, voteId) {
+  const vote = session.votesEnCours[voteId];
+  if (!vote) return;
+
+  // Compter les votes par cible
+  const scores = {};
+  Object.values(vote.votes).forEach(cibleId => {
+    scores[cibleId] = (scores[cibleId] || 0) + 1;
+  });
+
+  // Trouver le max
+  const maxVotes = Math.max(...Object.values(scores), 0);
+
+  // Trouver les ex-aequo
+  let finalistes = Object.entries(scores)
+    .filter(([id, nb]) => nb === maxVotes)
+    .map(([id]) => id);
+
+  // Si personne n'a voté → désignation aléatoire
+  if (finalistes.length === 0) {
+    const j = getJoueurAleatoire(session);
+    finalistes = j ? [j.id] : [];
+  }
+
+  let designeId;
+  if (finalistes.length === 1) {
+    designeId = finalistes[0];
+  } else {
+    // Ex-aequo : celui avec le moins de points
+    const finalJoueurs = finalistes.map(id => session.joueurs[id]).filter(Boolean);
+    finalJoueurs.sort((a, b) => (a.points || 0) - (b.points || 0));
+    const minPoints = finalJoueurs[0].points || 0;
+    const vraisExaequo = finalJoueurs.filter(j => (j.points || 0) === minPoints);
+    // Si encore ex-aequo → aléatoire
+    designeId = vraisExaequo[Math.floor(Math.random() * vraisExaequo.length)].id;
+  }
+
+  const designe = session.joueurs[designeId];
+  if (!designe) { delete session.votesEnCours[voteId]; return; }
+
+  // Donner les points et envoyer l'action au désigné
+  designe.points += vote.carte.points || 0;
+
+  // Choisir la bonne réplique
+  const repliques = session.cartes.repliques_oracle;
+  const isEgalite = finalistes.length > 1;
+  const repliquesPool = isEgalite ? repliques.vote_egalite : repliques.vote_resultat;
+  const replique = repliquesPool[Math.floor(Math.random() * repliquesPool.length)].replace(/{joueur}/g, designe.nom);
+
+  broadcast(session, {
+    type: 'VOTE_RESULTAT',
+    voteId,
+    designeId,
+    designeNom: designe.nom,
+    replique,
+    isEgalite
+  });
+
+  // Envoyer l'action au téléphone du désigné
+  if (designe.ws) {
+    send(designe.ws, {
+      type: 'ACTION_SOLO',
+      texte: vote.carte.texte_joueur,
+      points: vote.carte.points
+    });
+  }
+
+  delete session.votesEnCours[voteId];
+}
+
+function tirerCarte(session) {
+  // Déterminer le palier minimum du groupe
+  const joueurs = Object.values(session.joueurs);
+  if (joueurs.length === 0) return null;
+  const palierMin = Math.min(...joueurs.map(j => j.palier || 0));
   const paliers = ['tiede', 'chaud', 'brulant'];
-  const palierNom = paliers[palierMax] || 'tiede';
-  const cartesDisponibles = session.cartes.cartes[palierNom].filter(c => !session.cartesUtilisees.has(c.id));
-  let pool = cartesDisponibles;
-  if (joueur1Id && joueur2Id) pool = cartesDisponibles.filter(c => c.cible === 'duo');
-  else if (joueur1Id) pool = cartesDisponibles.filter(c => c.cible === 'solo');
-  else pool = cartesDisponibles.filter(c => c.cible === 'groupe');
-  if (pool.length === 0) pool = cartesDisponibles;
+  const palierNom = paliers[palierMin] || 'tiede';
+
+  const cartesDisponibles = session.cartes.cartes[palierNom]
+    .filter(c => !session.cartesUtilisees.has(c.id));
+
+  // Si plus de cartes dans ce palier, ouvrir les autres
+  const pool = cartesDisponibles.length > 0
+    ? cartesDisponibles
+    : session.cartes.cartes[palierNom]; // reset si épuisé
+
   if (pool.length === 0) return null;
   const carte = pool[Math.floor(Math.random() * pool.length)];
   session.cartesUtilisees.add(carte.id);
-  const j1nom = joueur1?.nom || 'Joueur 1';
-  const j2nom = joueur2?.nom || 'Joueur 2';
-  return {
-    ...carte,
-    texte: carte.texte.replace(/{joueur}/g, j1nom).replace(/{joueur1}/g, j1nom).replace(/{joueur2}/g, j2nom),
-    texte_joueur: carte.texte_joueur ? carte.texte_joueur.replace(/{joueur}/g, j1nom).replace(/{joueur1}/g, j1nom).replace(/{joueur2}/g, j2nom) : null,
-    joueur1: j1nom, joueur2: j2nom, palierNom
-  };
+  return { ...carte, palierNom };
+}
+
+function getJoueurAleatoire(session) {
+  const joueurs = Object.values(session.joueurs).filter(j => j.ws);
+  if (joueurs.length === 0) return null;
+  return joueurs[Math.floor(Math.random() * joueurs.length)];
+}
+
+function getDuoAleatoire(session) {
+  const joueurs = Object.values(session.joueurs).filter(j => j.ws);
+  if (joueurs.length < 2) return null;
+  const shuffled = joueurs.sort(() => Math.random() - 0.5);
+  return [shuffled[0], shuffled[1]];
 }
 
 function sanitizeCarte(carte) {
-  const { texte_joueur, ...pub } = carte;
+  const { texte_joueur, texte_vote, ...pub } = carte;
   return pub;
 }
 
@@ -341,5 +421,5 @@ function broadcast(session, data) {
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`\n🔴 DIABLO en ligne sur http://localhost:${PORT}\n`);
+  console.log(`\n🔴 DIABLO v2.0 en ligne sur http://localhost:${PORT}\n`);
 });
