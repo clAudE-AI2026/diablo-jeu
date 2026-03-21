@@ -249,6 +249,19 @@ wss.on('connection', (ws) => {
       }
 
       // ── Action solo ───────────────────────────────────────────────────────
+      case 'GROUPE_RESULTAT': {
+        // L hote indique si le groupe a convaincu le joueur
+        if (ws.role !== 'host') return;
+        const carteGroupe = session.tourActuel;
+        if (!carteGroupe) return;
+        if (msg.succes) {
+          broadcast(session, { type: 'GROUPE_SUCCES', cibleNom: msg.cibleNom, message: msg.message });
+        } else {
+          broadcast(session, { type: 'GROUPE_ECHEC', cibleNom: msg.cibleNom });
+        }
+        break;
+      }
+
       case 'ACTION_RESULTAT': {
         const carte = session.tourActuel;
         if (!carte) return;
@@ -443,5 +456,6 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🔴 DIABLO v2.0 en ligne sur http://localhost:${PORT}\n`);
 });
+
 
 
