@@ -23,76 +23,86 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const sessions = {};
 
+// Nettoyage des sessions inactives toutes les heures (sessions > 12h)
+setInterval(function() {
+  var now = Date.now();
+  Object.keys(sessions).forEach(function(id) {
+    if (now - sessions[id].createdAt > 12 * 60 * 60 * 1000) {
+      delete sessions[id];
+      console.log('Session ' + id + ' nettoyee');
+    }
+  });
+}, 60 * 60 * 1000);
+
 function createSession(hostName) {
-  const id = uuidv4().slice(0, 6).toUpperCase();
+  var id = uuidv4().slice(0, 6).toUpperCase();
   sessions[id] = {
-    id,
+    id: id,
     host: hostName,
     joueurs: {},
     etat: 'lobby',
     tourActuel: null,
     accordsEnCours: {},
     votesEnCours: {},
-    historique: [],
     cartes: loadCartes(),
-    cartesUtilisees: new Set(),
+    cartesUtilisees: { tiede: new Set(), chaud: new Set(), brulant: new Set() },
     createdAt: Date.now()
   };
   return sessions[id];
 }
 
 function loadCartes() {
-  const cartesPath = path.join(__dirname, 'contenu', 'cartes.json');
+  var cartesPath = path.join(__dirname, 'contenu', 'cartes.json');
   return JSON.parse(fs.readFileSync(cartesPath, 'utf8'));
 }
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'oracle.html')));
-app.get('/joueur', (req, res) => res.sendFile(path.join(__dirname, 'public', 'joueur.html')));
+app.get('/', function(req, res) { res.sendFile(path.join(__dirname, 'public', 'oracle.html')); });
+app.get('/joueur', function(req, res) { res.sendFile(path.join(__dirname, 'public', 'joueur.html')); });
 
-app.post('/api/session', (req, res) => {
-  const { hostName } = req.body;
-  const session = createSession(hostName || 'Oracle');
+app.post('/api/session', function(req, res) {
+  var session = createSession(req.body.hostName || 'Oracle');
   res.json({ sessionId: session.id });
 });
 
-app.get('/api/qr/:sessionId', async (req, res) => {
-  const { sessionId } = req.params;
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
-  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
-  const url = proto + '://' + host + '/joueur?s=' + sessionId;
+app.get('/api/qr/:sessionId', async function(req, res) {
+  var sessionId = req.params.sessionId;
+  var host = req.headers['x-forwarded-host'] || req.headers.host;
+  var proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  var url = proto + '://' + host + '/joueur?s=' + sessionId;
   try {
-    const qr = await QRCode.toDataURL(url, { width: 300, color: { dark: '#ff2d55', light: '#1a1a2e' } });
-    res.json({ qr, url });
+    var qr = await QRCode.toDataURL(url, { width: 300, color: { dark: '#ff2d55', light: '#1a1a2e' } });
+    res.json({ qr: qr, url: url });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
-app.get('/api/session/:id', (req, res) => {
-  const s = sessions[req.params.id];
+app.get('/api/session/:id', function(req, res) {
+  var s = sessions[req.params.id];
   if (!s) return res.status(404).json({ error: 'Session introuvable' });
   res.json({
     id: s.id, host: s.host, etat: s.etat,
-    joueurs: Object.values(s.joueurs).map(j => ({ id: j.id, nom: j.nom, palier: j.palier, points: j.points })),
+    joueurs: Object.values(s.joueurs).map(function(j) { return { id: j.id, nom: j.nom, palier: j.palier, points: j.points }; }),
     nbJoueurs: Object.keys(s.joueurs).length
   });
 });
 
-const PING_INTERVAL = 25000;
-setInterval(() => {
-  wss.clients.forEach(ws => {
+// Ping WebSocket toutes les 25s pour eviter timeout Railway
+var PING_INTERVAL = 25000;
+setInterval(function() {
+  wss.clients.forEach(function(ws) {
     if (ws.isAlive === false) { ws.terminate(); return; }
     ws.isAlive = false;
     ws.ping();
   });
 }, PING_INTERVAL);
 
-wss.on('connection', (ws) => {
+wss.on('connection', function(ws) {
   ws.id = uuidv4();
   ws.isAlive = true;
-  ws.on('pong', () => { ws.isAlive = true; });
+  ws.on('pong', function() { ws.isAlive = true; });
 
-  ws.on('message', (raw) => {
+  ws.on('message', function(raw) {
     var msg;
     try { msg = JSON.parse(raw); } catch (e) { return; }
     var session = sessions[msg.sessionId];
@@ -125,7 +135,7 @@ wss.on('connection', (ws) => {
           session.joueurs[joueurId] = {
             id: joueurId,
             nom: msg.nom || ('Joueur' + (Object.keys(session.joueurs).length + 1)),
-            sexe: msg.sexe || 'autre',   // 'homme', 'femme', 'autre'
+            sexe: msg.sexe || 'autre',
             palier: 0,
             points: 0,
             ws: ws
@@ -161,7 +171,6 @@ wss.on('connection', (ws) => {
         if (carte.type === 'solo') {
           var joueurCible = getJoueurAleatoire(session);
           if (!joueurCible) return;
-          // Designer un joueur2 different du joueur cible pour les cartes qui en ont besoin
           var joueur2 = getJoueurAleatoireSauf(session, joueurCible.id);
           var texte = carte.texte
             .replace(/{joueur}/g, joueurCible.nom)
@@ -171,14 +180,14 @@ wss.on('connection', (ws) => {
         }
 
         else if (carte.type === 'duo') {
-          // Determiner si la carte est intime (chaud/brulant) pour appliquer le filtre sexe
           var estIntime = (carte.palierNom === 'chaud' || carte.palierNom === 'brulant');
-          var duo = getDuoAleatoire(session, estIntime);
-          if (!duo) return;
-          var j1 = duo[0];
-          var j2 = duo[1];
+          var duoResult = getDuoAleatoire(session, estIntime);
+          if (!duoResult) return;
+          var j1 = duoResult[0];
+          var j2 = duoResult[1];
+          var fallback = duoResult[2]; // true si aucune paire compatible trouvee
           var texte2 = carte.texte.replace(/{joueur1}/g, j1.nom).replace(/{joueur2}/g, j2.nom);
-          broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texte2, joueur1: j1.nom, joueur2: j2.nom }) });
+          broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texte2, joueur1: j1.nom, joueur2: j2.nom, duoFallback: fallback || false }) });
           var actionId = uuidv4().slice(0, 8);
           session.accordsEnCours[actionId] = {
             actionId: actionId, carte: carte, joueur1Id: j1.id, joueur2Id: j2.id, reponses: {},
@@ -186,7 +195,7 @@ wss.on('connection', (ws) => {
           };
           if (j1.ws) send(j1.ws, { type: 'ACCORD_REQUIS', actionId: actionId, texte: carte.texte_joueur, partenaire: j2.nom });
           if (j2.ws) send(j2.ws, { type: 'ACCORD_REQUIS', actionId: actionId, texte: carte.texte_joueur, partenaire: j1.nom });
-          send(ws, { type: 'ACCORD_EN_ATTENTE', actionId: actionId });
+          send(ws, { type: 'ACCORD_EN_ATTENTE', actionId: actionId, duoFallback: fallback || false });
         }
 
         else if (carte.type === 'vote') {
@@ -211,7 +220,7 @@ wss.on('connection', (ws) => {
         else if (carte.type === 'groupe') {
           var cible = getJoueurAleatoire(session);
           if (!cible) return;
-          var texteGroupe = carte.texte.replace(/{joueur}/g, cible.nom).replace(/{joueur1}/g, cible.nom);
+          var texteGroupe = carte.texte.replace(/{joueur}/g, cible.nom);
           broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texteGroupe, joueurCible: cible.nom, joueurCibleId: cible.id }) });
           if (cible.ws) send(cible.ws, { type: 'ACTION_GROUPE_CIBLE', texte: carte.texte_joueur, duree: 30 });
           send(ws, { type: 'GROUPE_EN_ATTENTE', cibleNom: cible.nom, duree: 30 });
@@ -311,18 +320,19 @@ wss.on('connection', (ws) => {
   });
 });
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 function resolveAccord(session, actionId, raison) {
   var accord = session.accordsEnCours[actionId];
   if (!accord) return;
-  var tousAccepte = Object.values(accord.reponses).every(function(r) { return r === true; }) && Object.keys(accord.reponses).length >= 2;
+  var tousAccepte = Object.keys(accord.reponses).length >= 2 &&
+    Object.values(accord.reponses).every(function(r) { return r === true; });
   var j1 = session.joueurs[accord.joueur1Id];
   var j2 = session.joueurs[accord.joueur2Id];
   if (tousAccepte) {
     if (j1) j1.points += accord.carte.points || 0;
     if (j2) j2.points += accord.carte.points || 0;
-    broadcast(session, { type: 'ACCORD_OUI', actionId: actionId, joueur1: j1 ? j1.nom : '', joueur2: j2 ? j2.nom : '', points: accord.carte.points });
+    broadcast(session, { type: 'ACCORD_OUI', actionId: actionId, joueur1: j1 ? j1.nom : '', joueur2: j2 ? j2.nom : '', points: accord.carte.points || 0 });
   } else {
     broadcast(session, { type: 'ACCORD_NON', actionId: actionId, penalite: accord.carte.penalite_refus || 'shot chacun' });
   }
@@ -332,34 +342,53 @@ function resolveAccord(session, actionId, raison) {
 function resolveVote(session, voteId) {
   var vote = session.votesEnCours[voteId];
   if (!vote) return;
+
   var scores = {};
   Object.values(vote.votes).forEach(function(cibleId) {
     scores[cibleId] = (scores[cibleId] || 0) + 1;
   });
-  var maxVotes = Math.max.apply(null, Object.values(scores).concat([0]));
+
+  var maxVotes = Object.values(scores).length > 0 ? Math.max.apply(null, Object.values(scores)) : 0;
   var finalistes = Object.entries(scores).filter(function(e) { return e[1] === maxVotes; }).map(function(e) { return e[0]; });
+
   if (finalistes.length === 0) {
-    var j = getJoueurAleatoire(session);
-    finalistes = j ? [j.id] : [];
+    var jRand = getJoueurAleatoire(session);
+    finalistes = jRand ? [jRand.id] : [];
   }
+
   var designeId;
   if (finalistes.length === 1) {
     designeId = finalistes[0];
   } else {
+    // Egalite : le joueur avec le moins de points
     var finalJoueurs = finalistes.map(function(id) { return session.joueurs[id]; }).filter(Boolean);
     finalJoueurs.sort(function(a, b) { return (a.points || 0) - (b.points || 0); });
     var minPoints = finalJoueurs[0].points || 0;
-    var vraisExaequo = finalJoueurs.filter(function(j) { return (j.points || 0) === minPoints; });
-    designeId = vraisExaequo[Math.floor(Math.random() * vraisExaequo.length)].id;
+    var exaequo = finalJoueurs.filter(function(j) { return (j.points || 0) === minPoints; });
+    designeId = exaequo[Math.floor(Math.random() * exaequo.length)].id;
   }
+
   var designe = session.joueurs[designeId];
   if (!designe) { delete session.votesEnCours[voteId]; return; }
+
+  // Points ajoutes cote serveur uniquement
   designe.points += vote.carte.points || 0;
+
   var repliques = session.cartes.repliques_oracle;
   var isEgalite = finalistes.length > 1;
-  var repliquesPool = isEgalite ? repliques.vote_egalite : repliques.vote_resultat;
-  var replique = repliquesPool[Math.floor(Math.random() * repliquesPool.length)].replace(/{joueur}/g, designe.nom);
-  broadcast(session, { type: 'VOTE_RESULTAT', voteId: voteId, designeId: designeId, designeNom: designe.nom, replique: replique, isEgalite: isEgalite });
+  var pool = isEgalite ? repliques.vote_egalite : repliques.vote_resultat;
+  var replique = pool[Math.floor(Math.random() * pool.length)].replace(/{joueur}/g, designe.nom);
+
+  broadcast(session, {
+    type: 'VOTE_RESULTAT',
+    voteId: voteId,
+    designeId: designeId,
+    designeNom: designe.nom,
+    designePoints: designe.points, // envoyer les points mis a jour pour affichage correct
+    replique: replique,
+    isEgalite: isEgalite
+  });
+
   if (designe.ws) send(designe.ws, { type: 'ACTION_SOLO', texte: vote.carte.texte_joueur, points: vote.carte.points });
   delete session.votesEnCours[voteId];
 }
@@ -367,14 +396,25 @@ function resolveVote(session, voteId) {
 function tirerCarte(session) {
   var joueurs = Object.values(session.joueurs);
   if (joueurs.length === 0) return null;
+
   var palierMin = Math.min.apply(null, joueurs.map(function(j) { return j.palier || 0; }));
   var paliers = ['tiede', 'chaud', 'brulant'];
-  var palierNom = paliers[palierMin] || 'tiede';
-  var cartesDisponibles = session.cartes.cartes[palierNom].filter(function(c) { return !session.cartesUtilisees.has(c.id); });
-  var pool = cartesDisponibles.length > 0 ? cartesDisponibles : session.cartes.cartes[palierNom];
-  if (pool.length === 0) return null;
-  var carte = pool[Math.floor(Math.random() * pool.length)];
-  session.cartesUtilisees.add(carte.id);
+  var palierNom = paliers[Math.min(palierMin, 2)];
+
+  // cartesUtilisees par palier — reset uniquement le palier courant si epuise
+  var used = session.cartesUtilisees[palierNom];
+  var cartesDisponibles = session.cartes.cartes[palierNom].filter(function(c) { return !used.has(c.id); });
+
+  if (cartesDisponibles.length === 0) {
+    // Reset du palier courant uniquement
+    session.cartesUtilisees[palierNom] = new Set();
+    cartesDisponibles = session.cartes.cartes[palierNom];
+  }
+
+  if (cartesDisponibles.length === 0) return null;
+
+  var carte = cartesDisponibles[Math.floor(Math.random() * cartesDisponibles.length)];
+  session.cartesUtilisees[palierNom].add(carte.id);
   return Object.assign({}, carte, { palierNom: palierNom });
 }
 
@@ -384,60 +424,50 @@ function getJoueurAleatoire(session) {
   return joueurs[Math.floor(Math.random() * joueurs.length)];
 }
 
-/**
- * Determine si une paire est compatible pour un duo intime.
- * Regle : si l un des deux est hetero ET qu ils ont le meme sexe declare -> incompatible.
- * 'autre' est compatible avec tout le monde.
- * Pour les duos non intimes (tiede) : toujours compatible.
- */
-function paireCompatible(j1, j2) {
-  var s1 = j1.sexe || 'autre';
-  var s2 = j2.sexe || 'autre';
-  // Si l un est 'autre' -> toujours OK
-  if (s1 === 'autre' || s2 === 'autre') return true;
-  // Si meme sexe declare -> incompatible (on suppose heterosexualite par defaut)
-  if (s1 === s2) return false;
-  return true;
-}
-
-/**
- * Selectionne un duo aleatoire.
- * Si estIntime=true, tente de trouver une paire compatible (sexes differents).
- * Si aucune paire compatible n'existe, fallback sur paire aleatoire pour ne pas bloquer.
- */
 function getJoueurAleatoireSauf(session, excludeId) {
   var joueurs = Object.values(session.joueurs).filter(function(j) { return j.ws && j.id !== excludeId; });
   if (joueurs.length === 0) return null;
   return joueurs[Math.floor(Math.random() * joueurs.length)];
 }
 
+// Retourne true si les deux joueurs sont compatibles pour un duo intime
+// Incompatible = meme sexe declare et aucun n'est 'autre'
+function paireCompatible(j1, j2) {
+  var s1 = j1.sexe || 'autre';
+  var s2 = j2.sexe || 'autre';
+  if (s1 === 'autre' || s2 === 'autre') return true;
+  return s1 !== s2;
+}
+
+// Retourne [j1, j2, fallback]
+// fallback=true si aucune paire compatible n'existe (groupe mono-sexe)
 function getDuoAleatoire(session, estIntime) {
   var joueurs = Object.values(session.joueurs).filter(function(j) { return j.ws; });
   if (joueurs.length < 2) return null;
 
-  // Melanger
   joueurs.sort(function() { return Math.random() - 0.5; });
 
   if (!estIntime) {
-    // Duo non intime : peu importe la compatibilite
-    return [joueurs[0], joueurs[1]];
+    return [joueurs[0], joueurs[1], false];
   }
 
-  // Duo intime : chercher une paire compatible
+  // Chercher une paire compatible
   for (var i = 0; i < joueurs.length; i++) {
     for (var k = i + 1; k < joueurs.length; k++) {
       if (paireCompatible(joueurs[i], joueurs[k])) {
-        return [joueurs[i], joueurs[k]];
+        return [joueurs[i], joueurs[k], false];
       }
     }
   }
 
-  // Aucune paire compatible trouvee (ex: groupe mono-sexe) -> fallback aleatoire
-  return [joueurs[0], joueurs[1]];
+  // Aucune paire compatible : fallback avec flag
+  return [joueurs[0], joueurs[1], true];
 }
 
 function getJoueursList(session) {
-  return Object.values(session.joueurs).map(function(j) { return { id: j.id, nom: j.nom, palier: j.palier, points: j.points }; });
+  return Object.values(session.joueurs).map(function(j) {
+    return { id: j.id, nom: j.nom, palier: j.palier, points: j.points };
+  });
 }
 
 function send(ws, data) {
