@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const { WebSocketServer } = require('ws');
 const { createServer } = require('http');
 const QRCode = require('qrcode');
@@ -9,6 +9,15 @@ const fs = require('fs');
 const app = express();
 const server = createServer(app);
 const wss = new WebSocketServer({ server });
+
+// CORS — autoriser toutes les origines (nécessaire pour Railway reverse proxy)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -423,3 +432,4 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🔴 DIABLO v2.0 en ligne sur http://localhost:${PORT}\n`);
 });
+
