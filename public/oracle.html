@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -93,6 +93,14 @@
   .verdict-pts { color:var(--or); font-size:0.9rem; }
   .verdict-texte { color:var(--gris); font-size:0.9rem; font-style:italic; margin-top:0.3rem; }
 
+  .groupe-bar { display:none; background:var(--noir3); border:2px solid var(--orange); border-radius:12px; padding:1rem 1.5rem; margin-bottom:1rem; text-align:center; max-width:500px; }
+  .groupe-bar.visible { display:block; }
+  .groupe-timer { font-size:2.5rem; font-weight:900; color:var(--orange); }
+  .groupe-cible { font-size:1.1rem; color:var(--blanc); margin-bottom:0.5rem; }
+  .groupe-btns { display:flex; gap:1rem; justify-content:center; margin-top:0.8rem; }
+  .btn-succes { background:var(--vert); color:#000; border:none; padding:0.6rem 1.5rem; border-radius:8px; font-weight:900; cursor:pointer; }
+  .btn-echec  { background:var(--rouge); color:#fff; border:none; padding:0.6rem 1.5rem; border-radius:8px; font-weight:900; cursor:pointer; }
+
   .flash-notif { position:fixed; top:1rem; right:1rem; background:var(--noir3); border:1px solid var(--rouge); color:var(--blanc); padding:0.8rem 1.2rem; border-radius:10px; font-size:0.9rem; z-index:999; animation:slide-in 0.3s ease; }
   @keyframes slide-in { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
 </style>
@@ -127,6 +135,17 @@
       <div class="carte-meta" id="carte-meta" style="display:none"></div>
       <div class="oracle-message" id="oracle-message">Je vous observe. La partie va commencer.</div>
       <div class="role-groupe" id="role-groupe" style="display:none"></div>
+      <!-- GROUPE contre joueur -->
+      <div class="groupe-bar" id="groupe-bar">
+        <div class="groupe-cible" id="groupe-cible-label">Le groupe convainc...</div>
+        <div style="font-size:0.85rem;color:var(--gris);margin-bottom:0.5rem;">Le groupe a 30s pour convaincre. Arguments, seduction, negociation.</div>
+        <div class="groupe-timer" id="groupe-timer">30</div>
+        <div class="groupe-btns">
+          <button class="btn-succes" onclick="groupeResultat(true)">Le joueur a cede !</button>
+          <button class="btn-echec"  onclick="groupeResultat(false)">Il a resiste</button>
+        </div>
+      </div>
+
       <div class="accord-attente-bar" id="accord-attente-bar">
         <div id="accord-label">En attente...</div>
         <div class="accord-timer" id="accord-timer">30</div>
@@ -267,6 +286,22 @@ function handleMessage(msg) {
       startTimerGeneric(30, 'accord');
       break;
 
+    case 'GROUPE_EN_ATTENTE':
+      startGroupeTimer(msg.cibleNom, msg.cibleId, msg.duree || 30);
+      break;
+
+    case 'GROUPE_SUCCES':
+      stopGroupeTimer();
+      setOracleMessage(msg.cibleNom + ' a cede. Le groupe a gagne !', 'accord-oui');
+      flash('Le groupe a convaincu ' + msg.cibleNom + ' !');
+      break;
+
+    case 'GROUPE_ECHEC':
+      stopGroupeTimer();
+      setOracleMessage(msg.cibleNom + ' a resiste. Shot pour tout le groupe.', 'accord-non');
+      flash('Shot collectif - ' + msg.cibleNom + ' a tenu bon.');
+      break;
+
     case 'VOTE_EN_ATTENTE':
       document.getElementById('accord-label').textContent = 'Vote en cours...';
       startTimerGeneric(msg.duree || 20, 'vote');
@@ -345,6 +380,35 @@ function afficherCarte(carte) {
 // TIMERS
 var timerInterval = null;
 var timerSecondes = 30;
+var groupeTimerInterval = null;
+var groupeCibleNom = null;
+var groupeCibleId = null;
+
+function startGroupeTimer(cibleNom, cibleId, duree) {
+  groupeCibleNom = cibleNom;
+  groupeCibleId = cibleId;
+  var t = duree || 30;
+  document.getElementById("groupe-cible-label").textContent = "Le groupe convainc " + cibleNom + "...";
+  document.getElementById("groupe-timer").textContent = t;
+  document.getElementById("groupe-bar").classList.add("visible");
+  groupeTimerInterval = setInterval(function() {
+    t--;
+    document.getElementById("groupe-timer").textContent = t;
+    if (t <= 0) {
+      clearInterval(groupeTimerInterval);
+    }
+  }, 1000);
+}
+
+function stopGroupeTimer() {
+  clearInterval(groupeTimerInterval);
+  document.getElementById("groupe-bar").classList.remove("visible");
+}
+
+function groupeResultat(succes) {
+  stopGroupeTimer();
+  ws.send(JSON.stringify({ type: "GROUPE_RESULTAT", sessionId: sessionId, succes: succes, cibleNom: groupeCibleNom }));
+}
 
 function startTimerGeneric(duree, type) {
   stopTimer();
@@ -420,3 +484,7 @@ function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 </script>
 </body>
 </html>
+
+
+
+
