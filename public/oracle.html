@@ -6,16 +6,9 @@
 <title>DIABLO - Oracle</title>
 <style>
   :root {
-    --rouge: #ff2d55;
-    --rouge-sombre: #c0142b;
-    --orange: #ff6b35;
-    --noir: #0a0a0f;
-    --noir2: #12121a;
-    --noir3: #1e1e2e;
-    --blanc: #f0e6ff;
-    --gris: #888;
-    --or: #ffd700;
-    --vert: #4ecdc4;
+    --rouge:#ff2d55; --rouge-sombre:#c0142b; --orange:#ff6b35;
+    --noir:#0a0a0f; --noir2:#12121a; --noir3:#1e1e2e;
+    --blanc:#f0e6ff; --gris:#888; --or:#ffd700; --vert:#4ecdc4;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--noir); color:var(--blanc); font-family:'Segoe UI',system-ui,sans-serif; min-height:100vh; overflow-x:hidden; }
@@ -27,7 +20,6 @@
   .tagline { color:var(--gris); font-size:1rem; letter-spacing:0.3em; text-transform:uppercase; margin-bottom:3rem; }
   .btn-primary { background:linear-gradient(135deg,var(--rouge),var(--rouge-sombre)); color:white; border:none; padding:1rem 2.5rem; border-radius:8px; font-size:1.1rem; font-weight:700; cursor:pointer; letter-spacing:0.1em; text-transform:uppercase; transition:all 0.2s; width:280px; }
   .btn-primary:hover { transform:scale(1.03); filter:brightness(1.2); }
-
   #qr-section { display:none; flex-direction:column; align-items:center; gap:1rem; margin-top:2rem; }
   .session-code { font-size:2.5rem; font-weight:900; letter-spacing:0.3em; color:var(--rouge); background:var(--noir3); padding:0.5rem 1.5rem; border-radius:8px; border:2px solid var(--rouge); }
   #qr-img { border-radius:12px; border:4px solid var(--rouge); }
@@ -37,8 +29,7 @@
   .joueurs-list { display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center; max-width:600px; }
   .joueur-tag { background:var(--noir3); border:1px solid var(--rouge); padding:0.3rem 0.8rem; border-radius:20px; font-size:0.9rem; }
   .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:4px; vertical-align:middle; }
-  .dot-0 { background:var(--vert); } .dot-1 { background:var(--orange); } .dot-2 { background:var(--rouge); }
-
+  .dot-0{background:var(--vert)} .dot-1{background:var(--orange)} .dot-2{background:var(--rouge)}
   #btn-start { display:none; margin-top:1.5rem; width:280px; padding:1rem; border-radius:8px; border:none; font-size:1rem; font-weight:900; cursor:pointer; letter-spacing:0.08em; text-transform:uppercase; transition:all 0.2s; }
 
   /* JEU */
@@ -125,24 +116,21 @@
       <div class="oracle-icon" id="oracle-icon">👁️</div>
       <div class="carte-meta" id="carte-meta" style="display:none"></div>
       <div class="oracle-message" id="oracle-message">Je vous observe. La partie va commencer.</div>
-
-      <!-- Groupe contre joueur -->
+      <!-- Groupe -->
       <div class="groupe-bar" id="groupe-bar">
         <div class="groupe-cible" id="groupe-cible-label">Le groupe convainc...</div>
-        <div style="font-size:0.85rem;color:var(--gris);margin-bottom:0.5rem;">30s pour convaincre. Arguments, seduction, negociation.</div>
+        <div style="font-size:0.85rem;color:var(--gris);margin-bottom:0.5rem;">30s. Arguments, seduction, negociation.</div>
         <div class="groupe-timer" id="groupe-timer">30</div>
         <div class="groupe-btns">
           <button class="btn-succes" onclick="groupeResultat(true)">Le joueur a cede !</button>
           <button class="btn-echec" onclick="groupeResultat(false)">Il a resiste</button>
         </div>
       </div>
-
-      <!-- Accord / vote en attente -->
+      <!-- Accord / vote timer -->
       <div class="accord-attente-bar" id="accord-attente-bar">
         <div id="accord-label">En attente...</div>
         <div class="accord-timer" id="accord-timer">30</div>
       </div>
-
       <div class="btn-group">
         <button class="btn-action btn-tirer" id="btn-tirer" onclick="tirerCarte()">L Oracle decide</button>
         <button class="btn-action btn-end" onclick="terminerPartie()">Jugement final</button>
@@ -163,19 +151,17 @@
 var MIN_JOUEURS = 2;
 var ws = null;
 var sessionId = null;
+// joueurs stocke par ID pour eviter les conflits de noms
 var joueurs = {};
 var wsReconnectTimer = null;
 var timerInterval = null;
 var groupeTimerInterval = null;
 var groupeCibleNom = null;
+var groupeCibleId = null;
 
 async function creerSession() {
   try {
-    var res = await fetch('/api/session', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({hostName: 'Oracle'})
-    });
+    var res = await fetch('/api/session', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({hostName:'Oracle'}) });
     var data = await res.json();
     sessionId = data.sessionId;
     var qrData = await (await fetch('/api/qr/' + sessionId)).json();
@@ -193,7 +179,7 @@ function connectWS() {
   if (wsReconnectTimer) { clearTimeout(wsReconnectTimer); wsReconnectTimer = null; }
   var proto = location.protocol === 'https:' ? 'wss' : 'ws';
   ws = new WebSocket(proto + '://' + location.host);
-  ws.onopen = function() { ws.send(JSON.stringify({type: 'HOST_CONNECT', sessionId: sessionId})); };
+  ws.onopen = function() { ws.send(JSON.stringify({type:'HOST_CONNECT', sessionId:sessionId})); };
   ws.onmessage = function(e) { try { handleMessage(JSON.parse(e.data)); } catch(err) {} };
   ws.onclose = function() { if (sessionId) wsReconnectTimer = setTimeout(connectWS, 2000); };
   ws.onerror = function() { ws.close(); };
@@ -202,7 +188,7 @@ function connectWS() {
 function lancerPartie() {
   var nb = Object.keys(joueurs).length;
   if (nb < MIN_JOUEURS) { flash('Il faut au moins ' + MIN_JOUEURS + ' joueurs ! (' + nb + ' connecte(s))'); return; }
-  ws.send(JSON.stringify({type: 'START_GAME', sessionId: sessionId}));
+  ws.send(JSON.stringify({type:'START_GAME', sessionId:sessionId}));
 }
 
 function updateBtnStart() {
@@ -244,7 +230,7 @@ function handleMessage(msg) {
 
     case 'JOUEUR_JOINED':
     case 'JOUEUR_RECONNECTED':
-      joueurs[msg.joueurId] = {id: msg.joueurId, nom: msg.nom, palier: 0, points: 0};
+      joueurs[msg.joueurId] = { id:msg.joueurId, nom:msg.nom, palier:0, points:0 };
       renderJoueursLobby();
       updateBtnStart();
       flash((msg.type === 'JOUEUR_RECONNECTED' ? 'Reconnexion' : 'Bienvenue') + ' : ' + msg.nom);
@@ -257,7 +243,8 @@ function handleMessage(msg) {
     case 'GAME_STARTED':
       showScreen('jeu');
       renderScores();
-      setOracleMessage('Bonsoir mortels. Je suis DIABLO. Ce soir vous n\'avez plus le choix.');
+      // Utiliser la replique d intro envoyee par le serveur
+      setOracleMessage(msg.introMsg || 'Bonsoir mortels. Je suis DIABLO. Ce soir vous obeissez.');
       break;
 
     case 'ERROR':
@@ -280,21 +267,22 @@ function handleMessage(msg) {
       break;
 
     case 'GROUPE_EN_ATTENTE':
-      startGroupeTimer(msg.cibleNom, msg.duree || 30);
+      startGroupeTimer(msg.cibleNom, msg.cibleId, msg.duree || 30);
       break;
 
     case 'ACCORD_OUI':
       stopTimer();
-      setOracleMessage('Les deux ont dit oui. Executez.', 'accord-oui');
+      setOracleMessage(msg.replique || 'Les deux ont dit oui. Executez.', 'accord-oui');
+      // Mise a jour par ID — fiable meme si deux joueurs ont le meme nom
+      if (msg.joueur1Id && joueurs[msg.joueur1Id]) { joueurs[msg.joueur1Id].points = msg.joueur1Points; }
+      if (msg.joueur2Id && joueurs[msg.joueur2Id]) { joueurs[msg.joueur2Id].points = msg.joueur2Points; }
       if (msg.points) flash('+' + msg.points + ' pts pour les deux !');
-      if (msg.joueur1 && joueurs[findIdByNom(msg.joueur1)]) { joueurs[findIdByNom(msg.joueur1)].points += msg.points || 0; }
-      if (msg.joueur2 && joueurs[findIdByNom(msg.joueur2)]) { joueurs[findIdByNom(msg.joueur2)].points += msg.points || 0; }
       renderScores();
       break;
 
     case 'ACCORD_NON':
       stopTimer();
-      setOracleMessage('Quelqu\'un a dit non. L\'Oracle protege.', 'accord-non');
+      setOracleMessage(msg.replique || 'Quelqu un a dit non. L Oracle protege.', 'accord-non');
       if (msg.penalite) flash('Penalite : ' + msg.penalite);
       break;
 
@@ -302,8 +290,7 @@ function handleMessage(msg) {
       stopTimer();
       setOracleMessage(msg.replique || (msg.designeNom + ' a ete designe(e).'), 'accord-oui');
       flash(msg.designeNom + ' designe(e) par le groupe !');
-      // Utiliser les points envoyes par le serveur (pas de calcul cote client)
-      if (joueurs[msg.designeId]) {
+      if (msg.designeId && joueurs[msg.designeId]) {
         joueurs[msg.designeId].points = msg.designePoints;
         renderScores();
       }
@@ -311,29 +298,32 @@ function handleMessage(msg) {
 
     case 'GROUPE_SUCCES':
       stopGroupeTimer();
-      setOracleMessage(msg.cibleNom + ' a cede. Le groupe a gagne !', 'accord-oui');
+      setOracleMessage(msg.replique || (msg.cibleNom + ' a cede.'), 'accord-oui');
       flash('Le groupe a convaincu ' + msg.cibleNom + ' !');
       break;
 
     case 'GROUPE_ECHEC':
       stopGroupeTimer();
-      setOracleMessage(msg.cibleNom + ' a resiste. Shot pour tout le groupe.', 'accord-non');
-      flash('Shot collectif — ' + msg.cibleNom + ' a tenu bon.');
+      setOracleMessage(msg.replique || (msg.cibleNom + ' a resiste. Shot collectif.'), 'accord-non');
+      flash('Shot pour tout le groupe sauf ' + msg.cibleNom);
       break;
 
     case 'ACTION_ACCOMPLIE':
-      if (joueurs[msg.joueurId]) { joueurs[msg.joueurId].points = msg.points; renderScores(); }
-      flash(msg.nom + ' a accompli l\'action !');
+      if (msg.joueurId && joueurs[msg.joueurId]) { joueurs[msg.joueurId].points = msg.points; renderScores(); }
+      setOracleMessage(msg.replique || 'Accompli.', 'accord-oui');
+      flash(msg.nom + ' a accompli l action !');
       break;
 
     case 'ACTION_REFUSEE':
+      setOracleMessage(msg.replique || 'Refus. Shot.', 'accord-non');
       flash(msg.nom + ' refuse. Penalite : ' + msg.penalite);
       break;
 
     case 'JOUEUR_PALIER_UP':
-      if (joueurs[msg.joueurId]) joueurs[msg.joueurId].palier = msg.palier;
+      if (msg.joueurId && joueurs[msg.joueurId]) joueurs[msg.joueurId].palier = msg.palier;
       renderScores();
-      flash(msg.nom + ' monte de palier !');
+      flash(msg.nom + ' passe en ' + ['Tiede','Chaud','Brulant'][msg.palier] + ' !');
+      if (msg.transitionMsg) setOracleMessage(msg.transitionMsg);
       break;
 
     case 'GAME_OVER':
@@ -347,13 +337,13 @@ function tirerCarte() {
   if (!ws) return;
   document.getElementById('btn-tirer').disabled = true;
   setTimeout(function() { document.getElementById('btn-tirer').disabled = false; }, 2000);
-  setOracleMessage(pickRandom(['Je consulte les abysses...', 'Le sort se tisse...', 'La decision est prise...', 'Obeissez.', 'Le destin choisit.']));
-  ws.send(JSON.stringify({type: 'TIRER_CARTE', sessionId: sessionId}));
+  setOracleMessage(pickRandom(['Je consulte les abysses...','Le sort se tisse...','La decision est prise...','Obeissez.','Le destin choisit.']));
+  ws.send(JSON.stringify({type:'TIRER_CARTE', sessionId:sessionId}));
 }
 
 function afficherCarte(carte) {
-  var palierLabels = {tiede: 'Tiede', chaud: 'Chaud', brulant: 'Brulant'};
-  var typeLabels = {solo: 'Solo', duo: 'Duo', vote: 'Vote', groupe: 'Groupe', shot: 'Shot'};
+  var palierLabels = {tiede:'Tiede', chaud:'Chaud', brulant:'Brulant'};
+  var typeLabels = {solo:'Solo', duo:'Duo', vote:'Vote', groupe:'Groupe', shot:'Shot'};
   var meta = '';
   if (carte.palierNom) meta += '<span class="badge badge-' + carte.palierNom + '">' + (palierLabels[carte.palierNom] || carte.palierNom) + '</span>';
   if (carte.type) meta += '<span class="badge badge-type">' + (typeLabels[carte.type] || carte.type) + '</span>';
@@ -362,8 +352,7 @@ function afficherCarte(carte) {
   var metaEl = document.getElementById('carte-meta');
   metaEl.innerHTML = meta;
   metaEl.style.display = 'flex';
-
-  var icons = {solo: '👁️', duo: '🔀', vote: '🗳️', groupe: '👥', shot: '🥃'};
+  var icons = {solo:'👁️', duo:'🔀', vote:'🗳️', groupe:'👥', shot:'🥃'};
   document.getElementById('oracle-icon').textContent = icons[carte.type] || '👁️';
   setOracleMessage(carte.texte || '...');
 }
@@ -388,8 +377,9 @@ function stopTimer() {
   document.getElementById('accord-attente-bar').classList.remove('visible');
 }
 
-function startGroupeTimer(cibleNom, duree) {
+function startGroupeTimer(cibleNom, cibleId, duree) {
   groupeCibleNom = cibleNom;
+  groupeCibleId = cibleId;
   var t = duree;
   document.getElementById('groupe-cible-label').textContent = 'Le groupe convainc ' + cibleNom + '...';
   document.getElementById('groupe-timer').textContent = t;
@@ -408,30 +398,29 @@ function stopGroupeTimer() {
 
 function groupeResultat(succes) {
   stopGroupeTimer();
-  ws.send(JSON.stringify({type: 'GROUPE_RESULTAT', sessionId: sessionId, succes: succes, cibleNom: groupeCibleNom}));
+  ws.send(JSON.stringify({type:'GROUPE_RESULTAT', sessionId:sessionId, succes:succes, cibleNom:groupeCibleNom, cibleId:groupeCibleId}));
 }
 
 // UI
 function renderJoueursLobby() {
   document.getElementById('joueurs-lobby').innerHTML = Object.values(joueurs).map(function(j) {
-    return '<span class="joueur-tag"><span class="dot dot-' + (j.palier || 0) + '"></span>' + j.nom + '</span>';
+    return '<span class="joueur-tag"><span class="dot dot-' + (j.palier||0) + '"></span>' + j.nom + '</span>';
   }).join('');
 }
 
 function renderScores() {
   document.getElementById('scores-bar').innerHTML = Object.values(joueurs)
-    .sort(function(a, b) { return (b.points || 0) - (a.points || 0); })
+    .sort(function(a,b) { return (b.points||0)-(a.points||0); })
     .map(function(j) {
-      var icons = ['🌊', '🔥', '💀'];
-      return '<div class="score-item">' + (icons[j.palier || 0] || '') + ' ' + j.nom + ' <span class="score-pts">' + (j.points || 0) + '</span></div>';
+      var icons = ['🌊','🔥','💀'];
+      return '<div class="score-item">' + (icons[j.palier||0]||'') + ' ' + j.nom + ' <span class="score-pts">' + (j.points||0) + '</span></div>';
     }).join('');
 }
 
 function renderFin(verdicts) {
-  var ranks = ['🥇', '🥈', '🥉', '4', '5', '6', '7', '8', '9', '10'];
-  document.getElementById('verdict-list').innerHTML = verdicts.map(function(v, i) {
-    return '<div class="verdict-item">' +
-      '<div class="verdict-rank">' + (ranks[i] || '·') + '</div>' +
+  var ranks = ['🥇','🥈','🥉','4','5','6','7','8','9','10'];
+  document.getElementById('verdict-list').innerHTML = verdicts.map(function(v,i) {
+    return '<div class="verdict-item"><div class="verdict-rank">' + (ranks[i]||'·') + '</div>' +
       '<div><div class="verdict-nom">' + v.nom + ' <span class="verdict-pts">' + v.points + ' pts</span></div>' +
       '<div class="verdict-texte">' + v.verdict + '</div></div></div>';
   }).join('');
@@ -444,21 +433,16 @@ function setOracleMessage(txt, cls) {
 }
 
 function showScreen(name) {
-  var screens = ['lobby', 'jeu', 'fin'];
-  screens.forEach(function(s) {
+  ['lobby','jeu','fin'].forEach(function(s) {
     var el = document.getElementById('screen-' + s);
     if (!el) return;
-    if (s === name) {
-      el.style.display = (s === 'lobby') ? 'flex' : 'flex';
-    } else {
-      el.style.display = 'none';
-    }
+    el.style.display = (s === name) ? 'flex' : 'none';
   });
 }
 
 function terminerPartie() {
   if (!confirm('Prononcer le Jugement Final ?')) return;
-  ws.send(JSON.stringify({type: 'END_GAME', sessionId: sessionId}));
+  ws.send(JSON.stringify({type:'END_GAME', sessionId:sessionId}));
 }
 
 function flash(msg) {
@@ -467,11 +451,6 @@ function flash(msg) {
   el.textContent = msg;
   document.body.appendChild(el);
   setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 3000);
-}
-
-function findIdByNom(nom) {
-  var found = Object.values(joueurs).find(function(j) { return j.nom === nom; });
-  return found ? found.id : null;
 }
 
 function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
