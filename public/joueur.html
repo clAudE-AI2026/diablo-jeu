@@ -410,7 +410,7 @@ function showAccord(texte, partenaire) {
 }
 
 function repondreAccord(accepte) {
-  if (!accordEnCords && !accordEnCours) return;
+  if (!accordEnCours) return;
   var id = accordEnCours;
   if (!id || !ws) return;
   ws.send(JSON.stringify({ type: 'ACCORD_REPONSE', sessionId: sessionId, actionId: id, accepte: accepte }));
