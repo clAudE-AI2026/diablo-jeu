@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -397,6 +397,17 @@ function handleMessage(msg) {
       vibratePhone([200]);
       break;
 
+    case 'ACTION_GROUPE_CIBLE':
+      showGroupeCible(msg.texte, msg.duree || 30);
+      vibratePhone([100, 50, 100, 50, 200]);
+      break;
+
+    case 'GROUPE_SUCCES':
+    case 'GROUPE_ECHEC':
+      hideGroupeCible();
+      showIdle();
+      break;
+
     case 'VOTE_REQUIS':
       showVote(msg.voteId, msg.question, msg.joueurs);
       vibratePhone([100, 50, 100]);
@@ -584,6 +595,7 @@ function vibratePhone(pattern) {
 </script>
 </body>
 </html>
+
 
 
 
