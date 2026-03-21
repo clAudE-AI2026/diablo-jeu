@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -15,6 +15,7 @@
     --blanc: #f0e6ff;
     --gris: #888;
     --or: #ffd700;
+    --vert: #4ecdc4;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
@@ -25,35 +26,25 @@
     overflow-x: hidden;
   }
 
-  /* ── ÉCRAN LOBBY ── */
+  /* ── LOBBY ── */
   #screen-lobby {
     display: flex; flex-direction: column; align-items: center;
     justify-content: center; min-height: 100vh;
     padding: 2rem; text-align: center;
   }
   .logo {
-    font-size: clamp(4rem, 12vw, 9rem);
-    font-weight: 900;
+    font-size: clamp(4rem, 12vw, 9rem); font-weight: 900;
     letter-spacing: 0.1em;
     background: linear-gradient(135deg, var(--rouge), var(--orange));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-shadow: none;
     animation: pulse-logo 2s ease-in-out infinite;
   }
   @keyframes pulse-logo {
     0%,100% { filter: drop-shadow(0 0 20px rgba(255,45,85,0.5)); }
     50% { filter: drop-shadow(0 0 50px rgba(255,45,85,0.9)); }
   }
-  .tagline {
-    color: var(--gris); font-size: 1rem; letter-spacing: 0.3em;
-    text-transform: uppercase; margin-bottom: 3rem;
-  }
-  .input-host {
-    background: var(--noir3); border: 1px solid var(--rouge);
-    color: var(--blanc); padding: 0.8rem 1.5rem;
-    border-radius: 8px; font-size: 1.1rem; width: 280px;
-    margin-bottom: 1rem; text-align: center; outline: none;
-  }
+  .tagline { color: var(--gris); font-size: 1rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 3rem; }
+
   .btn-primary {
     background: linear-gradient(135deg, var(--rouge), var(--rouge-sombre));
     color: white; border: none; padding: 1rem 2.5rem;
@@ -63,11 +54,8 @@
   }
   .btn-primary:hover { transform: scale(1.03); filter: brightness(1.2); }
 
-  /* ── QR CODE LOBBY ── */
-  #qr-section {
-    display: none; flex-direction: column; align-items: center;
-    gap: 1rem; margin-top: 2rem;
-  }
+  /* QR section */
+  #qr-section { display: none; flex-direction: column; align-items: center; gap: 1rem; margin-top: 2rem; }
   #qr-section.visible { display: flex; }
   .session-code {
     font-size: 2.5rem; font-weight: 900; letter-spacing: 0.3em;
@@ -76,45 +64,46 @@
   }
   #qr-img { border-radius: 12px; border: 4px solid var(--rouge); }
   .join-url { color: var(--gris); font-size: 0.85rem; }
-  .joueurs-list {
-    display: flex; flex-wrap: wrap; gap: 0.5rem;
-    justify-content: center; max-width: 600px; margin-top: 1rem;
-  }
-  .joueur-tag {
-    background: var(--noir3); border: 1px solid var(--rouge);
-    padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem;
-  }
-  .joueur-tag .palier-dot {
-    display: inline-block; width: 8px; height: 8px;
-    border-radius: 50%; margin-right: 4px; vertical-align: middle;
-  }
-  .palier-0 { background: #4ecdc4; }
-  .palier-1 { background: var(--orange); }
-  .palier-2 { background: var(--rouge); }
 
-  #btn-start-game {
-    display: none; margin-top: 1.5rem;
-    background: linear-gradient(135deg, #4ecdc4, #44b5ac);
-    color: #000; font-weight: 900;
-  }
-  #btn-start-game.visible { display: block; }
+  .joueurs-list { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; max-width: 600px; margin-top: 1rem; }
+  .joueur-tag { background: var(--noir3); border: 1px solid var(--rouge); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem; }
+  .joueur-tag .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+  .dot-0 { background: var(--vert); } .dot-1 { background: var(--orange); } .dot-2 { background: var(--rouge); }
 
-  /* ── ÉCRAN JEU ── */
+  /* Compteur joueurs dans lobby */
+  .joueurs-counter {
+    font-size: 0.95rem; color: var(--gris); margin-top: 0.5rem;
+  }
+  .joueurs-counter span { color: var(--blanc); font-weight: 700; }
+
+  /* Bouton lancer — DÉSACTIVÉ par défaut, actif dès 2 joueurs */
+  #btn-start {
+    display: none; margin-top: 1.5rem; width: 280px;
+    padding: 1rem; border-radius: 8px; border: none;
+    font-size: 1rem; font-weight: 900; cursor: pointer;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  #btn-start.show { display: block; }
+  #btn-start.ready {
+    background: linear-gradient(135deg, var(--vert), #44b5ac);
+    color: #000; opacity: 1; cursor: pointer;
+  }
+  #btn-start.not-ready {
+    background: var(--noir3); color: var(--gris);
+    border: 1px solid var(--gris); opacity: 0.7; cursor: not-allowed;
+  }
+
+  /* ── JEU ── */
   #screen-jeu { display: none; min-height: 100vh; }
   #screen-jeu.visible { display: flex; flex-direction: column; }
 
   .oracle-header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1rem 2rem; border-bottom: 1px solid var(--noir3);
-    background: var(--noir2);
+    padding: 1rem 2rem; border-bottom: 1px solid var(--noir3); background: var(--noir2);
   }
-  .oracle-title {
-    font-size: 1.5rem; font-weight: 900; letter-spacing: 0.2em;
-    color: var(--rouge);
-  }
-  .scores-bar {
-    display: flex; gap: 1rem; flex-wrap: wrap;
-  }
+  .oracle-title { font-size: 1.5rem; font-weight: 900; letter-spacing: 0.2em; color: var(--rouge); }
+  .scores-bar { display: flex; gap: 1rem; flex-wrap: wrap; }
   .score-item {
     display: flex; align-items: center; gap: 0.4rem;
     font-size: 0.85rem; background: var(--noir3);
@@ -122,135 +111,72 @@
   }
   .score-pts { color: var(--or); font-weight: 700; }
 
-  .oracle-arena {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 2rem; text-align: center;
-  }
-  .oracle-speech {
-    max-width: 700px; width: 100%;
-  }
-  .oracle-icon {
-    font-size: 5rem; margin-bottom: 1rem;
-    animation: float 3s ease-in-out infinite;
-  }
-  @keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-  }
+  .oracle-arena { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center; }
+  .oracle-speech { max-width: 700px; width: 100%; }
+  .oracle-icon { font-size: 5rem; margin-bottom: 1rem; animation: float 3s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
   .oracle-message {
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    line-height: 1.5; color: var(--blanc);
+    font-size: clamp(1.2rem, 3vw, 1.8rem); line-height: 1.5; color: var(--blanc);
     background: var(--noir3); border: 1px solid var(--rouge);
-    border-radius: 16px; padding: 1.5rem 2rem;
-    margin-bottom: 1.5rem;
+    border-radius: 16px; padding: 1.5rem 2rem; margin-bottom: 1.5rem;
     box-shadow: 0 0 40px rgba(255,45,85,0.15);
     min-height: 120px; display: flex; align-items: center; justify-content: center;
   }
-  .oracle-message.attente { border-color: var(--orange); color: var(--orange); }
-  .oracle-message.accord-oui { border-color: #4ecdc4; animation: flash-green 0.5s 3; }
+  .oracle-message.accord-oui { border-color: var(--vert); animation: flash-green 0.5s 3; }
   .oracle-message.accord-non { border-color: var(--gris); }
-  @keyframes flash-green {
-    0%,100% { box-shadow: 0 0 40px rgba(78,205,196,0.2); }
-    50% { box-shadow: 0 0 80px rgba(78,205,196,0.6); }
-  }
+  @keyframes flash-green { 0%,100%{box-shadow:0 0 40px rgba(78,205,196,0.2)} 50%{box-shadow:0 0 80px rgba(78,205,196,0.6)} }
 
-  .carte-meta {
-    display: flex; gap: 1rem; justify-content: center;
-    align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;
-  }
-  .badge {
-    padding: 0.3rem 0.8rem; border-radius: 20px;
-    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-  .badge-tiede { background: rgba(78,205,196,0.2); color: #4ecdc4; border: 1px solid #4ecdc4; }
+  .carte-meta { display: flex; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .badge { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+  .badge-tiede { background: rgba(78,205,196,0.2); color: var(--vert); border: 1px solid var(--vert); }
   .badge-chaud { background: rgba(255,107,53,0.2); color: var(--orange); border: 1px solid var(--orange); }
   .badge-brulant { background: rgba(255,45,85,0.2); color: var(--rouge); border: 1px solid var(--rouge); }
   .badge-type { background: var(--noir3); color: var(--gris); border: 1px solid var(--gris); }
   .badge-points { background: rgba(255,215,0,0.15); color: var(--or); border: 1px solid var(--or); }
 
   .role-groupe {
-    font-size: 0.9rem; color: var(--gris);
-    background: var(--noir2); border-radius: 8px;
-    padding: 0.6rem 1rem; margin-bottom: 1.5rem;
-    border-left: 3px solid var(--rouge);
-    max-width: 600px; text-align: left;
+    font-size: 0.9rem; color: var(--gris); background: var(--noir2);
+    border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 1.5rem;
+    border-left: 3px solid var(--rouge); max-width: 600px; text-align: left;
   }
 
-  /* ─── Sélecteur joueurs ─── */
-  .joueur-selector {
-    display: flex; flex-wrap: wrap; gap: 0.6rem;
-    justify-content: center; margin-bottom: 1.5rem;
-  }
+  .joueur-selector { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-bottom: 1.5rem; }
   .joueur-btn {
     background: var(--noir3); border: 2px solid var(--gris);
-    color: var(--blanc); padding: 0.5rem 1rem;
-    border-radius: 8px; cursor: pointer; font-size: 0.9rem;
-    transition: all 0.2s;
+    color: var(--blanc); padding: 0.5rem 1rem; border-radius: 8px;
+    cursor: pointer; font-size: 0.9rem; transition: all 0.2s;
   }
   .joueur-btn:hover { border-color: var(--rouge); }
   .joueur-btn.selected1 { border-color: var(--rouge); background: rgba(255,45,85,0.2); }
   .joueur-btn.selected2 { border-color: var(--orange); background: rgba(255,107,53,0.2); }
 
-  .selector-label {
-    font-size: 0.85rem; color: var(--gris); margin-bottom: 0.5rem;
-  }
-  .selector-hint {
-    font-size: 0.8rem; color: var(--gris);
-    margin-bottom: 1rem;
-    background: var(--noir3); padding: 0.4rem 0.8rem; border-radius: 6px;
-  }
+  .selector-label { font-size: 0.85rem; color: var(--gris); margin-bottom: 0.5rem; }
+  .selector-hint { font-size: 0.8rem; color: var(--gris); margin-bottom: 1rem; background: var(--noir3); padding: 0.4rem 0.8rem; border-radius: 6px; }
 
   .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-  .btn-action {
-    padding: 0.8rem 1.8rem; border-radius: 8px; border: none;
-    font-size: 1rem; font-weight: 700; cursor: pointer;
-    letter-spacing: 0.05em; transition: all 0.2s;
-  }
-  .btn-tirer {
-    background: linear-gradient(135deg, var(--rouge), var(--rouge-sombre));
-    color: white;
-  }
+  .btn-action { padding: 0.8rem 1.8rem; border-radius: 8px; border: none; font-size: 1rem; font-weight: 700; cursor: pointer; letter-spacing: 0.05em; transition: all 0.2s; }
+  .btn-tirer { background: linear-gradient(135deg, var(--rouge), var(--rouge-sombre)); color: white; }
   .btn-tirer:hover { transform: scale(1.05); filter: brightness(1.15); }
   .btn-tirer:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
   .btn-end { background: var(--noir3); color: var(--gris); border: 1px solid var(--gris); }
 
-  /* Accord en attente */
-  .accord-attente-bar {
-    display: none; background: var(--noir3); border: 1px solid var(--orange);
-    border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1rem;
-    max-width: 500px; text-align: center;
-  }
+  .accord-attente-bar { display: none; background: var(--noir3); border: 1px solid var(--orange); border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1rem; max-width: 500px; text-align: center; }
   .accord-attente-bar.visible { display: block; }
   .accord-timer { font-size: 2rem; font-weight: 900; color: var(--orange); }
 
-  /* ── ÉCRAN FIN ── */
+  /* ── FIN ── */
   #screen-fin { display: none; }
-  #screen-fin.visible {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; min-height: 100vh;
-    padding: 2rem; text-align: center;
-  }
-  .fin-title {
-    font-size: clamp(2rem, 6vw, 4rem); font-weight: 900;
-    color: var(--rouge); margin-bottom: 0.5rem;
-  }
+  #screen-fin.visible { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; text-align: center; }
+  .fin-title { font-size: clamp(2rem, 6vw, 4rem); font-weight: 900; color: var(--rouge); margin-bottom: 0.5rem; }
   .verdict-list { max-width: 600px; width: 100%; margin-top: 2rem; }
-  .verdict-item {
-    background: var(--noir3); border: 1px solid var(--noir2);
-    border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1rem;
-    text-align: left; display: flex; align-items: center; gap: 1rem;
-  }
+  .verdict-item { background: var(--noir3); border: 1px solid var(--noir2); border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1rem; text-align: left; display: flex; align-items: center; gap: 1rem; }
   .verdict-item:first-child { border-color: var(--or); }
-  .verdict-rank {
-    font-size: 1.5rem; font-weight: 900; min-width: 40px; text-align: center;
-  }
+  .verdict-rank { font-size: 1.5rem; font-weight: 900; min-width: 40px; text-align: center; }
   .verdict-nom { font-weight: 700; font-size: 1.1rem; }
   .verdict-pts { color: var(--or); font-size: 0.9rem; }
   .verdict-texte { color: var(--gris); font-size: 0.9rem; font-style: italic; margin-top: 0.3rem; }
 
-  /* ── Notification flash ── */
   .flash-notif {
     position: fixed; top: 1rem; right: 1rem;
     background: var(--noir3); border: 1px solid var(--rouge);
@@ -258,10 +184,7 @@
     border-radius: 10px; font-size: 0.9rem;
     animation: slide-in 0.3s ease; z-index: 999;
   }
-  @keyframes slide-in {
-    from { transform: translateX(120%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
+  @keyframes slide-in { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
 </style>
 </head>
 <body>
@@ -271,21 +194,22 @@
   <div class="logo">DIABLO</div>
   <div class="tagline">Le jeu qui décide pour toi</div>
 
-  <input class="input-host" id="host-name" placeholder="Ton prénom (hôte)" maxlength="20">
+  <!-- PAS de champ nom : l'hôte n'est PAS un joueur -->
   <button class="btn-primary" onclick="creerSession()">Créer la soirée</button>
 
   <div id="qr-section">
-    <div>Code de session :</div>
+    <div style="color:var(--gris);font-size:0.9rem">Code de session :</div>
     <div class="session-code" id="session-code">—</div>
     <img id="qr-img" width="200" height="200" alt="QR Code">
     <div class="join-url" id="join-url"></div>
-    <div style="color:var(--gris);font-size:0.85rem;margin-top:0.5rem;">
-      Joueurs connectés :
+
+    <div class="joueurs-counter">
+      Joueurs connectés : <span id="nb-joueurs">0</span>
     </div>
     <div class="joueurs-list" id="joueurs-lobby"></div>
-    <button class="btn-primary" id="btn-start-game" onclick="lancerPartie()">
-      🔴 Lancer DIABLO
-    </button>
+
+    <!-- Bouton lancer : visible dès le 1er joueur, actif dès 2 joueurs -->
+    <button id="btn-start" onclick="lancerPartie()"></button>
   </div>
 </div>
 
@@ -299,11 +223,8 @@
   <div class="oracle-arena">
     <div class="oracle-speech">
       <div class="oracle-icon" id="oracle-icon">👁️</div>
-
       <div class="carte-meta" id="carte-meta" style="display:none"></div>
-      <div class="oracle-message" id="oracle-message">
-        Je vous observe. La partie va commencer.
-      </div>
+      <div class="oracle-message" id="oracle-message">Je vous observe. La partie va commencer.</div>
       <div class="role-groupe" id="role-groupe" style="display:none"></div>
 
       <div class="accord-attente-bar" id="accord-attente-bar">
@@ -313,17 +234,13 @@
 
       <div class="selector-label">Sélectionne un ou deux joueurs :</div>
       <div class="selector-hint" id="selector-hint">
-        🔴 1 joueur sélectionné = carte solo &nbsp;|&nbsp; 2 joueurs = carte duo &nbsp;|&nbsp; 0 joueur = carte groupe
+        🔴 1 joueur = carte solo &nbsp;|&nbsp; 2 joueurs = carte duo &nbsp;|&nbsp; 0 joueur = carte groupe
       </div>
       <div class="joueur-selector" id="joueur-selector"></div>
 
       <div class="btn-group">
-        <button class="btn-action btn-tirer" id="btn-tirer" onclick="tirerCarte()">
-          🎴 L'Oracle décide
-        </button>
-        <button class="btn-action btn-end" onclick="terminerPartie()">
-          Jugement final
-        </button>
+        <button class="btn-action btn-tirer" id="btn-tirer" onclick="tirerCarte()">🎴 L'Oracle décide</button>
+        <button class="btn-action btn-end" onclick="terminerPartie()">Jugement final</button>
       </div>
     </div>
   </div>
@@ -334,37 +251,30 @@
   <div class="fin-title">⚖️ JUGEMENT FINAL</div>
   <div style="color:var(--gris);margin-bottom:1rem;">L'Oracle a tout vu. Tout retenu.</div>
   <div class="verdict-list" id="verdict-list"></div>
-  <button class="btn-primary" style="margin-top:2rem;" onclick="location.reload()">
-    Nouvelle soirée
-  </button>
+  <button class="btn-primary" style="margin-top:2rem;" onclick="location.reload()">Nouvelle soirée</button>
 </div>
 
 <script>
+const MIN_JOUEURS = 2;
 let ws = null;
 let sessionId = null;
-let joueurs = {};
+let joueurs = {}; // UNIQUEMENT les joueurs — l'hôte n'est PAS dedans
 let selectedJoueur1 = null;
 let selectedJoueur2 = null;
 let accordTimer = null;
 let accordSecondes = 30;
+let wsReconnectTimer = null;
 
-const oracleRepliques = {
-  idle: ["Je vous observe.", "En attente de votre prochaine erreur.", "Intéressant...", "Continuez."],
-  loading: ["Je consulte les abysses...", "Le sort se tisse...", "La décision est prise...", "Obéissez."]
-};
-
-// ─── SESSION ───────────────────────────────────────────────────────────────
+// ─── SESSION ──────────────────────────────────────────────────────────────
 
 async function creerSession() {
-  const nom = document.getElementById('host-name').value.trim() || 'Hôte';
   const res = await fetch('/api/session', {
     method: 'POST', headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ hostName: nom })
+    body: JSON.stringify({ hostName: 'Oracle' }) // l'hôte n'a pas de nom visible
   });
   const data = await res.json();
   sessionId = data.sessionId;
 
-  // QR Code
   const qrRes = await fetch(`/api/qr/${sessionId}`);
   const qrData = await qrRes.json();
   document.getElementById('session-code').textContent = sessionId;
@@ -376,26 +286,46 @@ async function creerSession() {
 }
 
 function connectWS() {
+  if (wsReconnectTimer) { clearTimeout(wsReconnectTimer); wsReconnectTimer = null; }
   const proto = location.protocol === 'https:' ? 'wss' : 'ws';
   ws = new WebSocket(`${proto}://${location.host}`);
 
-  ws.onopen = () => {
-    ws.send(JSON.stringify({ type: 'HOST_CONNECT', sessionId }));
-  };
-
-  ws.onmessage = (e) => {
-    const msg = JSON.parse(e.data);
-    handleMessage(msg);
-  };
-
-  ws.onclose = () => { if (wsReconnectTimer) clearTimeout(wsReconnectTimer); wsReconnectTimer = setTimeout(connectWS, 2000); };
+  ws.onopen = () => { ws.send(JSON.stringify({ type: 'HOST_CONNECT', sessionId })); };
+  ws.onmessage = (e) => { try { handleMessage(JSON.parse(e.data)); } catch {} };
+  ws.onclose = () => { wsReconnectTimer = setTimeout(connectWS, 2000); };
   ws.onerror = () => { ws.close(); };
 }
 
+// Lance la partie — bloqué si moins de MIN_JOUEURS
 function lancerPartie() {
   const nb = Object.keys(joueurs).length;
-  if (nb < MIN_JOUEURS) { flash(`⚠️ Il faut au moins ${MIN_JOUEURS} joueurs ! (${nb} connecté${nb>1?"s":""})`); return; }
-  ws.send(JSON.stringify({ type: "START_GAME", sessionId }));
+  if (nb < MIN_JOUEURS) {
+    flash(`⚠️ Il faut au moins ${MIN_JOUEURS} joueurs ! (${nb} connecté${nb > 1 ? 's' : ''})`);
+    return;
+  }
+  ws.send(JSON.stringify({ type: 'START_GAME', sessionId }));
+}
+
+// Met à jour le bouton lancer selon le nb de joueurs
+function updateBtnStart() {
+  const btn = document.getElementById('btn-start');
+  const nb = Object.keys(joueurs).length;
+  document.getElementById('nb-joueurs').textContent = nb;
+
+  if (nb === 0) {
+    btn.className = 'btn-start'; // caché
+    return;
+  }
+  btn.className = 'btn-start show';
+  if (nb >= MIN_JOUEURS) {
+    btn.className = 'btn-start show ready';
+    btn.textContent = `🔴 Lancer DIABLO (${nb} joueur${nb > 1 ? 's' : ''})`;
+    btn.disabled = false;
+  } else {
+    btn.className = 'btn-start show not-ready';
+    btn.textContent = `⏳ Encore ${MIN_JOUEURS - nb} joueur${MIN_JOUEURS - nb > 1 ? 's' : ''} requis...`;
+    btn.disabled = true;
+  }
 }
 
 // ─── MESSAGES ─────────────────────────────────────────────────────────────
@@ -404,19 +334,22 @@ function handleMessage(msg) {
   switch(msg.type) {
     case 'HOST_CONNECTED':
       joueurs = {};
-      (msg.joueurs || []).forEach(j => joueurs[j.id] = j);
+      (msg.joueurs || []).forEach(j => { joueurs[j.id] = j; });
       renderJoueursLobby();
+      updateBtnStart();
       break;
 
     case 'JOUEUR_JOINED':
+    case 'JOUEUR_RECONNECTED':
       joueurs[msg.joueurId] = { id: msg.joueurId, nom: msg.nom, palier: 0, points: 0 };
       renderJoueursLobby();
       updateBtnStart();
-      flash(`👋 ${msg.nom} a rejoint !`);
+      flash(`👋 ${msg.nom} ${msg.type === 'JOUEUR_RECONNECTED' ? 's\'est reconnecté' : 'a rejoint'} !`);
       break;
 
     case 'JOUEUR_DISCONNECTED':
       if (joueurs[msg.joueurId]) joueurs[msg.joueurId].connected = false;
+      flash(`⚠️ ${msg.nom} s'est déconnecté`);
       break;
 
     case 'GAME_STARTED':
@@ -426,8 +359,14 @@ function handleMessage(msg) {
       setOracleMessage(pickRandom([
         "Bonsoir, mortels. Je suis DIABLO. Ce soir, vous n'avez plus le choix.",
         "Ah, des volontaires. Fascinant. Commençons.",
-        "Je vous observe depuis longtemps. Ce soir, je parle."
+        "Je vous observe depuis longtemps. Ce soir, je parle.",
+        "Bienvenue en enfer. L'entrée est gratuite. La sortie... on verra."
       ]));
+      break;
+
+    case 'ERROR':
+      if (msg.code === 'NOT_ENOUGH_PLAYERS') flash(`⚠️ ${msg.msg}`);
+      else flash(`❌ ${msg.msg}`);
       break;
 
     case 'NOUVELLE_CARTE':
@@ -440,25 +379,24 @@ function handleMessage(msg) {
 
     case 'ACCORD_OUI':
       stopAccordTimer();
-      const oracleOui = pickRandom([
+      setOracleMessage(pickRandom([
         `Les deux ont dit oui. Ce qui se passe maintenant, c'est votre faute.`,
-        `Accord conclu. ${msg.joueur1} et ${msg.joueur2}... exécution.`,
+        `${msg.joueur1} et ${msg.joueur2}... accord conclu. Exécution.`,
         `Oh, tous les deux courageux ce soir. Je suis... impressionné.`
-      ]);
-      setOracleMessage(oracleOui, 'accord-oui');
+      ]), 'accord-oui');
       if (msg.points) flash(`⭐ +${msg.points} pts pour les deux !`);
-      updateJoueurPoints(msg);
+      if (joueurs[msg.joueur1]) joueurs[msg.joueur1].points = (joueurs[msg.joueur1].points || 0) + (msg.points || 0);
+      if (joueurs[msg.joueur2]) joueurs[msg.joueur2].points = (joueurs[msg.joueur2].points || 0) + (msg.points || 0);
       renderScores();
       break;
 
     case 'ACCORD_NON':
       stopAccordTimer();
-      const oracleNon = pickRandom([
+      setOracleMessage(pickRandom([
         "Le destin en a décidé autrement. L'Oracle protège.",
         "Pas ce soir. Une autre fois, sûrement.",
         "Quelqu'un a dit non. On ne saura jamais qui."
-      ]);
-      setOracleMessage(oracleNon, 'accord-non');
+      ]), 'accord-non');
       if (msg.penalite) flash(`🥃 Pénalité : ${msg.penalite}`);
       break;
 
@@ -478,8 +416,7 @@ function handleMessage(msg) {
       if (joueurs[msg.joueurId]) joueurs[msg.joueurId].palier = msg.palier;
       renderJoueursSelector();
       renderScores();
-      const palierNoms = ['Tiède','Chaud','Brûlant'];
-      flash(`🔥 ${msg.nom} passe en niveau ${palierNoms[msg.palier]} !`);
+      flash(`🔥 ${msg.nom} passe en ${['Tiède','Chaud','Brûlant'][msg.palier]} !`);
       break;
 
     case 'GAME_OVER':
@@ -493,19 +430,10 @@ function handleMessage(msg) {
 
 function tirerCarte() {
   if (!ws) return;
-  const joueur1Id = selectedJoueur1;
-  const joueur2Id = selectedJoueur2;
-
   document.getElementById('btn-tirer').disabled = true;
   setTimeout(() => document.getElementById('btn-tirer').disabled = false, 1500);
-
-  setOracleMessage(pickRandom(oracleRepliques.loading), '');
-
-  ws.send(JSON.stringify({
-    type: 'TIRER_CARTE', sessionId,
-    joueurCible: joueur1Id || null,
-    joueur2: joueur2Id || null
-  }));
+  setOracleMessage(pickRandom(["Je consulte les abysses...", "Le sort se tisse...", "La décision est prise...", "Obéissez."]));
+  ws.send(JSON.stringify({ type: 'TIRER_CARTE', sessionId, joueurCible: selectedJoueur1 || null, joueur2: selectedJoueur2 || null }));
 }
 
 function afficherCarte(carte) {
@@ -517,14 +445,12 @@ function afficherCarte(carte) {
   if (carte.palierNom) meta += `<span class="badge ${palierBadge[carte.palierNom]}">${palierNoms[carte.palierNom]||carte.palierNom}</span>`;
   if (carte.type) meta += `<span class="badge badge-type">${typeNoms[carte.type]||carte.type}</span>`;
   if (carte.points) meta += `<span class="badge badge-points">+${carte.points} pts</span>`;
-
   document.getElementById('carte-meta').innerHTML = meta;
   document.getElementById('carte-meta').style.display = 'flex';
 
-  const icons = { confession:'🗣️', defi:'⚡', jugement:'⚖️', duo:'🔀', shot:'🥃', default:'👁️' };
-  document.getElementById('oracle-icon').textContent = icons[carte.type] || icons.default;
-
-  setOracleMessage(carte.texte || '...', '');
+  const icons = { confession:'🗣️', defi:'⚡', jugement:'⚖️', duo:'🔀', shot:'🥃' };
+  document.getElementById('oracle-icon').textContent = icons[carte.type] || '👁️';
+  setOracleMessage(carte.texte || '...');
 
   if (carte.role_groupe) {
     document.getElementById('role-groupe').textContent = '👥 ' + carte.role_groupe;
@@ -556,42 +482,30 @@ function stopAccordTimer() {
 function renderJoueursLobby() {
   const el = document.getElementById('joueurs-lobby');
   el.innerHTML = Object.values(joueurs).map(j =>
-    `<span class="joueur-tag">
-      <span class="palier-dot palier-${j.palier||0}"></span>${j.nom}
-    </span>`
+    `<span class="joueur-tag"><span class="dot dot-${j.palier||0}"></span>${j.nom}</span>`
   ).join('');
 }
 
 function renderJoueursSelector() {
   const el = document.getElementById('joueur-selector');
+  const palierIcons = ['🌊','🔥','💀'];
   el.innerHTML = Object.values(joueurs).map(j => {
-    const palierNoms = ['🌊','🔥','💀'];
     const cls = j.id === selectedJoueur1 ? 'selected1' : j.id === selectedJoueur2 ? 'selected2' : '';
-    return `<button class="joueur-btn ${cls}" onclick="selectJoueur('${j.id}')">
-      ${palierNoms[j.palier||0]} ${j.nom}
-    </button>`;
+    return `<button class="joueur-btn ${cls}" onclick="selectJoueur('${j.id}')">${palierIcons[j.palier||0]} ${j.nom}</button>`;
   }).join('');
 }
 
 function selectJoueur(id) {
-  if (selectedJoueur1 === id) {
-    selectedJoueur1 = selectedJoueur2;
-    selectedJoueur2 = null;
-  } else if (selectedJoueur2 === id) {
-    selectedJoueur2 = null;
-  } else if (!selectedJoueur1) {
-    selectedJoueur1 = id;
-  } else if (!selectedJoueur2) {
-    selectedJoueur2 = id;
-  } else {
-    selectedJoueur1 = selectedJoueur2;
-    selectedJoueur2 = id;
-  }
+  if (selectedJoueur1 === id) { selectedJoueur1 = selectedJoueur2; selectedJoueur2 = null; }
+  else if (selectedJoueur2 === id) { selectedJoueur2 = null; }
+  else if (!selectedJoueur1) { selectedJoueur1 = id; }
+  else if (!selectedJoueur2) { selectedJoueur2 = id; }
+  else { selectedJoueur1 = selectedJoueur2; selectedJoueur2 = id; }
   renderJoueursSelector();
 
   const hint = document.getElementById('selector-hint');
   if (selectedJoueur1 && selectedJoueur2) {
-    hint.textContent = `🎯 Duo sélectionné : ${joueurs[selectedJoueur1]?.nom} & ${joueurs[selectedJoueur2]?.nom}`;
+    hint.textContent = `🎯 Duo : ${joueurs[selectedJoueur1]?.nom} & ${joueurs[selectedJoueur2]?.nom}`;
     hint.style.color = 'var(--orange)';
   } else if (selectedJoueur1) {
     hint.textContent = `🎯 Solo : ${joueurs[selectedJoueur1]?.nom} — sélectionne un 2e pour un duo`;
@@ -604,15 +518,11 @@ function selectJoueur(id) {
 
 function renderScores() {
   const el = document.getElementById('scores-bar');
+  const palierIcons = ['🌊','🔥','💀'];
   el.innerHTML = Object.values(joueurs)
     .sort((a,b) => (b.points||0)-(a.points||0))
-    .map(j => {
-      const palierIcons = ['🌊','🔥','💀'];
-      return `<div class="score-item">
-        ${palierIcons[j.palier||0]} ${j.nom}
-        <span class="score-pts">${j.points||0}</span>
-      </div>`;
-    }).join('');
+    .map(j => `<div class="score-item">${palierIcons[j.palier||0]} ${j.nom} <span class="score-pts">${j.points||0}</span></div>`)
+    .join('');
 }
 
 function renderFin(verdicts) {
@@ -648,14 +558,6 @@ function terminerPartie() {
   ws.send(JSON.stringify({ type: 'END_GAME', sessionId }));
 }
 
-function updateJoueurPoints(msg) {
-  if (msg.joueur1 && msg.joueur2 && msg.points) {
-    Object.values(joueurs).forEach(j => {
-      if (j.nom === msg.joueur1 || j.nom === msg.joueur2) j.points = (j.points||0) + msg.points;
-    });
-  }
-}
-
 function flash(msg) {
   const el = document.createElement('div');
   el.className = 'flash-notif';
@@ -665,27 +567,6 @@ function flash(msg) {
 }
 
 function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-function updateBtnStart() {
-  const btn = document.getElementById('btn-start-game');
-  const nb = Object.keys(joueurs).length;
-  if (nb >= MIN_JOUEURS) {
-    btn.classList.add('visible');
-    btn.textContent = 🔴 Lancer DIABLO ( joueur);
-    btn.style.opacity = '1';
-    btn.disabled = false;
-  } else if (nb > 0) {
-    btn.classList.add('visible');
-    btn.textContent = ⏳ Encore  joueur requis...;
-    btn.style.opacity = '0.5';
-    btn.disabled = true;
-  } else {
-    btn.classList.remove('visible');
-  }
-}
 </script>
 </body>
 </html>
-
-
-
