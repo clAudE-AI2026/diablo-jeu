@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -326,8 +326,19 @@ function handleMessage(msg) {
     case 'JOIN_OK':
       joueurId = msg.joueurId;
       palierActuel = msg.palier || 0;
+      pointsActuels = msg.points || 0;
+      // FIX 3 : persister l'ID pour les reconnexions
+      sessionStorage.setItem('diablo_joueurId', joueurId);
+      sessionStorage.setItem('diablo_nom', msg.nom);
       document.getElementById('nom-affiché').textContent = msg.nom;
-      showScreen('lobby-joueur');
+      // Si c'est une reconnexion en cours de partie, reprendre directement le bon écran
+      if (msg.isReconnect && msg.etatSession === 'jeu') {
+        showScreen('jeu'); updateUI();
+      } else if (msg.isReconnect && msg.etatSession === 'fin') {
+        showScreen('fin');
+      } else {
+        showScreen('lobby-joueur');
+      }
       break;
 
     case 'GAME_STARTED':
@@ -504,3 +515,4 @@ function vibratePhone(pattern) {
 </script>
 </body>
 </html>
+
