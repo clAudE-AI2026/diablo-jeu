@@ -1,10 +1,11 @@
 {
   "meta": {
-    "version": "6.0",
+    "version": "9.0",
     "jeu": "DIABLO",
     "niveaux": ["tiede", "chaud", "brulant"],
     "types": ["solo", "duo", "vote", "groupe", "shot"],
-    "note": "v6.0 - Rythme varie, absurde-torride, duos 20%, groupe contre joueur, Oracle designe toujours"
+    "total": 360,
+    "note": "v9.0 - 120 cartes par niveau, rythme varie, contacts progressifs, Oracle designe toujours"
   },
   "repliques_oracle": {
     "intro": [
@@ -42,7 +43,8 @@
       "Je prends note. Shot.",
       "Pas ce soir. Shot quand meme.",
       "L Oracle comprend. L Oracle ne pardonne pas. Shot.",
-      "La prochaine sera pire. Shot maintenant."
+      "La prochaine sera pire. Shot maintenant.",
+      "Interesse par quelque chose de pire ? Non ? Shot alors."
     ],
     "groupe_lancement": [
       "Le groupe a 30 secondes pour convaincre {joueur}. Tout est permis sauf le contact force.",
@@ -134,757 +136,370 @@
   },
   "cartes": {
     "tiede": [
-      {
-        "id": "T001", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour se tenir les mains face a face, yeux dans les yeux, pendant 1 minute complete pendant que la partie continue.",
-        "texte_joueur": "DIABLO ordonne : mains dans les mains, yeux dans les yeux. 1 minute. La partie continue autour de vous.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "T002", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit seduire la chaise la plus proche pendant 30 secondes comme si c etait la personne la plus attirante de la piece. Le groupe juge la performance.",
-        "texte_joueur": "DIABLO ordonne : seduis cette chaise pendant 30 secondes comme si c etait la personne que tu trouves la plus attirante ici. Le groupe juge.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T003", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe serait le plus agreable a embrasser ? Vote en secret.",
-        "texte_vote": "Vote : qui serait le plus agreable a embrasser ?",
-        "texte_joueur": "DIABLO t a designe. Le groupe a vote pour toi.",
-        "points": 12, "penalite_refus": "shot"
-      },
-      {
-        "id": "T004", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit donner un massage du cou et des epaules de 1 minute a {joueur2}.",
-        "texte_joueur": "DIABLO ordonne : massage du cou et des epaules de la personne designee. 1 minute. Les mains vont sous le col.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "T005", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler son fantasme sexuel le plus recurrent en une phrase.",
-        "texte_joueur": "DIABLO veut ton fantasme sexuel le plus recurrent. Une phrase. Sans euphemisme.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "T006", "type": "shot",
-        "texte": "L Oracle decrete : celui qui a eu une pensee sexuelle sur quelqu un dans cette piece ce soir boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      },
-      {
-        "id": "T007", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. Dos a dos, ils doivent essayer de faire rire l autre en parlant pendant 30 secondes. Le premier qui rit perd et boit.",
-        "texte_joueur": "DIABLO ordonne : dos a dos. Vous parlez chacun votre tour pour faire rire l autre. Le premier qui rit boit.",
-        "points": 12, "penalite_refus": "shot"
-      },
-      {
-        "id": "T008", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe est le plus torride en prive selon vous ? Vote.",
-        "texte_vote": "Vote : qui est le plus torride en prive ?",
-        "texte_joueur": "DIABLO t a designe. Confirme ou donne un exemple qui prouve que le groupe a raison.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T009", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler le lieu le plus improbable ou il a deja eu un rapport sexuel.",
-        "texte_joueur": "DIABLO veut le lieu le plus improbable ou tu as deja eu un rapport sexuel.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "T010", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de poser sa tete sur l epaule de quelqu un de son choix pendant 2 minutes. Arguments, seduction, negociation : tout est permis.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre. Si tu cedes, tu poses ta tete sur l epaule de quelqu un pendant 2 minutes.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "T011", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit mimer comment il se comporte quand il veut vraiment coucher avec quelqu un. 20 secondes sans paroles.",
-        "texte_joueur": "DIABLO ordonne : montre au groupe comment tu te comportes quand tu veux vraiment coucher avec quelqu un. 20 secondes. Sans paroles.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "T012", "type": "shot",
-        "texte": "L Oracle decrete : celui qui a couche avec quelqu un qu il connaissait depuis moins d une semaine boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      },
-      {
-        "id": "T013", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. L un masse le cuir chevelu de l autre avec les doigts pendant 1 minute, les deux les yeux fermes.",
-        "texte_joueur": "DIABLO ordonne : massage du cuir chevelu. 1 minute. Les deux yeux fermes. Puis inversez si vous voulez.",
-        "points": 25, "penalite_refus": "shot"
-      },
-      {
-        "id": "T014", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe a l air le plus sage mais est clairement le plus deprave ? Vote.",
-        "texte_vote": "Vote : qui a l air sage mais est le plus deprave ?",
-        "texte_joueur": "DIABLO t a designe. Prouve que le groupe a raison avec une anecdote.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T015", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler avec qui dans ce groupe il dormirait ce soir si tout etait permis.",
-        "texte_joueur": "DIABLO veut savoir : avec qui dans ce groupe dormirais-tu ce soir si tout etait permis ? Dis son nom.",
-        "points": 25, "penalite_refus": "shot"
-      },
-      {
-        "id": "T016", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit faire un strip-tease de 30 secondes. Au minimum la veste ou les chaussures.",
-        "texte_joueur": "DIABLO ordonne : strip-tease de 30 secondes. Minimum veste ou chaussures. Fais-le bien.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "T017", "type": "shot",
-        "texte": "L Oracle decrete : celui qui a deja couche avec quelqu un dans cette piece boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      },
-      {
-        "id": "T018", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. L un trace lentement avec un doigt un chemin sur le bras de l autre du poignet jusqu a l epaule. 30 secondes. Puis inversez.",
-        "texte_joueur": "DIABLO ordonne : l un trace lentement un chemin du poignet a l epaule de l autre avec son doigt. 30 secondes. Puis inversez.",
-        "points": 25, "penalite_refus": "shot"
-      },
-      {
-        "id": "T019", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe serait le plus torride au lit ? Vote en secret.",
-        "texte_vote": "Vote : qui serait le plus torride au lit ?",
-        "texte_joueur": "DIABLO t a designe. Le groupe a tranche. Tu peux confirmer.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T020", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler sa position sexuelle preferee sans euphemisme.",
-        "texte_joueur": "DIABLO veut ta position sexuelle preferee. Sans euphemisme possible.",
-        "points": 25, "penalite_refus": "shot"
-      },
-      {
-        "id": "T021", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire un strip-tease de 20 secondes. Le groupe peut promettre n importe quoi.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre. Si tu cedes, tu fais un strip-tease de 20 secondes.",
-        "points": 25, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "T022", "type": "shot",
-        "texte": "L Oracle decrete : celui qui regarde regulierement du porno boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      },
-      {
-        "id": "T023", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit faire la demonstration de comment il embrasse sur son avant-bras. 20 secondes devant le groupe.",
-        "texte_joueur": "DIABLO ordonne : montre comment tu embrasses sur ton avant-bras. 20 secondes. Le groupe note.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T024", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe serait le plus agreable a reveiller apres une nuit ? Vote.",
-        "texte_vote": "Vote : qui serait le plus agreable a reveiller le matin apres une nuit ?",
-        "texte_joueur": "DIABLO t a designe. Le groupe a vote. L Oracle approuve.",
-        "points": 12, "penalite_refus": "shot"
-      },
-      {
-        "id": "T025", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour un slow serre de 45 secondes sans musique. Contact complet.",
-        "texte_joueur": "DIABLO ordonne : slow serre, 45 secondes, sans musique. Contact complet.",
-        "points": 30, "penalite_refus": "shot"
-      },
-      {
-        "id": "T026", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler la chose la plus osee qu il ait faite lors d une soiree comme celle-ci.",
-        "texte_joueur": "DIABLO veut la chose la plus osee que tu aies faite lors d une soiree comme celle-ci. Avec details.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "T027", "type": "shot",
-        "texte": "L Oracle decrete : celui qui a deja envoye un sexto boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      },
-      {
-        "id": "T028", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit faire un regard seducteur appuye sur {joueur2} pendant 20 secondes sans detourner les yeux. {joueur2} doit soutenir le regard.",
-        "texte_joueur": "DIABLO ordonne : regard seducteur sur la personne designee. 20 secondes. Yeux dans les yeux. Pas de sourire.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T029", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe donnerait le plus envie de rester jusqu au matin ? Vote.",
-        "texte_vote": "Vote : qui donnerait le plus envie de rester jusqu au matin ?",
-        "texte_joueur": "DIABLO t a designe. Le groupe t a choisi.",
-        "points": 12, "penalite_refus": "shot"
-      },
-      {
-        "id": "T030", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit envoyer un GIF coquin au dernier contact de ses messages. Le groupe choisit le GIF.",
-        "texte_joueur": "DIABLO ordonne : GIF coquin au dernier contact de tes messages. Le groupe choisit lequel.",
-        "points": 25, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "T031", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le nom de la personne dans cette piece qu il trouve la plus seduisante.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de reveler le nom de la personne ici que tu trouves la plus seduisante.",
-        "points": 20, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "T032", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. L un s assoit sur les genoux de l autre pendant 2 minutes pendant que la partie continue.",
-        "texte_joueur": "DIABLO ordonne : l un s assoit sur les genoux de l autre. 2 minutes. La partie continue normalement.",
-        "points": 35, "penalite_refus": "shot"
-      },
-      {
-        "id": "T033", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe a la plus belle facon d embrasser selon vous ? Vote.",
-        "texte_vote": "Vote : qui embrasse le mieux selon vous ?",
-        "texte_joueur": "DIABLO t a designe. Fais une demonstration sur ton avant-bras.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T034", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler la pensee la plus explicitement sexuelle qu il ait eu ce soir sur quelqu un dans cette piece.",
-        "texte_joueur": "DIABLO veut la pensee la plus explicitement sexuelle que tu aies eue ce soir sur quelqu un ici.",
-        "points": 30, "penalite_refus": "shot"
-      },
-      {
-        "id": "T035", "type": "shot",
-        "texte": "L Oracle decrete : celui qui a eu une aventure d un soir cette annee boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      },
-      {
-        "id": "T036", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. L un trace lentement des cercles dans le cou de l autre avec son doigt pendant 30 secondes. Puis inversez.",
-        "texte_joueur": "DIABLO ordonne : traces lentes dans le cou avec un doigt. 30 secondes. Puis inversez.",
-        "points": 35, "penalite_refus": "shot"
-      },
-      {
-        "id": "T037", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit mimer quelqu un du groupe en train de seduire quelqu un. Le groupe devine qui il imite.",
-        "texte_joueur": "DIABLO ordonne : imite quelqu un du groupe en train de seduire quelqu un. Le groupe devine qui tu imites.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T038", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe a le regard le plus sexuellement troublant ? Vote.",
-        "texte_vote": "Vote : qui a le regard le plus sexuellement troublant ?",
-        "texte_joueur": "DIABLO t a designe. Utilise ce regard sur {joueur2} pendant 15 secondes.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T039", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de danser de facon suggestive pendant 20 secondes. Tout est permis pour convaincre.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de danser de facon suggestive pendant 20 secondes.",
-        "points": 20, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "T040", "type": "shot",
-        "texte": "L Oracle decrete : celui qui a deja eu un rapport sexuel dans une voiture boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      },
-      {
-        "id": "T041", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler la chose la plus torride qu il ait jamais faite en public.",
-        "texte_joueur": "DIABLO veut la chose la plus torride que tu aies faite en public. Contexte et details.",
-        "points": 25, "penalite_refus": "shot"
-      },
-      {
-        "id": "T042", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe serait le plus difficile a resister si il essayait vraiment de seduire ? Vote.",
-        "texte_vote": "Vote : qui serait le plus difficile a resister ?",
-        "texte_joueur": "DIABLO t a designe. Prouve ce pouvoir sur {joueur2} pendant 15 secondes.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "T043", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour se decrire mutuellement en termes physiques positifs. L un puis l autre. 30 secondes chacun.",
-        "texte_joueur": "DIABLO ordonne : decrivez-vous mutuellement en termes physiques positifs. L un puis l autre. 30 secondes chacun.",
-        "points": 30, "penalite_refus": "shot"
-      },
-      {
-        "id": "T044", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler son scenario ideal pour une premiere nuit avec quelqu un qui lui plait vraiment.",
-        "texte_joueur": "DIABLO veut ton scenario ideal pour une premiere nuit avec quelqu un qui te plait vraiment. Detaille.",
-        "points": 25, "penalite_refus": "shot"
-      },
-      {
-        "id": "T045", "type": "shot",
-        "texte": "L Oracle decrete : celui qui pense en ce moment a coucher avec quelqu un dans cette piece boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      },
-      {
-        "id": "T046", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de choisir quelqu un et de lui chuchoter quelque chose a l oreille. Le groupe ne doit pas entendre.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de chuchoter quelque chose a quelqu un. Le groupe ne doit pas entendre.",
-        "points": 25, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "T047", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler le truc sexuel qu il fait et que ses partenaires adorent.",
-        "texte_joueur": "DIABLO veut le truc sexuel que tu fais et que tes partenaires adorent.",
-        "points": 30, "penalite_refus": "shot"
-      },
-      {
-        "id": "T048", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe serait le meilleur amant ou amante sans aucun doute ? Vote.",
-        "texte_vote": "Vote : qui serait le meilleur amant ou la meilleure amante ?",
-        "texte_joueur": "DIABLO t a designe. Confirme avec quelque chose de concret.",
-        "points": 15, "penalite_refus": "shot"
-      },
-      {
-        "id": "T049", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour se chuchoter mutuellement a l oreille ce qu ils pensent l un de l autre physiquement. En meme temps.",
-        "texte_joueur": "DIABLO ordonne : chacun chuchote a l oreille de l autre ce qu il pense de lui physiquement. En meme temps.",
-        "points": 35, "penalite_refus": "shot"
-      },
-      {
-        "id": "T050", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler son record personnel : le plus grand nombre de partenaires en une semaine.",
-        "texte_joueur": "DIABLO veut ton record : le plus grand nombre de partenaires sexuels en une seule semaine.",
-        "points": 20, "penalite_refus": "shot"
-      }
+      {"id":"T001","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire un regard seducteur appuye sur {joueur2} pendant 20 secondes sans detourner les yeux.","texte_joueur":"DIABLO ordonne : regard seducteur sur la personne designee. 20 secondes. Yeux dans les yeux.","points":12,"penalite_refus":"shot"},
+      {"id":"T002","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour se tenir les mains face a face pendant 1 minute pendant que la partie continue.","texte_joueur":"DIABLO ordonne : mains dans les mains, face a face. 1 minute. La partie continue autour de vous.","points":15,"penalite_refus":"shot"},
+      {"id":"T003","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus agreable a embrasser ? Vote en secret.","texte_vote":"Vote : qui serait le plus agreable a embrasser ?","texte_joueur":"DIABLO t a designe. Le groupe a vote pour toi.","points":10,"penalite_refus":"shot"},
+      {"id":"T004","type":"solo","texte":"L Oracle designe {joueur}. Il doit seduire la chaise la plus proche pendant 30 secondes comme si c etait la personne la plus attirante de la piece.","texte_joueur":"DIABLO ordonne : seduis cette chaise pendant 30 secondes comme si c etait la personne la plus attirante ici.","points":12,"penalite_refus":"shot"},
+      {"id":"T005","type":"solo","texte":"L Oracle designe {joueur}. Il doit donner un massage des epaules de 45 secondes a {joueur2}.","texte_joueur":"DIABLO ordonne : massage des epaules de la personne designee. 45 secondes. Plein effort.","points":15,"penalite_refus":"shot"},
+      {"id":"T006","type":"shot","texte":"L Oracle decrete : celui qui a eu une pensee sexuelle sur quelqu un dans cette piece ce soir boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T007","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa chanson honte, celle qu il ecoute en secret, et en fredonner 10 secondes.","texte_joueur":"DIABLO veut ta chanson honte. Celle que tu assumes pas. Et tu fredonne 10 secondes.","points":12,"penalite_refus":"shot"},
+      {"id":"T008","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de poser sa tete sur l epaule de quelqu un pendant 2 minutes.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre. Si tu cedes, tu poses ta tete sur l epaule de quelqu un pendant 2 minutes.","points":15,"penalite_refus":"shot"},
+      {"id":"T009","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe est le plus torride en prive selon vous ? Vote.","texte_vote":"Vote : qui est le plus torride en prive ?","texte_joueur":"DIABLO t a designe. Confirme ou donne un exemple qui prouve que le groupe a raison.","points":12,"penalite_refus":"shot"},
+      {"id":"T010","type":"solo","texte":"L Oracle designe {joueur}. Il doit mimer comment il se comporte quand il veut vraiment plaire a quelqu un. 20 secondes sans paroles.","texte_joueur":"DIABLO ordonne : montre au groupe comment tu te comportes quand tu veux vraiment plaire a quelqu un. 20 secondes. Sans paroles.","points":12,"penalite_refus":"shot"},
+      {"id":"T011","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un masse le cuir chevelu de l autre avec les doigts pendant 1 minute, les deux les yeux fermes.","texte_joueur":"DIABLO ordonne : massage du cuir chevelu. 1 minute. Les deux yeux fermes.","points":20,"penalite_refus":"shot"},
+      {"id":"T012","type":"shot","texte":"L Oracle decrete : celui qui a couche avec quelqu un qu il connaissait depuis moins d une semaine boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T013","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire la demonstration de comment il embrasse sur son avant-bras. 15 secondes devant le groupe.","texte_joueur":"DIABLO ordonne : montre comment tu embrasses sur ton avant-bras. 15 secondes. Le groupe note.","points":12,"penalite_refus":"shot"},
+      {"id":"T014","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a l air le plus sage mais est clairement le plus deprave ? Vote.","texte_vote":"Vote : qui a l air sage mais est le plus deprave ?","texte_joueur":"DIABLO t a designe. Prouve que le groupe a raison avec une anecdote.","points":12,"penalite_refus":"shot"},
+      {"id":"T015","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler avec qui dans ce groupe il dormirait ce soir si tout etait permis.","texte_joueur":"DIABLO veut savoir : avec qui dans ce groupe dormirais-tu ce soir si tout etait permis ? Dis son nom.","points":20,"penalite_refus":"shot"},
+      {"id":"T016","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire un strip-tease de 30 secondes. Au minimum la veste ou les chaussures.","texte_joueur":"DIABLO ordonne : strip-tease de 30 secondes. Minimum veste ou chaussures. Fais-le bien.","points":15,"penalite_refus":"shot"},
+      {"id":"T017","type":"shot","texte":"L Oracle decrete : celui qui a deja couche avec quelqu un dans cette piece boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T018","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un trace lentement avec un doigt un chemin sur le bras de l autre du poignet jusqu a l epaule. 30 secondes. Puis inversez.","texte_joueur":"DIABLO ordonne : l un trace lentement un chemin du poignet a l epaule de l autre. 30 secondes. Puis inversez.","points":20,"penalite_refus":"shot"},
+      {"id":"T019","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus torride au lit ? Vote en secret.","texte_vote":"Vote : qui serait le plus torride au lit ?","texte_joueur":"DIABLO t a designe. Le groupe a tranche. Tu peux confirmer.","points":12,"penalite_refus":"shot"},
+      {"id":"T020","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa position sexuelle preferee sans euphemisme.","texte_joueur":"DIABLO veut ta position sexuelle preferee. Sans euphemisme possible.","points":20,"penalite_refus":"shot"},
+      {"id":"T021","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le nom de la personne qu il trouve la plus seduisante ici ce soir.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler le nom de la personne que tu trouves la plus seduisante ici.","points":20,"penalite_refus":"shot"},
+      {"id":"T022","type":"shot","texte":"L Oracle decrete : celui qui regarde regulierement du porno boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T023","type":"solo","texte":"L Oracle designe {joueur}. Il doit poser sa main sur la cuisse de {joueur2} et la laisser 1 minute pendant que la partie continue.","texte_joueur":"DIABLO ordonne : pose ta main sur la cuisse de la personne designee. Elle reste 1 minute. La partie continue.","points":20,"penalite_refus":"shot"},
+      {"id":"T024","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus agreable a reveiller apres une nuit ? Vote.","texte_vote":"Vote : qui serait le plus agreable a reveiller le matin apres une nuit ?","texte_joueur":"DIABLO t a designe. Le groupe a vote. L Oracle approuve.","points":10,"penalite_refus":"shot"},
+      {"id":"T025","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour un slow serre de 45 secondes sans musique. Contact complet.","texte_joueur":"DIABLO ordonne : slow serre, 45 secondes, sans musique. Contact complet.","points":25,"penalite_refus":"shot"},
+      {"id":"T026","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus osee qu il ait faite lors d une soiree comme celle-ci.","texte_joueur":"DIABLO veut la chose la plus osee que tu aies faite lors d une soiree comme celle-ci.","points":15,"penalite_refus":"shot"},
+      {"id":"T027","type":"shot","texte":"L Oracle decrete : celui qui a deja envoye un sexto boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T028","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler son fantasme sexuel le plus recurrent en une phrase.","texte_joueur":"DIABLO veut ton fantasme sexuel le plus recurrent. Une phrase. Sans euphemisme.","points":15,"penalite_refus":"shot"},
+      {"id":"T029","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe donnerait le plus envie de rester jusqu au matin ? Vote.","texte_vote":"Vote : qui donnerait le plus envie de rester jusqu au matin ?","texte_joueur":"DIABLO t a designe. Le groupe t a choisi.","points":10,"penalite_refus":"shot"},
+      {"id":"T030","type":"solo","texte":"L Oracle designe {joueur}. Il doit envoyer un GIF coquin au dernier contact de ses messages. Le groupe choisit le GIF.","texte_joueur":"DIABLO ordonne : GIF coquin au dernier contact de tes messages. Le groupe choisit lequel.","points":20,"penalite_refus":"2 shots"},
+      {"id":"T031","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un s assoit sur les genoux de l autre pendant 2 minutes pendant que la partie continue.","texte_joueur":"DIABLO ordonne : l un s assoit sur les genoux de l autre. 2 minutes. La partie continue normalement.","points":30,"penalite_refus":"shot"},
+      {"id":"T032","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a la plus belle facon d embrasser selon vous ? Vote.","texte_vote":"Vote : qui embrasse le mieux selon vous ?","texte_joueur":"DIABLO t a designe. Fais une demonstration sur ton avant-bras.","points":12,"penalite_refus":"shot"},
+      {"id":"T033","type":"solo","texte":"L Oracle designe {joueur}. Il doit choisir quelqu un et lui chuchoter a l oreille ce qu il pense de lui physiquement.","texte_joueur":"DIABLO ordonne : choisis quelqu un. Chuchote-lui ce que tu penses de lui physiquement. Le groupe ne doit pas entendre.","points":20,"penalite_refus":"shot"},
+      {"id":"T034","type":"shot","texte":"L Oracle decrete : celui qui a eu une aventure d un soir cette annee boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T035","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire un strip-tease de 20 secondes.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre. Si tu cedes, tu fais un strip-tease de 20 secondes.","points":20,"penalite_refus":"shot"},
+      {"id":"T036","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un trace lentement des cercles dans le cou de l autre avec son doigt pendant 30 secondes. Puis inversez.","texte_joueur":"DIABLO ordonne : traces lentes dans le cou avec un doigt. 30 secondes. Puis inversez.","points":25,"penalite_refus":"shot"},
+      {"id":"T037","type":"solo","texte":"L Oracle designe {joueur}. Il doit mimer quelqu un du groupe en train de seduire quelqu un. Le groupe devine qui il imite.","texte_joueur":"DIABLO ordonne : imite quelqu un du groupe en train de seduire. Le groupe devine qui tu imites.","points":12,"penalite_refus":"shot"},
+      {"id":"T038","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le regard le plus troublant ce soir ? Vote.","texte_vote":"Vote : qui a le regard le plus troublant ?","texte_joueur":"DIABLO t a designe. Utilise ce regard sur {joueur2} pendant 15 secondes.","points":12,"penalite_refus":"shot"},
+      {"id":"T039","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le lieu le plus improbable ou il a deja eu un rapport sexuel.","texte_joueur":"DIABLO veut le lieu le plus improbable ou tu as deja eu un rapport sexuel.","points":15,"penalite_refus":"shot"},
+      {"id":"T040","type":"shot","texte":"L Oracle decrete : celui qui a deja eu un rapport sexuel dans une voiture boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T041","type":"solo","texte":"L Oracle designe {joueur}. Il doit danser de facon suggestive pendant 30 secondes sur une chanson imaginaire.","texte_joueur":"DIABLO ordonne : danse suggestive pendant 30 secondes sur une chanson imaginaire. Le groupe juge.","points":15,"penalite_refus":"shot"},
+      {"id":"T042","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus difficile a resister si il essayait vraiment de seduire ? Vote.","texte_vote":"Vote : qui serait le plus difficile a resister ?","texte_joueur":"DIABLO t a designe. Prouve ce pouvoir sur {joueur2} pendant 15 secondes.","points":15,"penalite_refus":"shot"},
+      {"id":"T043","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour se decrire mutuellement en termes physiques positifs. L un puis l autre. 30 secondes chacun.","texte_joueur":"DIABLO ordonne : decrivez-vous mutuellement en termes physiques positifs. L un puis l autre. 30 secondes chacun.","points":25,"penalite_refus":"shot"},
+      {"id":"T044","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler son scenario ideal pour une premiere nuit avec quelqu un qui lui plait vraiment.","texte_joueur":"DIABLO veut ton scenario ideal pour une premiere nuit avec quelqu un qui te plait vraiment.","points":20,"penalite_refus":"shot"},
+      {"id":"T045","type":"shot","texte":"L Oracle decrete : celui qui pense en ce moment a coucher avec quelqu un dans cette piece boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T046","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de danser de facon suggestive pendant 20 secondes.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de danser de facon suggestive pendant 20 secondes.","points":15,"penalite_refus":"shot"},
+      {"id":"T047","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le truc qu il fait et que ses partenaires adorent.","texte_joueur":"DIABLO veut le truc que tu fais et que tes partenaires adorent.","points":20,"penalite_refus":"shot"},
+      {"id":"T048","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le meilleur amant ou amante sans aucun doute ? Vote.","texte_vote":"Vote : qui serait le meilleur amant ou la meilleure amante ?","texte_joueur":"DIABLO t a designe. Confirme avec quelque chose de concret.","points":12,"penalite_refus":"shot"},
+      {"id":"T049","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour se chuchoter mutuellement a l oreille ce qu ils pensent l un de l autre physiquement. En meme temps.","texte_joueur":"DIABLO ordonne : chacun chuchote a l oreille de l autre ce qu il pense de lui physiquement. En meme temps.","points":30,"penalite_refus":"shot"},
+      {"id":"T050","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler son record personnel : le plus grand nombre de partenaires en une semaine.","texte_joueur":"DIABLO veut ton record : le plus grand nombre de partenaires en une seule semaine.","points":15,"penalite_refus":"shot"},
+      {"id":"T051","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire une entree dans la piece comme s il arrivait dans un film. 15 secondes. Le groupe applaudit ou pas.","texte_joueur":"DIABLO ordonne : sors et rentre comme si tu arrivais dans un film. 15 secondes. Fais-le bien.","points":10,"penalite_refus":"shot"},
+      {"id":"T052","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le plus de succes en soiree selon vous ? Vote.","texte_vote":"Vote : qui a le plus de succes en soiree ?","texte_joueur":"DIABLO t a designe. Commente ce verdict.","points":10,"penalite_refus":"shot"},
+      {"id":"T053","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour un regard intense. Pas de sourire. Le premier qui sourit boit.","texte_joueur":"DIABLO ordonne : regard intense face a face. Pas de sourire. Le premier qui sourit boit.","points":15,"penalite_refus":"shot"},
+      {"id":"T054","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la derniere fois qu il a vraiment ete attire par quelqu un dans cette piece.","texte_joueur":"DIABLO veut savoir : as-tu deja ete attire par quelqu un ici ce soir ? Reponds honnêtement.","points":15,"penalite_refus":"shot"},
+      {"id":"T055","type":"shot","texte":"L Oracle decrete : celui qui a deja menti sur son nombre de partenaires boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T056","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de choisir quelqu un et de lui chuchoter quelque chose a l oreille.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de chuchoter quelque chose a quelqu un. Le groupe ne doit pas entendre.","points":20,"penalite_refus":"shot"},
+      {"id":"T057","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus torride qu il ait jamais faite en public.","texte_joueur":"DIABLO veut la chose la plus torride que tu aies faite en public. Contexte et details.","points":20,"penalite_refus":"shot"},
+      {"id":"T058","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe semble le plus innocent mais ne l est clairement pas ? Vote.","texte_vote":"Vote : qui semble innocent mais ne l est pas ?","texte_joueur":"DIABLO t a designe. Prouve-leur qu ils ont raison.","points":12,"penalite_refus":"shot"},
+      {"id":"T059","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un masse les mains et les avant-bras de l autre pendant 45 secondes. Lentement.","texte_joueur":"DIABLO ordonne : massage des mains et avant-bras. 45 secondes. Lentement. Puis inversez.","points":20,"penalite_refus":"shot"},
+      {"id":"T060","type":"solo","texte":"L Oracle designe {joueur}. Il doit imiter quelqu un du groupe en train d embrasser. Sans dire son nom. Le groupe devine.","texte_joueur":"DIABLO ordonne : imite quelqu un du groupe en train d embrasser. Le groupe devine qui.","points":12,"penalite_refus":"shot"},
+      {"id":"T061","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa technique de seduction preferee avec demonstration sur {joueur2}.","texte_joueur":"DIABLO veut ta technique de seduction preferee. Avec demonstration sur la personne designee.","points":20,"penalite_refus":"shot"},
+      {"id":"T062","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le plus de charme naturel ce soir ? Vote.","texte_vote":"Vote : qui a le plus de charme naturel ce soir ?","texte_joueur":"DIABLO t a designe. Le groupe t a choisi. Dis un mot.","points":8,"penalite_refus":"shot"},
+      {"id":"T063","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler son DM le plus embarrassant.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de lire ton DM le plus embarrassant.","points":20,"penalite_refus":"shot"},
+      {"id":"T064","type":"solo","texte":"L Oracle designe {joueur}. Il doit poser sa tete sur l epaule de {joueur2} pendant 2 minutes pendant que la partie continue.","texte_joueur":"DIABLO ordonne : pose ta tete sur l epaule de la personne designee. 2 minutes. La partie continue.","points":15,"penalite_refus":"shot"},
+      {"id":"T065","type":"shot","texte":"L Oracle decrete : celui qui a deja embrasse quelqu un qu il venait de rencontrer boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T066","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. Dos a dos, l un decrit l autre au groupe comme un personnage de roman. L autre ecoute.","texte_joueur":"DIABLO ordonne : dos a dos. L un decrit l autre comme un personnage de roman. L autre ecoute en silence.","points":20,"penalite_refus":"shot"},
+      {"id":"T067","type":"solo","texte":"L Oracle designe {joueur}. Il doit appeler quelqu un et dire je pense souvent a toi puis raccrocher. Le groupe regarde.","texte_joueur":"DIABLO ordonne : appelle quelqu un. Dis je pense souvent a toi. Raccroche. Le groupe regarde.","points":25,"penalite_refus":"2 shots"},
+      {"id":"T068","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe est le plus susceptible d avoir un crush sur quelqu un ici ce soir ? Vote.","texte_vote":"Vote : qui a un crush sur quelqu un ici ce soir ?","texte_joueur":"DIABLO t a designe. Confirme ou infirme. L Oracle sait deja.","points":12,"penalite_refus":"shot"},
+      {"id":"T069","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire un massage des pieds de 1 minute a {joueur2}.","texte_joueur":"DIABLO ordonne : massage des pieds de la personne designee. 1 minute.","points":20,"penalite_refus":"shot"},
+      {"id":"T070","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa pire experience sexuelle en 20 secondes. Version resumee acceptee.","texte_joueur":"DIABLO veut ta pire experience sexuelle. 20 secondes. Version resumee acceptable.","points":20,"penalite_refus":"shot"},
+      {"id":"T071","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour se tenir par la main et marcher ensemble autour de la piece pendant 45 secondes sans parler.","texte_joueur":"DIABLO ordonne : main dans la main, vous marchez autour de la piece. 45 secondes. Silence.","points":15,"penalite_refus":"shot"},
+      {"id":"T072","type":"shot","texte":"L Oracle decrete : celui qui a deja couche avec quelqu un et ne lui a jamais rappele boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T073","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de danser sur {joueur2} pendant 20 secondes.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de danser sur la personne designee pendant 20 secondes.","points":25,"penalite_refus":"shot"},
+      {"id":"T074","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus difficile a oublier apres une nuit ? Vote.","texte_vote":"Vote : qui serait le plus difficile a oublier apres une nuit ?","texte_joueur":"DIABLO t a designe. Dis quelque chose qui confirme que le groupe a raison.","points":12,"penalite_refus":"shot"},
+      {"id":"T075","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il fantasme le plus souvent sur quelqu un du sexe qui l attire.","texte_joueur":"DIABLO veut ce que tu fantasmes le plus souvent sur quelqu un qui t attire.","points":20,"penalite_refus":"shot"},
+      {"id":"T076","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour se regarder dans les yeux en silence pendant 1 minute complete. Pas de sourire.","texte_joueur":"DIABLO ordonne : regard dans les yeux. 1 minute. Silence absolu. Pas de sourire.","points":20,"penalite_refus":"shot"},
+      {"id":"T077","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire 3 tours sur lui-meme les yeux fermes puis marcher en ligne droite. Le groupe regarde.","texte_joueur":"DIABLO ordonne : 3 tours sur toi-meme yeux fermes. Puis marche en ligne droite.","points":10,"penalite_refus":"shot"},
+      {"id":"T078","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a la plus grande presence physique ce soir ? Vote.","texte_vote":"Vote : qui a la plus grande presence physique ce soir ?","texte_joueur":"DIABLO t a designe. Le groupe l a ressenti. Dis un mot.","points":10,"penalite_refus":"shot"},
+      {"id":"T079","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la derniere fois qu il a menti a quelqu un pour coucher avec lui.","texte_joueur":"DIABLO veut la derniere fois que tu as menti a quelqu un pour coucher avec lui.","points":20,"penalite_refus":"shot"},
+      {"id":"T080","type":"shot","texte":"L Oracle decrete : celui qui a deja fait semblant d avoir un orgasme boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T081","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de lire les 3 derniers messages de sa conversation la plus active.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de lire tes 3 derniers messages de ta conv la plus active.","points":20,"penalite_refus":"shot"},
+      {"id":"T082","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un dessine lentement avec son doigt sur le dos de l autre un mot. L autre doit deviner.","texte_joueur":"DIABLO ordonne : l un dessine des mots avec son doigt sur le dos de l autre. 3 mots chacun.","points":20,"penalite_refus":"shot"},
+      {"id":"T083","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa chanson qui le met dans l ambiance. Et la fredonner 10 secondes.","texte_joueur":"DIABLO veut ta chanson qui te met dans l ambiance. Fredonne 10 secondes.","points":12,"penalite_refus":"shot"},
+      {"id":"T084","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le meilleur partenaire de soiree selon vous ? Vote.","texte_vote":"Vote : qui serait le meilleur partenaire de soiree ?","texte_joueur":"DIABLO t a designe. Commente ce choix collectif.","points":10,"penalite_refus":"shot"},
+      {"id":"T085","type":"solo","texte":"L Oracle designe {joueur}. Il doit envoyer un message romantique au dernier contact de ses messages. Le groupe voit l ecran.","texte_joueur":"DIABLO ordonne : message romantique au dernier contact de tes messages. Maintenant. Le groupe voit.","points":20,"penalite_refus":"shot"},
+      {"id":"T086","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un coiffe les cheveux de l autre avec les doigts pendant 45 secondes. Puis inversez.","texte_joueur":"DIABLO ordonne : coiffe les cheveux de l autre avec les doigts. 45 secondes. Puis inversez.","points":20,"penalite_refus":"shot"},
+      {"id":"T087","type":"shot","texte":"L Oracle decrete : celui qui a deja couche avec quelqu un sans connaitre son nom boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T088","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler son premier souvenir erotique.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ton premier souvenir erotique.","points":20,"penalite_refus":"shot"},
+      {"id":"T089","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le mensonge qu il repete le plus souvent pour plaire a quelqu un.","texte_joueur":"DIABLO veut le mensonge que tu repetes le plus souvent pour plaire a quelqu un.","points":15,"penalite_refus":"shot"},
+      {"id":"T090","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus ageable a embrasser dans le noir ? Vote.","texte_vote":"Vote : qui serait le plus agreable a embrasser dans le noir ?","texte_joueur":"DIABLO t a designe. Le groupe a tranche. Tu peux sourire.","points":12,"penalite_refus":"shot"},
+      {"id":"T091","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un fait un massage des epaules sous le col de l autre pendant 1 minute.","texte_joueur":"DIABLO ordonne : massage des epaules sous le col. 1 minute. Puis inversez si vous voulez.","points":25,"penalite_refus":"shot"},
+      {"id":"T092","type":"solo","texte":"L Oracle designe {joueur}. Il doit mimer son emoji le plus envoye en mode seduction. Le groupe devine l emoji.","texte_joueur":"DIABLO ordonne : mime ton emoji le plus envoye en mode seduction. Le groupe devine lequel.","points":10,"penalite_refus":"shot"},
+      {"id":"T093","type":"shot","texte":"L Oracle decrete : celui qui a deja eu un crush sur quelqu un dans cette piece boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T094","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire une demonstration de son regard le plus seducteur sur {joueur2}.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de poser ton regard le plus seducteur sur la personne designee.","points":15,"penalite_refus":"shot"},
+      {"id":"T095","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus folle qu il ait faite parce qu il desirait vraiment quelqu un.","texte_joueur":"DIABLO veut la chose la plus folle que tu aies faite parce que tu desirais vraiment quelqu un.","points":20,"penalite_refus":"shot"},
+      {"id":"T096","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a les mains les plus agreables a tenir selon vous ? Vote.","texte_vote":"Vote : qui a les mains les plus agreables a tenir ?","texte_joueur":"DIABLO t a designe. Tends les mains a {joueur2} pour confirmer.","points":10,"penalite_refus":"shot"},
+      {"id":"T097","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un pose sa joue contre l epaule de l autre pendant 1 minute pendant que la partie continue.","texte_joueur":"DIABLO ordonne : pose ta joue contre l epaule de l autre. 1 minute. La partie continue.","points":20,"penalite_refus":"shot"},
+      {"id":"T098","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler son type parfait en 3 adjectifs tres precis.","texte_joueur":"DIABLO veut ton type parfait en exactement 3 adjectifs tres precis.","points":12,"penalite_refus":"shot"},
+      {"id":"T099","type":"shot","texte":"L Oracle decrete : celui qui a deja couche quelque part que ses parents interdiraient boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T100","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire un slow de 30 secondes avec {joueur2}.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de faire un slow de 30 secondes avec la personne designee.","points":25,"penalite_refus":"shot"},
+      {"id":"T101","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la premiere chose qu il remarque chez quelqu un qui lui plait.","texte_joueur":"DIABLO veut la premiere chose que tu remarques chez quelqu un qui te plait physiquement.","points":10,"penalite_refus":"shot"},
+      {"id":"T102","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le sourire le plus seduisant ? Vote.","texte_vote":"Vote : qui a le sourire le plus seduisant ?","texte_joueur":"DIABLO t a designe. Fais un sourire a {joueur2} pour confirmer.","points":8,"penalite_refus":"shot"},
+      {"id":"T103","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un fredonne une chanson a l oreille de l autre pendant 20 secondes. Tres pres.","texte_joueur":"DIABLO ordonne : fredonne une chanson a l oreille de l autre. 20 secondes. Tres pres.","points":20,"penalite_refus":"shot"},
+      {"id":"T104","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa plus grande honte amoureuse en 20 secondes.","texte_joueur":"DIABLO veut ta plus grande honte amoureuse. 20 secondes. Sans filtre.","points":15,"penalite_refus":"shot"},
+      {"id":"T105","type":"shot","texte":"L Oracle decrete : celui qui a deja envoye un message a la mauvaise personne par accident boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T106","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler avec qui dans cette piece il passerait la nuit si tout etait permis.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de dire avec qui ici tu passerais la nuit si tout etait permis.","points":25,"penalite_refus":"shot"},
+      {"id":"T107","type":"solo","texte":"L Oracle designe {joueur}. Il doit choisir quelqu un et lui dessiner lentement avec un doigt sur le bras un chemin depuis le poignet jusqu au coude.","texte_joueur":"DIABLO ordonne : dessine lentement avec ton doigt un chemin du poignet au coude de la personne que tu choisis.","points":15,"penalite_refus":"shot"},
+      {"id":"T108","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus agreable comme voisin de chambre d hotel ? Vote.","texte_vote":"Vote : qui serait le plus agreable comme voisin de chambre d hotel ?","texte_joueur":"DIABLO t a designe. Le groupe a vote. Commente ce choix.","points":8,"penalite_refus":"shot"},
+      {"id":"T109","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. Face a face aussi proches que possible sans se toucher. Yeux fermes. 30 secondes.","texte_joueur":"DIABLO ordonne : face a face, aussi proches que possible sans se toucher. Yeux fermes. 30 secondes.","points":25,"penalite_refus":"shot"},
+      {"id":"T110","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le nombre de fois qu il a pense a quelqu un de cette piece de facon pas totalement innocente ce soir.","texte_joueur":"DIABLO veut savoir : combien de fois as-tu pense a quelqu un ici de facon pas totalement innocente ce soir ?","points":15,"penalite_refus":"shot"},
+      {"id":"T111","type":"shot","texte":"L Oracle decrete : celui qui a deja couche avec quelqu un pour se venger d un ex boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T112","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler sa position sexuelle preferee.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ta position sexuelle preferee.","points":20,"penalite_refus":"shot"},
+      {"id":"T113","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le dernier reve erotique dont il se souvient.","texte_joueur":"DIABLO veut le dernier reve erotique dont tu te souviens. Resume acceptable.","points":20,"penalite_refus":"shot"},
+      {"id":"T114","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus a l aise tout nu devant les autres ? Vote.","texte_vote":"Vote : qui serait le plus a l aise tout nu devant les autres ?","texte_joueur":"DIABLO t a designe. Commente ce verdict.","points":10,"penalite_refus":"shot"},
+      {"id":"T115","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un fait le portrait physique de l autre au groupe comme si c etait une oeuvre d art. L autre ecoute.","texte_joueur":"DIABLO ordonne : l un fait le portrait physique de l autre comme une oeuvre d art. L autre ecoute.","points":20,"penalite_refus":"shot"},
+      {"id":"T116","type":"solo","texte":"L Oracle designe {joueur}. Il doit envoyer un emoji coquin au choix du groupe au dernier contact de ses messages.","texte_joueur":"DIABLO ordonne : envoie l emoji coquin choisi par le groupe au dernier contact de tes messages.","points":15,"penalite_refus":"shot"},
+      {"id":"T117","type":"shot","texte":"L Oracle decrete : celui qui a deja danse de facon tres suggestive en soiree boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"T118","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre d imiter quelqu un du groupe en train de seduire. Le groupe devine qui il imite.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre d imiter quelqu un du groupe en train de seduire.","points":15,"penalite_refus":"shot"},
+      {"id":"T119","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il pense de {joueur2} physiquement. Honnêtement. En face.","texte_joueur":"DIABLO ordonne : dis ce que tu penses de la personne designee physiquement. Honnêtement. En face.","points":20,"penalite_refus":"shot"},
+      {"id":"T120","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a la voix la plus seduisante ce soir ? Vote.","texte_vote":"Vote : qui a la voix la plus seduisante ce soir ?","texte_joueur":"DIABLO t a designe. Dis quelque chose avec cette voix pour confirmer.","points":10,"penalite_refus":"shot"}
     ],
     "chaud": [
-      {
-        "id": "C001", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. En secret : l un embrasse le cou de l autre une fois lentement. Si les deux acceptent c est execute. Anonymat total si non.",
-        "texte_joueur": "DIABLO soumet en secret : l un embrasse le cou de l autre une fois lentement. Si les deux oui c est execute. Anonymat total si non.",
-        "points": 60, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C002", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit decrire en detail la derniere fois qu il a vraiment desire quelqu un dans cette piece.",
-        "texte_joueur": "DIABLO veut les details : la derniere fois que tu as eu du desir pour quelqu un ici. Ce que tu lui as fait ou aurais voulu lui faire.",
-        "points": 35, "penalite_refus": "shot"
-      },
-      {
-        "id": "C003", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe donnerait le plus envie d etre deshabille ? Vote en secret.",
-        "texte_vote": "Vote : qui donnerait le plus envie d etre deshabille ?",
-        "texte_joueur": "DIABLO t a designe. Le groupe a vote pour toi.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C004", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit faire un strip-tease complet sur 1 minute. Au moins deux vetements retires.",
-        "texte_joueur": "DIABLO ordonne : strip-tease complet. 1 minute. Au moins deux vetements retires.",
-        "points": 50, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "C005", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. L un masse le dos de l autre sous le t-shirt pendant 1 minute. Puis inversez.",
-        "texte_joueur": "DIABLO ordonne : massage du dos sous le t-shirt. 1 minute. Puis inversez si vous voulez.",
-        "points": 55, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C006", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler sa meilleure technique au lit avec les details qui font que ses partenaires reviennent.",
-        "texte_joueur": "DIABLO veut ta meilleure technique au lit. Avec les details qui font que tes partenaires reviennent.",
-        "points": 40, "penalite_refus": "shot"
-      },
-      {
-        "id": "C007", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe a la bouche la plus seduisante ce soir ? Vote.",
-        "texte_vote": "Vote : qui a la bouche la plus seduisante ce soir ?",
-        "texte_joueur": "DIABLO t a designe. Fais quelque chose avec cette bouche pour confirmer.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C008", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de lire les 5 derniers messages de sa conversation la plus intime. Tout est permis pour convaincre.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de lire tes 5 derniers messages de ta conv la plus intime.",
-        "points": 45, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "C009", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour se tenir les mains, yeux fermes, face a face pendant 1 minute. Sans bouger. Sans parler.",
-        "texte_joueur": "DIABLO ordonne : mains dans les mains, yeux fermes, face a face. 1 minute. Sans bouger. Sans parler.",
-        "points": 40, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C010", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler la chose la plus explicitement sexuelle qu il ait jamais faite et dont il est le plus fier.",
-        "texte_joueur": "DIABLO veut la chose la plus explicitement sexuelle que tu aies faite et dont tu es le plus fier.",
-        "points": 45, "penalite_refus": "shot"
-      },
-      {
-        "id": "C011", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe serait le plus insatiable au lit ? Vote.",
-        "texte_vote": "Vote : qui serait le plus insatiable au lit ?",
-        "texte_joueur": "DIABLO t a designe. Confirme ou prouve que le groupe a raison.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C012", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler exactement ce qu il aime recevoir au lit avec les details qui comptent.",
-        "texte_joueur": "DIABLO veut exactement ce que tu aimes recevoir au lit. Avec les details qui comptent.",
-        "points": 40, "penalite_refus": "shot"
-      },
-      {
-        "id": "C013", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. Face a face, aussi proches que possible sans se toucher, yeux fermes, pendant 45 secondes.",
-        "texte_joueur": "DIABLO ordonne : face a face, aussi proches que possible sans se toucher. Yeux fermes. 45 secondes.",
-        "points": 55, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C014", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler son kink le plus inavouable. Le groupe peut promettre le silence.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de reveler ton kink le plus inavouable.",
-        "points": 55, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "C015", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe ferait le meilleur amant ou amante selon vous tous ? Vote.",
-        "texte_vote": "Vote : qui ferait le meilleur amant ou la meilleure amante ?",
-        "texte_joueur": "DIABLO t a designe. Dis quelque chose qui confirme ca.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C016", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit faire un massage des fesses de 30 secondes a {joueur2} qui accepte.",
-        "texte_joueur": "DIABLO ordonne : massage des fesses de la personne designee. 30 secondes.",
-        "points": 55, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "C017", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour s embrasser sur la joue lentement. Chacun a son tour.",
-        "texte_joueur": "DIABLO ordonne : vous vous embrassez sur la joue lentement. Chacun a son tour.",
-        "points": 50, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C018", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler son kink le plus inavouable. Celui qu il n a probablement jamais dit a quelqu un ici.",
-        "texte_joueur": "DIABLO veut ton kink le plus inavouable. Celui que tu n as probablement jamais dit a quelqu un ici.",
-        "points": 50, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "C019", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe fait le moins l innocent mais en a le plus envie ce soir ? Vote.",
-        "texte_vote": "Vote : qui en a le plus envie ce soir sans le montrer ?",
-        "texte_joueur": "DIABLO t a designe. Le groupe te connait mieux que tu ne le crois.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C020", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire une demonstration de son talent avec la langue sur sa propre main. Tout est permis pour convaincre.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de faire une demonstration de ton talent avec la langue sur ta main.",
-        "points": 45, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "C021", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour echanger un message vocal de 30 secondes en prive. Le groupe ne sait jamais ce qui s est dit.",
-        "texte_joueur": "DIABLO ordonne : echangez un message vocal de 30 secondes en totale intimite. Le groupe ne sait jamais.",
-        "points": 50, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C022", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler le sexto le plus explicite qu il ait jamais envoye. En lire des extraits.",
-        "texte_joueur": "DIABLO veut le sexto le plus explicite que tu aies jamais envoye. Lis des extraits.",
-        "points": 50, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "C023", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe a le corps le plus seduisant selon vous ? Vote en secret.",
-        "texte_vote": "Vote : qui a le corps le plus seduisant dans ce groupe ?",
-        "texte_joueur": "DIABLO t a designe. Le groupe a vote pour toi.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C024", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit designer la personne qu il embrasserait en premier ce soir et lui expliquer pourquoi devant tout le groupe.",
-        "texte_joueur": "DIABLO ordonne : designe la personne que tu embrasserais en premier ce soir. Regarde-la en lui expliquant pourquoi.",
-        "points": 60, "penalite_refus": "3 shots"
-      },
-      {
-        "id": "C025", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. L un trace lentement depuis le cou jusqu en bas de la nuque de l autre avec son doigt. 30 secondes. Puis inversez.",
-        "texte_joueur": "DIABLO ordonne : l un trace lentement depuis le cou jusqu en bas de la nuque de l autre. 30 secondes. Puis inversez.",
-        "points": 65, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C026", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler sa chose preferee a faire avec la bouche. Sans euphemisme possible.",
-        "texte_joueur": "DIABLO veut ta chose preferee a faire avec ta bouche. Sans euphemisme possible.",
-        "points": 45, "penalite_refus": "shot"
-      },
-      {
-        "id": "C027", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe serait le plus memorablement torride apres quelques verres ? Vote.",
-        "texte_vote": "Vote : qui serait le plus memorablement torride apres quelques verres ?",
-        "texte_joueur": "DIABLO t a designe. Prouve-le.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C028", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire une danse suggestive contre le mur pendant 1 minute. Le groupe peut promettre n importe quoi.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de faire une danse suggestive contre le mur. 1 minute.",
-        "points": 45, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "C029", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour se donner mutuellement un massage des fesses de 30 secondes chacun. Double accord.",
-        "texte_joueur": "DIABLO soumet en secret : massage des fesses mutuel. 30 secondes chacun. Si les deux oui. Anonymat si non.",
-        "points": 70, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C030", "type": "shot",
-        "texte": "L Oracle decrete : shot collectif. Ce qui se passe ce soir ne quitte pas cette piece.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      },
-      {
-        "id": "C031", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler la chose la plus degradante qu il ait accepte de faire par desir.",
-        "texte_joueur": "DIABLO veut la chose la plus degradante que tu aies accepte de faire parce que tu desirais vraiment quelqu un.",
-        "points": 50, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "C032", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe a probablement les pensees les plus torrides en ce moment meme ? Vote.",
-        "texte_vote": "Vote : qui a les pensees les plus torrides en ce moment meme ?",
-        "texte_joueur": "DIABLO t a designe. Revele une pensee. Une seule.",
-        "points": 25, "penalite_refus": "shot"
-      },
-      {
-        "id": "C033", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Recompense de l Oracle : il recoit un massage des cuisses de 1 minute de {joueur2} qui accepte.",
-        "texte_joueur": "DIABLO te recompense : tu recois un massage des cuisses de la personne designee. 1 minute. Si elle accepte.",
-        "points": 60, "penalite_refus": "shot si refus de la cible"
-      },
-      {
-        "id": "C034", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour s embrasser dans le cou. Un baiser chacun. Double accord.",
-        "texte_joueur": "DIABLO soumet en secret : un baiser dans le cou chacun. Si les deux oui c est execute. Anonymat si non.",
-        "points": 75, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C035", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre d envoyer un message textuel suggestif a quelqu un hors du groupe. Le groupe voit l ecran.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre d envoyer un message suggestif a quelqu un hors du groupe. Le groupe voit.",
-        "points": 60, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "C036", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe serait le plus a l aise pour parler de sexe avec n importe qui ? Vote.",
-        "texte_vote": "Vote : qui est le plus a l aise pour parler de sexe ?",
-        "texte_joueur": "DIABLO t a designe. Prouve-le en repondant a la question que le groupe te pose.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C037", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler le nombre total approximatif de ses partenaires sexuels. Honnêtement.",
-        "texte_joueur": "DIABLO veut le nombre total approximatif de tes partenaires sexuels. Honnêtement.",
-        "points": 35, "penalite_refus": "shot"
-      },
-      {
-        "id": "C038", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour se decrire mutuellement en termes sexuellement explicites positifs. L un puis l autre. 30 secondes chacun.",
-        "texte_joueur": "DIABLO ordonne : decrivez-vous mutuellement en termes sexuellement explicites et positifs. L un puis l autre. 30 secondes chacun.",
-        "points": 65, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C039", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler son endroit prefere sur le corps d un partenaire et ce qu il aime y faire.",
-        "texte_joueur": "DIABLO veut ton endroit prefere sur le corps d un partenaire et ce que tu aimes y faire.",
-        "points": 45, "penalite_refus": "shot"
-      },
-      {
-        "id": "C040", "type": "shot",
-        "texte": "L Oracle decrete : celui qui a fantasme sur quelqu un dans cette piece dans les 30 dernieres minutes boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      },
-      {
-        "id": "C041", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de choisir quelqu un et de lui murmurer a l oreille exactement ce qu il ferait avec lui cette nuit si tout etait possible. Le groupe ne doit pas entendre.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de murmurer a quelqu un ce que tu ferais avec lui cette nuit.",
-        "points": 55, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "C042", "type": "vote",
-        "texte": "L Oracle veut savoir : avec qui dans ce groupe passerais-tu la nuit si tu devais choisir maintenant ? Vote en secret.",
-        "texte_vote": "Vote : avec qui passerais-tu la nuit si tu devais choisir maintenant ?",
-        "texte_joueur": "DIABLO t a designe comme choix collectif. Tu peux juste sourire.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C043", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit faire une demonstration explicite de son talent avec la langue sur sa propre main. 15 secondes.",
-        "texte_joueur": "DIABLO ordonne : demonstration de ton talent avec la langue sur ta propre main. 15 secondes. Le groupe note.",
-        "points": 45, "penalite_refus": "shot"
-      },
-      {
-        "id": "C044", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour se chuchoter mutuellement a l oreille ce qu ils aimeraient faire avec l autre. En meme temps.",
-        "texte_joueur": "DIABLO ordonne : chacun chuchote a l oreille de l autre ce qu il aimerait lui faire. En meme temps.",
-        "points": 70, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C045", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit faire un massage du bas du dos et des hanches de {joueur2} pendant 1 minute.",
-        "texte_joueur": "DIABLO ordonne : massage du bas du dos et des hanches de la personne designee. 1 minute.",
-        "points": 55, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "C046", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe a la presence sexuelle la plus troublante ce soir ? Vote.",
-        "texte_vote": "Vote : qui a la presence sexuelle la plus troublante ce soir ?",
-        "texte_joueur": "DIABLO t a designe. Le groupe l a senti. L Oracle confirme.",
-        "points": 20, "penalite_refus": "shot"
-      },
-      {
-        "id": "C047", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le fantasme qu il a sur quelqu un dans cette piece. Pas besoin de nommer.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de reveler un fantasme que tu as sur quelqu un ici.",
-        "points": 55, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "C048", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. Recompense : l un recoit un massage complet du dos de l autre pendant 2 minutes. Double accord.",
-        "texte_joueur": "DIABLO vous recompense : massage complet du dos. 2 minutes. L un masse l autre. Si les deux acceptent.",
-        "points": 60, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "C049", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler la chose la plus torride qu il ait faite en couple ou avec un partenaire regulier.",
-        "texte_joueur": "DIABLO veut la chose la plus torride que tu aies faite en couple ou avec un partenaire regulier.",
-        "points": 45, "penalite_refus": "shot"
-      },
-      {
-        "id": "C050", "type": "shot",
-        "texte": "L Oracle decrete : celui qui pense en ce moment meme a coucher avec quelqu un dans cette piece boit.",
-        "texte_joueur": null,
-        "points": 0, "penalite_refus": "shot"
-      }
+      {"id":"C001","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un embrasse le cou de l autre une fois lentement. Si les deux oui c est execute. Anonymat total si non.","texte_joueur":"DIABLO soumet en secret : l un embrasse le cou de l autre une fois lentement. Si les deux oui c est execute. Anonymat total si non.","points":60,"penalite_refus":"shot chacun"},
+      {"id":"C002","type":"solo","texte":"L Oracle designe {joueur}. Il doit decrire en detail la derniere fois qu il a vraiment desire quelqu un dans cette piece.","texte_joueur":"DIABLO veut les details : la derniere fois que tu as eu du desir pour quelqu un ici. Ce que tu lui as fait ou aurais voulu lui faire.","points":35,"penalite_refus":"shot"},
+      {"id":"C003","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe donnerait le plus envie d etre deshabille ? Vote en secret.","texte_vote":"Vote : qui donnerait le plus envie d etre deshabille ?","texte_joueur":"DIABLO t a designe. Le groupe a vote pour toi.","points":20,"penalite_refus":"shot"},
+      {"id":"C004","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire un strip-tease complet sur 1 minute. Au moins deux vetements retires.","texte_joueur":"DIABLO ordonne : strip-tease complet. 1 minute. Au moins deux vetements retires.","points":50,"penalite_refus":"2 shots"},
+      {"id":"C005","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un masse le dos de l autre sous le t-shirt pendant 1 minute. Puis inversez.","texte_joueur":"DIABLO ordonne : massage du dos sous le t-shirt. 1 minute. Puis inversez si vous voulez.","points":55,"penalite_refus":"shot chacun"},
+      {"id":"C006","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa meilleure technique au lit avec les details qui font que ses partenaires reviennent.","texte_joueur":"DIABLO veut ta meilleure technique au lit. Avec les details qui font que tes partenaires reviennent.","points":40,"penalite_refus":"shot"},
+      {"id":"C007","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a la bouche la plus seduisante ce soir ? Vote.","texte_vote":"Vote : qui a la bouche la plus seduisante ce soir ?","texte_joueur":"DIABLO t a designe. Fais quelque chose avec cette bouche pour confirmer.","points":20,"penalite_refus":"shot"},
+      {"id":"C008","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de lire les 5 derniers messages de sa conversation la plus intime.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de lire tes 5 derniers messages de ta conv la plus intime.","points":45,"penalite_refus":"shot"},
+      {"id":"C009","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour se tenir les mains yeux fermes face a face pendant 1 minute. Sans bouger. Sans parler.","texte_joueur":"DIABLO ordonne : mains dans les mains, yeux fermes, face a face. 1 minute. Sans bouger. Sans parler.","points":40,"penalite_refus":"shot chacun"},
+      {"id":"C010","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus explicitement sexuelle qu il ait jamais faite et dont il est le plus fier.","texte_joueur":"DIABLO veut la chose la plus explicitement sexuelle que tu aies faite et dont tu es le plus fier.","points":45,"penalite_refus":"shot"},
+      {"id":"C011","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus insatiable au lit ? Vote.","texte_vote":"Vote : qui serait le plus insatiable au lit ?","texte_joueur":"DIABLO t a designe. Confirme ou prouve que le groupe a raison.","points":20,"penalite_refus":"shot"},
+      {"id":"C012","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler exactement ce qu il aime recevoir au lit avec les details qui comptent.","texte_joueur":"DIABLO veut exactement ce que tu aimes recevoir au lit. Avec les details qui comptent.","points":40,"penalite_refus":"shot"},
+      {"id":"C013","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. Face a face, aussi proches que possible sans se toucher, yeux fermes, pendant 45 secondes.","texte_joueur":"DIABLO ordonne : face a face, aussi proches que possible sans se toucher. Yeux fermes. 45 secondes.","points":55,"penalite_refus":"shot chacun"},
+      {"id":"C014","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler son kink le plus inavouable.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ton kink le plus inavouable.","points":55,"penalite_refus":"shot"},
+      {"id":"C015","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe ferait le meilleur amant ou amante selon vous ? Vote.","texte_vote":"Vote : qui ferait le meilleur amant ou la meilleure amante ?","texte_joueur":"DIABLO t a designe. Dis quelque chose qui confirme ca.","points":20,"penalite_refus":"shot"},
+      {"id":"C016","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire un massage des fesses de 30 secondes a {joueur2} qui accepte.","texte_joueur":"DIABLO ordonne : massage des fesses de la personne designee. 30 secondes.","points":55,"penalite_refus":"2 shots"},
+      {"id":"C017","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour s embrasser sur la joue lentement. Chacun a son tour.","texte_joueur":"DIABLO ordonne : vous vous embrassez sur la joue lentement. Chacun a son tour.","points":50,"penalite_refus":"shot chacun"},
+      {"id":"C018","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler son kink le plus inavouable. Celui qu il n a probablement jamais dit a quelqu un ici.","texte_joueur":"DIABLO veut ton kink le plus inavouable. Celui que tu n as probablement jamais dit a quelqu un ici.","points":50,"penalite_refus":"2 shots"},
+      {"id":"C019","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe fait le moins l innocent mais en a le plus envie ce soir ? Vote.","texte_vote":"Vote : qui en a le plus envie ce soir sans le montrer ?","texte_joueur":"DIABLO t a designe. Le groupe te connait mieux que tu ne le crois.","points":20,"penalite_refus":"shot"},
+      {"id":"C020","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire une demonstration de son talent avec la langue sur sa propre main.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de faire une demonstration de ton talent avec la langue sur ta main.","points":45,"penalite_refus":"shot"},
+      {"id":"C021","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour echanger un message vocal de 30 secondes en prive. Le groupe ne sait jamais ce qui s est dit.","texte_joueur":"DIABLO ordonne : echangez un message vocal de 30 secondes en totale intimite. Le groupe ne sait jamais.","points":50,"penalite_refus":"shot chacun"},
+      {"id":"C022","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le sexto le plus explicite qu il ait jamais envoye. En lire des extraits.","texte_joueur":"DIABLO veut le sexto le plus explicite que tu aies jamais envoye. Lis des extraits.","points":50,"penalite_refus":"2 shots"},
+      {"id":"C023","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le corps le plus seduisant selon vous ? Vote en secret.","texte_vote":"Vote : qui a le corps le plus seduisant dans ce groupe ?","texte_joueur":"DIABLO t a designe. Le groupe a vote pour toi.","points":20,"penalite_refus":"shot"},
+      {"id":"C024","type":"solo","texte":"L Oracle designe {joueur}. Il doit designer la personne qu il embrasserait en premier ce soir et lui expliquer pourquoi devant tout le groupe.","texte_joueur":"DIABLO ordonne : designe la personne que tu embrasserais en premier ce soir. Regarde-la en lui expliquant pourquoi.","points":60,"penalite_refus":"3 shots"},
+      {"id":"C025","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un trace lentement depuis le cou jusqu en bas de la nuque de l autre avec son doigt. 30 secondes. Puis inversez.","texte_joueur":"DIABLO ordonne : l un trace lentement depuis le cou jusqu en bas de la nuque de l autre. 30 secondes. Puis inversez.","points":65,"penalite_refus":"shot chacun"},
+      {"id":"C026","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa chose preferee a faire avec la bouche. Sans euphemisme possible.","texte_joueur":"DIABLO veut ta chose preferee a faire avec ta bouche. Sans euphemisme possible.","points":45,"penalite_refus":"shot"},
+      {"id":"C027","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus memorablement torride apres quelques verres ? Vote.","texte_vote":"Vote : qui serait le plus memorablement torride apres quelques verres ?","texte_joueur":"DIABLO t a designe. Prouve-le.","points":20,"penalite_refus":"shot"},
+      {"id":"C028","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire une danse suggestive contre le mur pendant 1 minute.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de faire une danse suggestive contre le mur. 1 minute.","points":45,"penalite_refus":"shot"},
+      {"id":"C029","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour se donner mutuellement un massage des fesses de 30 secondes chacun. Double accord.","texte_joueur":"DIABLO soumet en secret : massage des fesses mutuel. 30 secondes chacun. Si les deux oui. Anonymat si non.","points":70,"penalite_refus":"shot chacun"},
+      {"id":"C030","type":"shot","texte":"L Oracle decrete : shot collectif. Ce qui se passe ce soir ne quitte pas cette piece.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"C031","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus degradante qu il ait accepte de faire par desir.","texte_joueur":"DIABLO veut la chose la plus degradante que tu aies accepte de faire parce que tu desirais vraiment quelqu un.","points":50,"penalite_refus":"2 shots"},
+      {"id":"C032","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a probablement les pensees les plus torrides en ce moment ? Vote.","texte_vote":"Vote : qui a les pensees les plus torrides en ce moment ?","texte_joueur":"DIABLO t a designe. Revele une pensee. Une seule.","points":25,"penalite_refus":"shot"},
+      {"id":"C033","type":"solo","texte":"L Oracle recompense {joueur}. Il recoit un massage des cuisses de 1 minute de {joueur2}.","texte_joueur":"DIABLO te recompense : tu recois un massage des cuisses de la personne designee. 1 minute.","points":60,"penalite_refus":"shot"},
+      {"id":"C034","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour s embrasser dans le cou. Un baiser chacun. Double accord.","texte_joueur":"DIABLO soumet en secret : un baiser dans le cou chacun. Si les deux oui c est execute. Anonymat si non.","points":75,"penalite_refus":"shot chacun"},
+      {"id":"C035","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre d envoyer un message suggestif a quelqu un hors du groupe. Le groupe voit l ecran.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre d envoyer un message suggestif a quelqu un hors du groupe. Le groupe voit.","points":60,"penalite_refus":"shot"},
+      {"id":"C036","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus a l aise pour parler de sexe avec n importe qui ? Vote.","texte_vote":"Vote : qui est le plus a l aise pour parler de sexe ?","texte_joueur":"DIABLO t a designe. Prouve-le en repondant a la question que le groupe te pose.","points":20,"penalite_refus":"shot"},
+      {"id":"C037","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le nombre total approximatif de ses partenaires sexuels.","texte_joueur":"DIABLO veut le nombre total approximatif de tes partenaires sexuels. Honnêtement.","points":35,"penalite_refus":"shot"},
+      {"id":"C038","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour se decrire mutuellement en termes sexuellement explicites positifs. L un puis l autre. 30 secondes chacun.","texte_joueur":"DIABLO ordonne : decrivez-vous mutuellement en termes sexuellement explicites et positifs. L un puis l autre. 30 secondes chacun.","points":65,"penalite_refus":"shot chacun"},
+      {"id":"C039","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler son endroit prefere sur le corps d un partenaire et ce qu il aime y faire.","texte_joueur":"DIABLO veut ton endroit prefere sur le corps d un partenaire et ce que tu aimes y faire.","points":45,"penalite_refus":"shot"},
+      {"id":"C040","type":"shot","texte":"L Oracle decrete : celui qui a fantasme sur quelqu un dans cette piece dans les 30 dernieres minutes boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"C041","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de choisir quelqu un et de lui murmurer a l oreille ce qu il ferait avec lui cette nuit si tout etait possible.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de murmurer a quelqu un ce que tu ferais avec lui cette nuit.","points":55,"penalite_refus":"shot"},
+      {"id":"C042","type":"vote","texte":"L Oracle veut savoir : avec qui dans ce groupe passerais-tu la nuit si tu devais choisir maintenant ? Vote en secret.","texte_vote":"Vote : avec qui passerais-tu la nuit si tu devais choisir maintenant ?","texte_joueur":"DIABLO t a designe comme choix collectif. Tu peux juste sourire.","points":20,"penalite_refus":"shot"},
+      {"id":"C043","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire une demonstration de son talent avec la langue sur sa propre main. 15 secondes.","texte_joueur":"DIABLO ordonne : demonstration de ton talent avec la langue sur ta propre main. 15 secondes. Le groupe note.","points":45,"penalite_refus":"shot"},
+      {"id":"C044","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour se chuchoter mutuellement a l oreille ce qu ils aimeraient faire avec l autre. En meme temps.","texte_joueur":"DIABLO ordonne : chacun chuchote a l oreille de l autre ce qu il aimerait lui faire. En meme temps.","points":70,"penalite_refus":"shot chacun"},
+      {"id":"C045","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire un massage du bas du dos et des hanches de {joueur2} pendant 1 minute.","texte_joueur":"DIABLO ordonne : massage du bas du dos et des hanches de la personne designee. 1 minute.","points":55,"penalite_refus":"2 shots"},
+      {"id":"C046","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a la presence sexuelle la plus troublante ce soir ? Vote.","texte_vote":"Vote : qui a la presence sexuelle la plus troublante ce soir ?","texte_joueur":"DIABLO t a designe. Le groupe l a senti. L Oracle confirme.","points":20,"penalite_refus":"shot"},
+      {"id":"C047","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le fantasme qu il a sur quelqu un dans cette piece.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler un fantasme que tu as sur quelqu un ici.","points":55,"penalite_refus":"shot"},
+      {"id":"C048","type":"duo","texte":"L Oracle recompense {joueur1} et {joueur2}. Massage complet du dos de l un par l autre pendant 2 minutes. Double accord.","texte_joueur":"DIABLO vous recompense : massage complet du dos. 2 minutes. L un masse l autre. Si les deux acceptent.","points":60,"penalite_refus":"shot chacun"},
+      {"id":"C049","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus torride qu il ait faite en couple ou avec un partenaire regulier.","texte_joueur":"DIABLO veut la chose la plus torride que tu aies faite en couple ou avec un partenaire regulier.","points":45,"penalite_refus":"shot"},
+      {"id":"C050","type":"shot","texte":"L Oracle decrete : celui qui pense en ce moment meme a coucher avec quelqu un dans cette piece boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"C051","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa zone erogene principale et ce qu il aime qu on y fasse.","texte_joueur":"DIABLO veut ta zone erogene principale et ce que tu aimes qu on y fasse.","points":45,"penalite_refus":"shot"},
+      {"id":"C052","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un masse l interieur des bras de l autre lentement pendant 45 secondes. Puis inversez.","texte_joueur":"DIABLO ordonne : massage lent de l interieur des bras. 45 secondes. Puis inversez.","points":45,"penalite_refus":"shot chacun"},
+      {"id":"C053","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le plus d audace en amour selon vous ? Vote.","texte_vote":"Vote : qui a le plus d audace en amour ?","texte_joueur":"DIABLO t a designe. Prouve-le avec une anecdote concrete.","points":20,"penalite_refus":"shot"},
+      {"id":"C054","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire une danse suggestive de 45 secondes sur {joueur2}. Contact possible.","texte_joueur":"DIABLO ordonne : danse suggestive de 45 secondes sur la personne designee. Contact possible.","points":55,"penalite_refus":"2 shots"},
+      {"id":"C055","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler sa chose preferee a donner au lit.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ta chose preferee a donner au lit.","points":45,"penalite_refus":"shot"},
+      {"id":"C056","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un embrasse lentement la main de l autre en remontant jusqu au poignet. Double accord.","texte_joueur":"DIABLO soumet en secret : l un embrasse lentement la main de l autre jusqu au poignet. Si les deux oui. Anonymat si non.","points":60,"penalite_refus":"shot chacun"},
+      {"id":"C057","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le lieu le plus insolite ou il a deja eu un rapport. Pas le plus improbable, le plus insolite.","texte_joueur":"DIABLO veut le lieu le plus insolite ou tu aies eu un rapport. Pas le plus improbable. Le plus insolite.","points":40,"penalite_refus":"shot"},
+      {"id":"C058","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe cacherait le mieux une relation interdite ? Vote.","texte_vote":"Vote : qui cacherait le mieux une relation interdite ?","texte_joueur":"DIABLO t a designe. Commente ce verdict avec une anecdote.","points":20,"penalite_refus":"shot"},
+      {"id":"C059","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le fantasme impliquant quelqu un dans cette piece. Il n a pas besoin de nommer.","texte_joueur":"DIABLO veut ton fantasme impliquant quelqu un dans cette piece. Pas besoin de nommer la personne.","points":50,"penalite_refus":"shot"},
+      {"id":"C060","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un masse les cuisses de l autre par dessus les vetements pendant 30 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : massage des cuisses par dessus les vetements. 30 secondes. Si les deux oui. Anonymat si non.","points":65,"penalite_refus":"shot chacun"},
+      {"id":"C061","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de designer la personne qu il serait le plus tente d embrasser ce soir.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de designer la personne que tu serais le plus tente d embrasser ce soir.","points":50,"penalite_refus":"shot"},
+      {"id":"C062","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le scenario le plus torride qu il ait jamais imagine.","texte_joueur":"DIABLO veut le scenario le plus torride que tu aies jamais imagine. Avec contexte et details.","points":45,"penalite_refus":"shot"},
+      {"id":"C063","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus difficile a satisfaire au lit ? Vote.","texte_vote":"Vote : qui serait le plus difficile a satisfaire au lit ?","texte_joueur":"DIABLO t a designe. Confirme ou infirme avec des arguments.","points":20,"penalite_refus":"shot"},
+      {"id":"C064","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour une conversation privee de 90 secondes. Le groupe ne sait jamais ce qui s est dit.","texte_joueur":"DIABLO ordonne : 90 secondes de conversation totalement privee. Ce qui se dit disparait.","points":55,"penalite_refus":"shot chacun"},
+      {"id":"C065","type":"solo","texte":"L Oracle designe {joueur}. Il doit faire la demonstration de sa technique de baiser sur son poignet. 20 secondes.","texte_joueur":"DIABLO ordonne : demonstration de ta technique de baiser sur ton poignet. 20 secondes. Le groupe note.","points":30,"penalite_refus":"shot"},
+      {"id":"C066","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le truc sexuel qu il n a jamais ose faire.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler le truc sexuel que tu n as jamais ose faire.","points":55,"penalite_refus":"shot"},
+      {"id":"C067","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus agreable comme partenaire d une nuit d hotel selon vous ? Vote.","texte_vote":"Vote : qui serait le plus agreable comme partenaire d une nuit d hotel ?","texte_joueur":"DIABLO t a designe. Le groupe a vote. L Oracle confirme.","points":20,"penalite_refus":"shot"},
+      {"id":"C068","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il ferait a {joueur2} si tout etait permis ce soir. Devant tout le groupe.","texte_joueur":"DIABLO ordonne : dis ce que tu ferais a la personne designee si tout etait permis ce soir. Devant tout le groupe.","points":60,"penalite_refus":"2 shots"},
+      {"id":"C069","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un embrasse l autre sur la tempe. Double accord.","texte_joueur":"DIABLO soumet en secret : l un embrasse l autre sur la tempe. Lentement. Si les deux oui. Anonymat si non.","points":55,"penalite_refus":"shot chacun"},
+      {"id":"C070","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus torride qu il ait faite dans un endroit public.","texte_joueur":"DIABLO veut la chose la plus torride que tu aies faite dans un endroit public. Contexte et details.","points":45,"penalite_refus":"shot"},
+      {"id":"C071","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de montrer la photo la plus suggestive de son telephone.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de montrer la photo la plus suggestive de ton telephone.","points":55,"penalite_refus":"shot"},
+      {"id":"C072","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a la plus belle facon de se deshabiller selon votre intuition ? Vote.","texte_vote":"Vote : qui se deshabille le mieux selon votre intuition ?","texte_joueur":"DIABLO t a designe. Fais une demonstration de 10 secondes pour confirmer.","points":25,"penalite_refus":"shot"},
+      {"id":"C073","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un respire dans le cou de l autre pendant 20 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : l un respire dans le cou de l autre pendant 20 secondes. Si les deux oui. Anonymat si non.","points":70,"penalite_refus":"shot chacun"},
+      {"id":"C074","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la pensee la plus torride qu il ait eu ce soir sur quelqu un dans cette piece.","texte_joueur":"DIABLO veut la pensee la plus torride que tu aies eue ce soir sur quelqu un ici.","points":45,"penalite_refus":"shot"},
+      {"id":"C075","type":"shot","texte":"L Oracle decrete : celui qui a deja participe a un jeu de verite ou action adulte avant ce soir boit.","texte_joueur":null,"points":0,"penalite_refus":"shot"},
+      {"id":"C076","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler son nombre de partenaires en une nuit.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ton record de partenaires en une seule nuit.","points":45,"penalite_refus":"shot"},
+      {"id":"C077","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il ferait en premier si on le laissait seul 30 minutes avec quelqu un de tres attirant dans cette piece.","texte_joueur":"DIABLO veut savoir ce que tu ferais en premier si on te laissait seul 30 minutes avec quelqu un de tres attirant ici.","points":45,"penalite_refus":"shot"},
+      {"id":"C078","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un passe ses doigts dans les cheveux de l autre lentement pendant 45 secondes. Puis inversez.","texte_joueur":"DIABLO ordonne : l un passe ses doigts dans les cheveux de l autre lentement. 45 secondes. Puis inversez.","points":45,"penalite_refus":"shot chacun"},
+      {"id":"C079","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a l instinct le plus predateur en matiere de seduction ? Vote.","texte_vote":"Vote : qui a l instinct le plus predateur en seduction ?","texte_joueur":"DIABLO t a designe. Montre cet instinct pendant 15 secondes sur quelqu un de consentant.","points":25,"penalite_refus":"shot"},
+      {"id":"C080","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la partie de son corps dont il est le plus fier et pourquoi.","texte_joueur":"DIABLO veut la partie de ton corps dont tu es le plus fier et pourquoi.","points":30,"penalite_refus":"shot"},
+      {"id":"C081","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un embrasse l epaule de l autre. Double accord.","texte_joueur":"DIABLO soumet en secret : l un embrasse l epaule de l autre. Si les deux oui. Anonymat si non.","points":60,"penalite_refus":"shot chacun"},
+      {"id":"C082","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler ce qu il aime le moins au lit.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ce que tu aimes le moins au lit.","points":40,"penalite_refus":"shot"},
+      {"id":"C083","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait capable de seduire n importe qui s il le voulait vraiment ? Vote.","texte_vote":"Vote : qui serait capable de seduire n importe qui s il le voulait ?","texte_joueur":"DIABLO t a designe. Prouve-le en 15 secondes sur {joueur2}.","points":25,"penalite_refus":"shot"},
+      {"id":"C084","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le moment le plus excitant qu il ait vecu lors d une soiree similaire.","texte_joueur":"DIABLO veut le moment le plus excitant que tu aies vecu lors d une soiree similaire. Avec details.","points":40,"penalite_refus":"shot"},
+      {"id":"C085","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un fait courir son doigt lentement de la nuque jusqu au bas du dos de l autre. Double accord.","texte_joueur":"DIABLO soumet en secret : l un fait courir son doigt de la nuque jusqu au bas du dos de l autre. Si les deux oui. Anonymat si non.","points":70,"penalite_refus":"shot chacun"},
+      {"id":"C086","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus audacieuse qu il ait jamais tentee pour seduire quelqu un.","texte_joueur":"DIABLO veut la chose la plus audacieuse que tu aies jamais tentee pour seduire quelqu un.","points":35,"penalite_refus":"shot"},
+      {"id":"C087","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus difficile a ne pas regarder toute la nuit ? Vote.","texte_vote":"Vote : qui serait le plus difficile a ne pas regarder toute la nuit ?","texte_joueur":"DIABLO t a designe. L Oracle te confirme que le groupe a raison.","points":20,"penalite_refus":"shot"},
+      {"id":"C088","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire une demonstration de son strip-tease le plus lent possible. 30 secondes minimum.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de faire un strip-tease tres lent de 30 secondes.","points":55,"penalite_refus":"shot"},
+      {"id":"C089","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. Ils se tiennent par la taille face a face pendant 1 minute sans bouger. Double accord.","texte_joueur":"DIABLO soumet en secret : face a face tenus par la taille. 1 minute sans bouger. Si les deux oui. Anonymat si non.","points":65,"penalite_refus":"shot chacun"},
+      {"id":"C090","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler son record de temps sans sexe depuis qu il a eu sa premiere fois.","texte_joueur":"DIABLO veut ton record de temps sans sexe depuis ta premiere fois. Honnêtement.","points":30,"penalite_refus":"shot"},
+      {"id":"C091","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le mouvement le plus seduisant quand il marche ? Vote.","texte_vote":"Vote : qui a le mouvement le plus seduisant quand il marche ?","texte_joueur":"DIABLO t a designe. Fais un aller-retour dans la piece pour confirmer.","points":20,"penalite_refus":"shot"},
+      {"id":"C092","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus torride qu il n a jamais osee dire a haute voix.","texte_joueur":"DIABLO veut la chose la plus torride que tu n as jamais osee dire a haute voix. L Oracle ne juge pas.","points":55,"penalite_refus":"2 shots"},
+      {"id":"C093","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un masse les fessiers de l autre pendant 30 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : massage des fessiers. 30 secondes. Si les deux oui. Anonymat si non.","points":70,"penalite_refus":"shot chacun"},
+      {"id":"C094","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler la chose qu il ferait a {joueur2} s ils etaient seuls.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ce que tu ferais a la personne designee si vous etiez seuls.","points":55,"penalite_refus":"shot"},
+      {"id":"C095","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le regard le plus difficile a soutenir sans faiblir ? Vote.","texte_vote":"Vote : qui a le regard le plus difficile a soutenir ?","texte_joueur":"DIABLO t a designe. Pose ce regard sur {joueur2} pendant 20 secondes.","points":20,"penalite_refus":"shot"},
+      {"id":"C096","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qui le rend fou ou folle au lit. Sans filtre.","texte_joueur":"DIABLO veut ce qui te rend fou ou folle au lit. Sans filtre.","points":50,"penalite_refus":"shot"},
+      {"id":"C097","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un effleure lentement la joue de l autre avec le dos de la main. Double accord.","texte_joueur":"DIABLO soumet en secret : l un effleure lentement la joue de l autre avec le dos de la main. Si les deux oui. Anonymat si non.","points":55,"penalite_refus":"shot chacun"},
+      {"id":"C098","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il a fait de plus torride sous l influence de l alcool.","texte_joueur":"DIABLO veut ce que tu as fait de plus torride sous l influence de l alcool.","points":40,"penalite_refus":"shot"},
+      {"id":"C099","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus agreable a retrouver apres une longue separation ? Vote.","texte_vote":"Vote : qui serait le plus agreable a retrouver apres une longue separation ?","texte_joueur":"DIABLO t a designe. Le groupe a vote. Tu sais ce que ca veut dire.","points":20,"penalite_refus":"shot"},
+      {"id":"C100","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le truc qu il fait qui rend ses partenaires fous.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler le truc que tu fais qui rend tes partenaires fous.","points":50,"penalite_refus":"shot"},
+      {"id":"C101","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler son endroit prefere pour recevoir un baiser en dehors de la bouche.","texte_joueur":"DIABLO veut ton endroit prefere pour recevoir un baiser en dehors de la bouche.","points":35,"penalite_refus":"shot"},
+      {"id":"C102","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un passe sa main dans les cheveux de l autre pendant 30 secondes. Lentement. Double accord.","texte_joueur":"DIABLO soumet en secret : l un passe sa main dans les cheveux de l autre. 30 secondes. Lentement. Si les deux oui. Anonymat si non.","points":55,"penalite_refus":"shot chacun"},
+      {"id":"C103","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus difficile a quitter apres une premiere nuit ? Vote.","texte_vote":"Vote : qui serait le plus difficile a quitter apres une premiere nuit ?","texte_joueur":"DIABLO t a designe. Dis quelque chose pour confirmer ce verdict.","points":20,"penalite_refus":"shot"},
+      {"id":"C104","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa chose preferee dans le sexe oral. Sans euphemisme.","texte_joueur":"DIABLO veut ta chose preferee dans le sexe oral. Sans euphemisme.","points":50,"penalite_refus":"shot"},
+      {"id":"C105","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler avec qui dans cette piece il se verrait dans un couple ouvert.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler avec qui ici tu te verrais dans un couple ouvert.","points":45,"penalite_refus":"shot"},
+      {"id":"C106","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un masse les pieds de l autre pendant 1 minute. Double accord.","texte_joueur":"DIABLO ordonne : massage des pieds. 1 minute. Si les deux acceptent.","points":50,"penalite_refus":"shot chacun"},
+      {"id":"C107","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le corps le plus fait pour le plaisir selon votre intuition ? Vote.","texte_vote":"Vote : qui a le corps le plus fait pour le plaisir ?","texte_joueur":"DIABLO t a designe. L Oracle valide le jugement collectif.","points":25,"penalite_refus":"shot"},
+      {"id":"C108","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la fois ou il a ete le plus audacieux ou la plus audacieuse dans un contexte intime.","texte_joueur":"DIABLO veut la fois ou tu as ete le plus audacieux dans un contexte intime. Details bienvenus.","points":45,"penalite_refus":"shot"},
+      {"id":"C109","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un embrasse lentement l interieur du poignet de l autre. Double accord.","texte_joueur":"DIABLO soumet en secret : l un embrasse lentement l interieur du poignet de l autre. Si les deux oui. Anonymat si non.","points":65,"penalite_refus":"shot chacun"},
+      {"id":"C110","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler sa pratique sexuelle preferee.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ta pratique sexuelle preferee.","points":50,"penalite_refus":"shot"},
+      {"id":"C111","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le moment ou il a desire le plus intensement quelqu un dans cette piece depuis le debut de la soiree.","texte_joueur":"DIABLO veut le moment ce soir ou tu as desire le plus intensement quelqu un ici. Precis et honnête.","points":45,"penalite_refus":"shot"},
+      {"id":"C112","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe aurait le plus de facilite a seduire quelqu un hors de son type habituel ? Vote.","texte_vote":"Vote : qui seduirait le plus facilement hors de son type habituel ?","texte_joueur":"DIABLO t a designe. Commente ce verdict.","points":20,"penalite_refus":"shot"},
+      {"id":"C113","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. Ils se font face et l un enleve tres lentement un accessoire de l autre (ceinture, collier, bague). Double accord.","texte_joueur":"DIABLO soumet en secret : l un enleve tres lentement un accessoire de l autre. Si les deux oui. Anonymat si non.","points":70,"penalite_refus":"shot chacun"},
+      {"id":"C114","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le moment le plus intense qu il ait vecu avec quelqu un qu il venait juste de rencontrer.","texte_joueur":"DIABLO veut le moment le plus intense que tu aies vecu avec quelqu un que tu venais de rencontrer.","points":40,"penalite_refus":"shot"},
+      {"id":"C115","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler ce qu il pense reellement de la vie sexuelle de {joueur2}.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de dire ce que tu penses de la vie sexuelle de la personne designee.","points":55,"penalite_refus":"shot"},
+      {"id":"C116","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le plus de maitrise dans l art de la seduction ? Vote.","texte_vote":"Vote : qui maitrise le mieux l art de la seduction ?","texte_joueur":"DIABLO t a designe. Fais une demonstration de 20 secondes sur {joueur2}.","points":25,"penalite_refus":"shot"},
+      {"id":"C117","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. L un embrasse lentement le lobe de l oreille de l autre. Double accord.","texte_joueur":"DIABLO soumet en secret : l un embrasse lentement le lobe de l oreille de l autre. Si les deux oui. Anonymat si non.","points":75,"penalite_refus":"shot chacun"},
+      {"id":"C118","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le plus grand regret de sa vie intime.","texte_joueur":"DIABLO veut ton plus grand regret de ta vie intime. Honnêtement.","points":40,"penalite_refus":"shot"},
+      {"id":"C119","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire une demonstration de son baiser le plus passionne sur la main de {joueur2}.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de faire une demonstration de ton baiser le plus passionne sur la main de la personne designee.","points":50,"penalite_refus":"shot"},
+      {"id":"C120","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus susceptible de tomber amoureux de quelqu un qu il a rencontre ce soir ? Vote.","texte_vote":"Vote : qui tomberait le plus facilement amoureux de quelqu un rencontre ce soir ?","texte_joueur":"DIABLO t a designe. Commente ce verdict avec honnêtete.","points":20,"penalite_refus":"shot"}
     ],
     "brulant": [
-      {
-        "id": "B001", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. En secret : baiser passionne sur les levres, 5 secondes minimum. Si les deux oui c est execute maintenant. Anonymat total si non.",
-        "texte_joueur": "DIABLO soumet en secret : baiser passionne sur les levres. 5 secondes minimum. Si les deux oui c est execute maintenant. Anonymat total si non.",
-        "points": 100, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "B002", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler en detail le moment sexuel le plus intense de sa vie.",
-        "texte_joueur": "DIABLO veut le moment sexuel le plus intense de ta vie. En detail. L Oracle ecoute.",
-        "points": 60, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "B003", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe voudrait reellement coucher avec quelqu un ici ce soir ? Vote en secret.",
-        "texte_vote": "Vote : qui voudrait reellement coucher avec quelqu un ici ce soir ?",
-        "texte_joueur": "DIABLO t a designe. Le groupe le sent. L Oracle aussi.",
-        "points": 30, "penalite_refus": "shot"
-      },
-      {
-        "id": "B004", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. En secret : ils se touchent les levres avec les doigts mutuellement pendant 15 secondes. Double accord.",
-        "texte_joueur": "DIABLO soumet en secret : vous vous touchez les levres mutuellement avec les doigts. 15 secondes. Si les deux oui. Anonymat si non.",
-        "points": 80, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "B005", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de designer la personne qu il voudrait le plus deshabiller ce soir et de lui dire exactement ce qu il ferait apres.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de designer quelqu un et de lui dire ce que tu ferais apres l avoir deshabille.",
-        "points": 70, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "B006", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe serait le plus difficile a ne pas embrasser apres cette soiree ? Vote en secret.",
-        "texte_vote": "Vote : qui serait le plus difficile a ne pas embrasser apres cette soiree ?",
-        "texte_joueur": "DIABLO t a designe. Dis quelque chose a la personne que tu trouveras la plus difficile a ne pas embrasser.",
-        "points": 30, "penalite_refus": "shot"
-      },
-      {
-        "id": "B007", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. En secret : l un embrasse la main de l autre lentement en remontant jusqu au poignet. Double accord.",
-        "texte_joueur": "DIABLO soumet en secret : l un embrasse la main de l autre lentement jusqu au poignet. Si les deux oui. Anonymat si non.",
-        "points": 75, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "B008", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler sa perversion la plus profonde. Celle qu il assume completement.",
-        "texte_joueur": "DIABLO veut ta perversion la plus profonde. Celle que tu assumes completement.",
-        "points": 65, "penalite_refus": "3 shots"
-      },
-      {
-        "id": "B009", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe ferait l amour de la facon la plus intense ? Vote en secret.",
-        "texte_vote": "Vote : qui ferait l amour de la facon la plus intense ?",
-        "texte_joueur": "DIABLO t a couronne. L Oracle confirme ce que le groupe ressent.",
-        "points": 25, "penalite_refus": "shot"
-      },
-      {
-        "id": "B010", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour le defi ultime. Si les deux acceptent ils s embrassent passionnement pendant que le groupe compte jusqu a 10.",
-        "texte_joueur": "DIABLO soumet le defi ultime : si les deux acceptent vous vous embrassez passionnement pendant que le groupe compte jusqu a 10. Personne ne sait jamais qui a refuse si non.",
-        "points": 100, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "B011", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler exactement ce qu il ferait a quelqu un dans cette piece s il pouvait tout se permettre ce soir.",
-        "texte_joueur": "DIABLO veut exactement ce que tu ferais a quelqu un dans cette piece si tu pouvais tout te permettre ce soir.",
-        "points": 70, "penalite_refus": "3 shots"
-      },
-      {
-        "id": "B012", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe a les mains les plus habiles ? Vote en secret.",
-        "texte_vote": "Vote : qui a les mains les plus habiles ?",
-        "texte_joueur": "DIABLO t a designe. Le groupe l a senti. Fais une demonstration sur {joueur2} de volontaire.",
-        "points": 30, "penalite_refus": "shot"
-      },
-      {
-        "id": "B013", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2} pour 2 minutes de totale intimite. Ce qu ils font ou disent disparait. Le groupe ne sait jamais.",
-        "texte_joueur": "DIABLO ordonne : 2 minutes de totale intimite. Ce que vous faites ou dites disparait. Le groupe ne sait jamais.",
-        "points": 80, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "B014", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le fantasme le plus explicite qu il ait eu sur quelqu un ici ce soir. Tout est permis pour convaincre.",
-        "texte_joueur": "DIABLO ordonne : le groupe essaie de te convaincre de reveler ton fantasme le plus explicite sur quelqu un ici ce soir.",
-        "points": 75, "penalite_refus": "shot collectif si echec"
-      },
-      {
-        "id": "B015", "type": "vote",
-        "texte": "L Oracle veut savoir : qui dans ce groupe serait le meilleur au lit sans aucune retenue ? Vote en secret.",
-        "texte_vote": "Vote : qui serait le meilleur au lit sans aucune retenue ?",
-        "texte_joueur": "DIABLO t a couronne. Le groupe a tranche.",
-        "points": 30, "penalite_refus": "shot"
-      },
-      {
-        "id": "B016", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. En secret : ils se mordent lentement la levre inferieure face a face pendant 15 secondes. Double accord.",
-        "texte_joueur": "DIABLO soumet en secret : face a face, vous vous mordez lentement la levre inferieure. 15 secondes. Si les deux oui. Anonymat si non.",
-        "points": 85, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "B017", "type": "solo",
-        "texte": "L Oracle designe {joueur}. Il doit reveler le truc sexuel qu il n a jamais ose faire mais dont il a envie.",
-        "texte_joueur": "DIABLO veut le truc sexuel que tu n as jamais ose faire mais dont tu as envie. L Oracle ne juge pas.",
-        "points": 65, "penalite_refus": "2 shots"
-      },
-      {
-        "id": "B018", "type": "duo",
-        "texte": "L Oracle designe {joueur1} et {joueur2}. En secret : l un masse l interieur des cuisses de l autre pendant 30 secondes. Double accord.",
-        "texte_joueur": "DIABLO soumet en secret : l un masse l interieur des cuisses de l autre pendant 30 secondes. Si les deux oui. Anonymat si non.",
-        "points": 90, "penalite_refus": "shot chacun"
-      },
-      {
-        "id": "B019", "type": "groupe",
-        "texte": "L Oracle designe {joueur}. Le groupe invente maintenant le defi le plus torride possible. {joueur} a 1 minute pour l executer. Tout est permis dans la limite du consentement.",
-        "texte_joueur": "DIABLO a donne le pouvoir au groupe. Ils inventent ton defi maintenant. Tu as 1 minute. Tout est permis dans la limite du consentement.",
-        "points": 80, "penalite_refus": "3 shots"
-      },
-      {
-        "id": "B020", "type": "vote",
-        "texte": "L Oracle prononce le verdict final : qui a ete le plus courageux, le plus torride et le plus ose de toute la soiree ?",
-        "texte_vote": "Vote final : qui a ete le plus ose et le plus torride de toute la soiree ?",
-        "texte_joueur": "DIABLO te couronne. Tu es le champion de cette soiree. Tout le groupe boit a ta sante.",
-        "points": 0, "penalite_refus": "shot"
-      }
+      {"id":"B001","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : baiser passionne sur les levres, 5 secondes minimum. Si les deux oui c est execute maintenant. Anonymat total si non.","texte_joueur":"DIABLO soumet en secret : baiser passionne sur les levres. 5 secondes minimum. Si les deux oui c est execute maintenant. Anonymat total si non.","points":100,"penalite_refus":"shot chacun"},
+      {"id":"B002","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler en detail le moment sexuel le plus intense de sa vie.","texte_joueur":"DIABLO veut le moment sexuel le plus intense de ta vie. En detail. L Oracle ecoute.","points":60,"penalite_refus":"2 shots"},
+      {"id":"B003","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe voudrait reellement coucher avec quelqu un ici ce soir ? Vote en secret.","texte_vote":"Vote : qui voudrait reellement coucher avec quelqu un ici ce soir ?","texte_joueur":"DIABLO t a designe. Le groupe le sent. L Oracle aussi.","points":30,"penalite_refus":"shot"},
+      {"id":"B004","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils se touchent les levres avec les doigts mutuellement pendant 15 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : vous vous touchez les levres mutuellement avec les doigts. 15 secondes. Si les deux oui. Anonymat si non.","points":80,"penalite_refus":"shot chacun"},
+      {"id":"B005","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de designer la personne qu il voudrait le plus deshabiller ce soir et de lui dire exactement ce qu il ferait apres.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de designer quelqu un et de lui dire ce que tu ferais apres l avoir deshabille.","points":70,"penalite_refus":"shot"},
+      {"id":"B006","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus difficile a ne pas embrasser apres cette soiree ? Vote en secret.","texte_vote":"Vote : qui serait le plus difficile a ne pas embrasser apres cette soiree ?","texte_joueur":"DIABLO t a designe. Dis quelque chose a la personne que tu trouveras la plus difficile a ne pas embrasser.","points":30,"penalite_refus":"shot"},
+      {"id":"B007","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un embrasse la main de l autre lentement en remontant jusqu au poignet. Double accord.","texte_joueur":"DIABLO soumet en secret : l un embrasse la main de l autre lentement jusqu au poignet. Si les deux oui. Anonymat si non.","points":75,"penalite_refus":"shot chacun"},
+      {"id":"B008","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa perversion la plus profonde. Celle qu il assume completement.","texte_joueur":"DIABLO veut ta perversion la plus profonde. Celle que tu assumes completement.","points":65,"penalite_refus":"3 shots"},
+      {"id":"B009","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe ferait l amour de la facon la plus intense ? Vote en secret.","texte_vote":"Vote : qui ferait l amour de la facon la plus intense ?","texte_joueur":"DIABLO t a couronne. L Oracle confirme ce que le groupe ressent.","points":25,"penalite_refus":"shot"},
+      {"id":"B010","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour le defi ultime. Si les deux acceptent ils s embrassent passionnement pendant que le groupe compte jusqu a 10.","texte_joueur":"DIABLO soumet le defi ultime : si les deux acceptent vous vous embrassez passionnement pendant que le groupe compte jusqu a 10. Personne ne sait jamais qui a refuse si non.","points":100,"penalite_refus":"shot chacun"},
+      {"id":"B011","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler exactement ce qu il ferait a quelqu un dans cette piece s il pouvait tout se permettre ce soir.","texte_joueur":"DIABLO veut exactement ce que tu ferais a quelqu un dans cette piece si tu pouvais tout te permettre ce soir.","points":70,"penalite_refus":"3 shots"},
+      {"id":"B012","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a les mains les plus habiles ? Vote en secret.","texte_vote":"Vote : qui a les mains les plus habiles ?","texte_joueur":"DIABLO t a designe. Le groupe l a senti. Fais une demonstration sur {joueur2}.","points":30,"penalite_refus":"shot"},
+      {"id":"B013","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2} pour 2 minutes de totale intimite. Ce qu ils font ou disent disparait. Le groupe ne sait jamais.","texte_joueur":"DIABLO ordonne : 2 minutes de totale intimite. Ce que vous faites ou dites disparait. Le groupe ne sait jamais.","points":80,"penalite_refus":"shot chacun"},
+      {"id":"B014","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le fantasme le plus explicite qu il ait eu sur quelqu un ici ce soir.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ton fantasme le plus explicite sur quelqu un ici ce soir.","points":75,"penalite_refus":"shot"},
+      {"id":"B015","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le meilleur au lit sans aucune retenue ? Vote en secret.","texte_vote":"Vote : qui serait le meilleur au lit sans aucune retenue ?","texte_joueur":"DIABLO t a couronne. Le groupe a tranche.","points":30,"penalite_refus":"shot"},
+      {"id":"B016","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils se mordent lentement la levre inferieure face a face pendant 15 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : face a face, vous vous mordez lentement la levre inferieure. 15 secondes. Si les deux oui. Anonymat si non.","points":85,"penalite_refus":"shot chacun"},
+      {"id":"B017","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le truc sexuel qu il n a jamais ose faire mais dont il a envie.","texte_joueur":"DIABLO veut le truc sexuel que tu n as jamais ose faire mais dont tu as envie. L Oracle ne juge pas.","points":65,"penalite_refus":"2 shots"},
+      {"id":"B018","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un masse l interieur des cuisses de l autre pendant 30 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : l un masse l interieur des cuisses de l autre pendant 30 secondes. Si les deux oui. Anonymat si non.","points":90,"penalite_refus":"shot chacun"},
+      {"id":"B019","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe invente maintenant le defi le plus torride possible. {joueur} a 1 minute pour l executer. Tout est permis dans la limite du consentement.","texte_joueur":"DIABLO a donne le pouvoir au groupe. Ils inventent ton defi maintenant. Tu as 1 minute. Tout est permis dans la limite du consentement.","points":80,"penalite_refus":"3 shots"},
+      {"id":"B020","type":"vote","texte":"L Oracle prononce le verdict final : qui a ete le plus courageux, le plus torride et le plus ose de toute la soiree ?","texte_vote":"Vote final : qui a ete le plus ose et le plus torride de toute la soiree ?","texte_joueur":"DIABLO te couronne. Tu es le champion de cette soiree. Tout le groupe boit a ta sante.","points":0,"penalite_refus":"shot"},
+      {"id":"B021","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le scenario erotique qu il a le plus imagine avec quelqu un dans cette piece.","texte_joueur":"DIABLO veut le scenario erotique que tu as le plus imagine avec quelqu un ici. Pas besoin de nommer.","points":65,"penalite_refus":"2 shots"},
+      {"id":"B022","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un embrasse doucement la clavicule de l autre. Double accord.","texte_joueur":"DIABLO soumet en secret : l un embrasse doucement la clavicule de l autre. Si les deux oui. Anonymat si non.","points":80,"penalite_refus":"shot chacun"},
+      {"id":"B023","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le fantasme le plus inavouable selon votre intuition ? Vote en secret.","texte_vote":"Vote : qui a le fantasme le plus inavouable selon vous ?","texte_joueur":"DIABLO t a designe. Prouve que le groupe a raison en revelant quelque chose.","points":30,"penalite_refus":"shot"},
+      {"id":"B024","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus torride qu il ait faite a deux ou plus.","texte_joueur":"DIABLO veut la chose la plus torride que tu aies faite a deux ou plus. En detail.","points":70,"penalite_refus":"2 shots"},
+      {"id":"B025","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler ce qu il pense reellement faire avec {joueur2} apres cette soiree.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ce que tu penses reellement faire avec la personne designee apres cette soiree.","points":75,"penalite_refus":"shot"},
+      {"id":"B026","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un souffle lentement dans le cou de l autre pendant 20 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : l un souffle lentement dans le cou de l autre. 20 secondes. Si les deux oui. Anonymat si non.","points":75,"penalite_refus":"shot chacun"},
+      {"id":"B027","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus susceptible de coucher avec quelqu un de cette soiree avant minuit ? Vote en secret.","texte_vote":"Vote : qui coucherait avec quelqu un de ce groupe avant minuit ?","texte_joueur":"DIABLO t a designe. Le groupe a vote. L Oracle confirme.","points":30,"penalite_refus":"shot"},
+      {"id":"B028","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler son nombre de partenaires cette annee. Honnêtement.","texte_joueur":"DIABLO veut ton nombre de partenaires cette annee. Honnêtement et sans arrondir.","points":55,"penalite_refus":"shot"},
+      {"id":"B029","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils echangent un baiser sur la joue mais tres pres de la bouche. Double accord.","texte_joueur":"DIABLO soumet en secret : baiser sur la joue mais tres pres de la bouche. Si les deux oui. Anonymat si non.","points":85,"penalite_refus":"shot chacun"},
+      {"id":"B030","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler la chose la plus degradante qu il ait faite par desir.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler la chose la plus degradante que tu aies faite par desir.","points":70,"penalite_refus":"shot"},
+      {"id":"B031","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il aime faire juste avant un rapport. Le rituel.","texte_joueur":"DIABLO veut ce que tu fais juste avant un rapport. Le rituel. Les details comptent.","points":60,"penalite_refus":"shot"},
+      {"id":"B032","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus torride dans un contexte totalement prive et sans inhibitions ? Vote en secret.","texte_vote":"Vote : qui serait le plus torride sans aucune inhibition ?","texte_joueur":"DIABLO t a designe. Le groupe l a senti. L Oracle le confirme.","points":30,"penalite_refus":"shot"},
+      {"id":"B033","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un trace lentement les levres de l autre avec son doigt. Double accord.","texte_joueur":"DIABLO soumet en secret : l un trace lentement les levres de l autre avec son doigt. Si les deux oui. Anonymat si non.","points":85,"penalite_refus":"shot chacun"},
+      {"id":"B034","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le moment ou il s est senti le plus desire de sa vie.","texte_joueur":"DIABLO veut le moment ou tu t es senti le plus desire de ta vie. Contexte et details.","points":55,"penalite_refus":"shot"},
+      {"id":"B035","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler ce qu il ferait a {joueur2} avec les mains pendant 30 secondes si tout etait permis.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ce que tu ferais a la personne designee avec tes mains si tout etait permis.","points":70,"penalite_refus":"shot"},
+      {"id":"B036","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils se tiennent tres etroitement par la taille, front contre front, pendant 30 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : tres etroitement par la taille, front contre front. 30 secondes. Si les deux oui. Anonymat si non.","points":80,"penalite_refus":"shot chacun"},
+      {"id":"B037","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le desir le plus difficile a maitriser ce soir ? Vote en secret.","texte_vote":"Vote : qui a le desir le plus difficile a maitriser ce soir ?","texte_joueur":"DIABLO t a designe. Le groupe a vote. Commente ce verdict honnêtement.","points":30,"penalite_refus":"shot"},
+      {"id":"B038","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler sa pratique sexuelle preferee que peu de partenaires lui ont donnee.","texte_joueur":"DIABLO veut ta pratique sexuelle preferee que peu de partenaires t ont donnee.","points":65,"penalite_refus":"2 shots"},
+      {"id":"B039","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un embrasse l autre dans le creux du coude. Double accord.","texte_joueur":"DIABLO soumet en secret : l un embrasse l autre dans le creux du coude. Si les deux oui. Anonymat si non.","points":70,"penalite_refus":"shot chacun"},
+      {"id":"B040","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler son fantasme impliquant deux personnes de cette piece.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ton fantasme impliquant deux personnes de cette piece.","points":80,"penalite_refus":"shot"},
+      {"id":"B041","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus intense qu il ait faite dans un taxi ou une voiture.","texte_joueur":"DIABLO veut la chose la plus intense que tu aies faite dans un taxi ou une voiture.","points":55,"penalite_refus":"shot"},
+      {"id":"B042","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe aurait le plus de facilite a se deshabiller devant quelqu un qu il vient de rencontrer ? Vote en secret.","texte_vote":"Vote : qui se deshabille le plus facilement devant un inconnu ?","texte_joueur":"DIABLO t a designe. Le groupe a vote. Tu sais ce que ca implique.","points":25,"penalite_refus":"shot"},
+      {"id":"B043","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un mord doucement l epaule de l autre. Double accord.","texte_joueur":"DIABLO soumet en secret : l un mord doucement l epaule de l autre. Si les deux oui. Anonymat si non.","points":85,"penalite_refus":"shot chacun"},
+      {"id":"B044","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il a fait sous la douche ou dans un bain qui n avait rien d innocent.","texte_joueur":"DIABLO veut ce que tu as fait sous la douche ou dans un bain qui n avait rien d innocent.","points":60,"penalite_refus":"shot"},
+      {"id":"B045","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler la chose la plus torride qu il ait jamais demandee a un partenaire.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler la chose la plus torride que tu aies jamais demandee a un partenaire.","points":70,"penalite_refus":"shot"},
+      {"id":"B046","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus susceptible d initier quelque chose de torride avant la fin de la soiree ? Vote en secret.","texte_vote":"Vote : qui initierait quelque chose de torride avant la fin de la soiree ?","texte_joueur":"DIABLO t a designe. Le groupe croit en toi. Commente.","points":30,"penalite_refus":"shot"},
+      {"id":"B047","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils s embrassent lentement sur les levres pendant 3 secondes minimum. Double accord.","texte_joueur":"DIABLO soumet en secret : baiser lent sur les levres. 3 secondes minimum. Si les deux oui. Anonymat si non.","points":90,"penalite_refus":"shot chacun"},
+      {"id":"B048","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le moment ou il a ete le plus excite sans pouvoir agir.","texte_joueur":"DIABLO veut le moment ou tu as ete le plus excite sans pouvoir agir. Contexte complet.","points":55,"penalite_refus":"shot"},
+      {"id":"B049","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire une demonstration de ce qu il sait faire avec sa bouche sur sa propre main.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de faire une demonstration avec ta bouche sur ta propre main.","points":65,"penalite_refus":"shot"},
+      {"id":"B050","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un mord doucement la levre inferieure de l autre. Double accord.","texte_joueur":"DIABLO soumet en secret : l un mord doucement la levre inferieure de l autre. Si les deux oui. Anonymat si non.","points":90,"penalite_refus":"shot chacun"},
+      {"id":"B051","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a deja fait quelque chose de torride dans un contexte qui le rendait encore plus excitant ? Vote en secret.","texte_vote":"Vote : qui a fait quelque chose de torride dans un contexte tres excitant ?","texte_joueur":"DIABLO t a designe. Revele le contexte et la chose.","points":30,"penalite_refus":"shot"},
+      {"id":"B052","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il ferait si {joueur2} lui proposait de passer la nuit avec lui apres cette soiree.","texte_joueur":"DIABLO veut savoir ce que tu ferais si la personne designee te proposait de passer la nuit avec elle apres cette soiree.","points":70,"penalite_refus":"2 shots"},
+      {"id":"B053","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : 90 secondes d intimite totale dans un espace prive. Ce qui se passe ne sera jamais dit. Double accord.","texte_joueur":"DIABLO soumet en secret : 90 secondes d intimite totale a l ecart. Ce qui se passe ne sera jamais dit. Si les deux oui. Anonymat si non.","points":100,"penalite_refus":"shot chacun"},
+      {"id":"B054","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le truc qu il pense que {joueur2} fait au lit.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ce que tu penses que la personne designee fait au lit.","points":65,"penalite_refus":"shot"},
+      {"id":"B055","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus agreable a reveiller apres une nuit tres active ? Vote en secret.","texte_vote":"Vote : qui serait le plus agreable a reveiller apres une nuit tres active ?","texte_joueur":"DIABLO t a designe. Dis quelque chose qui confirme ce verdict.","points":25,"penalite_refus":"shot"},
+      {"id":"B056","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il n a jamais ose demander mais dont il reve.","texte_joueur":"DIABLO veut ce que tu n as jamais ose demander mais dont tu reves. L Oracle t ecoute sans jugement.","points":70,"penalite_refus":"2 shots"},
+      {"id":"B057","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un enlace l autre par derriere pendant 30 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : l un enlace l autre par derriere pendant 30 secondes. Si les deux oui. Anonymat si non.","points":80,"penalite_refus":"shot chacun"},
+      {"id":"B058","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a la plus grande energie sexuelle ce soir selon vous ? Vote en secret.","texte_vote":"Vote : qui a la plus grande energie sexuelle ce soir ?","texte_joueur":"DIABLO t a designe. L Oracle confirme ce que le groupe ressent.","points":25,"penalite_refus":"shot"},
+      {"id":"B059","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe invente le geste le plus intime possible. {joueur} doit l executer sur {joueur2} si les deux acceptent.","texte_joueur":"DIABLO a donne le pouvoir au groupe. Ils inventent un geste intime. Tu l executes sur la personne designee si vous acceptez tous les deux.","points":85,"penalite_refus":"shot"},
+      {"id":"B060","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le moment ou il a ete le plus tente par quelqu un qu il n aurait pas du desirer.","texte_joueur":"DIABLO veut le moment ou tu as ete le plus tente par quelqu un que tu n aurais pas du desirer.","points":60,"penalite_refus":"shot"},
+      {"id":"B061","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un pose ses mains sur les hanches de l autre pendant 30 secondes sans bouger. Double accord.","texte_joueur":"DIABLO soumet en secret : mains sur les hanches de l autre. 30 secondes. Sans bouger. Si les deux oui. Anonymat si non.","points":75,"penalite_refus":"shot chacun"},
+      {"id":"B062","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus susceptible de coucher avec quelqu un juste parce qu il le trouvait beau ? Vote en secret.","texte_vote":"Vote : qui coucherait avec quelqu un juste pour l attirance physique ?","texte_joueur":"DIABLO t a designe. Commente ce verdict honnêtement.","points":25,"penalite_refus":"shot"},
+      {"id":"B063","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose la plus torride qu il ait dite a voix haute pendant un rapport.","texte_joueur":"DIABLO veut la chose la plus torride que tu aies dite a voix haute pendant un rapport.","points":65,"penalite_refus":"2 shots"},
+      {"id":"B064","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler ce qu il pense de la facon dont {joueur2} embrasse.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ce que tu penses de la facon dont la personne designee embrasse.","points":60,"penalite_refus":"shot"},
+      {"id":"B065","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils se regardent dans les yeux pendant que l un pose tres lentement sa main sur la gorge de l autre. Double accord.","texte_joueur":"DIABLO soumet en secret : regard dans les yeux pendant que l un pose tres lentement sa main sur la gorge de l autre. Si les deux oui. Anonymat si non.","points":90,"penalite_refus":"shot chacun"},
+      {"id":"B066","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a deja eu un rapport dans un endroit ou il aurait pu se faire surprendre ? Vote en secret.","texte_vote":"Vote : qui a deja eu un rapport dans un endroit a risque ?","texte_joueur":"DIABLO t a designe. Revele le lieu.","points":30,"penalite_refus":"shot"},
+      {"id":"B067","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le geste le plus intime qu il ait fait sur quelqu un lors d une premiere rencontre.","texte_joueur":"DIABLO veut le geste le plus intime que tu aies fait sur quelqu un lors d une premiere rencontre.","points":60,"penalite_refus":"shot"},
+      {"id":"B068","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils s embrassent dans la bouche avec la langue pendant 5 secondes. Double accord.","texte_joueur":"DIABLO soumet le defi maximal : baiser avec la langue. 5 secondes. Si les deux oui. Anonymat total si non.","points":100,"penalite_refus":"shot chacun"},
+      {"id":"B069","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le detour le plus long qu il ait fait pour coucher avec quelqu un.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler le detour le plus long que tu aies fait pour coucher avec quelqu un.","points":60,"penalite_refus":"shot"},
+      {"id":"B070","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus susceptible de rester jusqu au lendemain si invite ? Vote en secret.","texte_vote":"Vote : qui resterait jusqu au lendemain si invite ?","texte_joueur":"DIABLO t a designe. Commente ce verdict.","points":25,"penalite_refus":"shot"},
+      {"id":"B071","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la situation la plus intense qu il ait vecue avec quelqu un dans un espace confine.","texte_joueur":"DIABLO veut la situation la plus intense que tu aies vecue avec quelqu un dans un espace confine.","points":55,"penalite_refus":"shot"},
+      {"id":"B072","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un embrasse l autre sur les levres pendant 3 secondes les yeux ouverts. Regard soutenu. Double accord.","texte_joueur":"DIABLO soumet en secret : baiser sur les levres, 3 secondes, yeux ouverts, regard soutenu. Si les deux oui. Anonymat si non.","points":90,"penalite_refus":"shot chacun"},
+      {"id":"B073","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de faire ce qu il ferait si {joueur2} et lui etaient seuls et que tout etait permis. Pendant 10 secondes.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de faire pendant 10 secondes ce que tu ferais si tu etais seul avec la personne designee et que tout etait permis.","points":90,"penalite_refus":"2 shots"},
+      {"id":"B074","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le courage d aller jusqu au bout de ce qu il desire ce soir ? Vote en secret.","texte_vote":"Vote : qui a le courage d aller jusqu au bout ce soir ?","texte_joueur":"DIABLO t a designe. Prouve que le groupe a raison.","points":30,"penalite_refus":"shot"},
+      {"id":"B075","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il ferait si {joueur2} lui chuchotait quelque chose de tres suggestif a l oreille maintenant.","texte_joueur":"DIABLO veut savoir ce que tu ferais si la personne designee te chuchotait quelque chose de tres suggestif a l oreille maintenant.","points":65,"penalite_refus":"shot"},
+      {"id":"B076","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un souleve tres lentement le t-shirt de l autre jusqu aux cotes et maintient. 15 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : l un souleve tres lentement le t-shirt de l autre jusqu aux cotes. 15 secondes. Si les deux oui. Anonymat si non.","points":90,"penalite_refus":"shot chacun"},
+      {"id":"B077","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler la chose la plus compromettante de sa vie intime.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler la chose la plus compromettante de ta vie intime.","points":80,"penalite_refus":"shot"},
+      {"id":"B078","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le plus envie en ce moment meme d etre touche par quelqu un dans cette piece ? Vote en secret.","texte_vote":"Vote : qui a le plus envie d etre touche maintenant ?","texte_joueur":"DIABLO t a designe. Dis par qui et ou tu aimerais etre touche.","points":35,"penalite_refus":"shot"},
+      {"id":"B079","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le nombre maximum de fois qu il a eu un rapport en 24 heures.","texte_joueur":"DIABLO veut ton record : le nombre maximum de fois que tu as eu un rapport en 24 heures.","points":55,"penalite_refus":"shot"},
+      {"id":"B080","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils se deshabillent mutuellement d un seul vetement chacun. Double accord.","texte_joueur":"DIABLO soumet en secret : vous vous deshabillezmutuellement d un seul vetement chacun. Si les deux oui. Anonymat si non.","points":100,"penalite_refus":"shot chacun"},
+      {"id":"B081","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le mot ou la phrase qui le fait perdre ses moyens dans un contexte intime.","texte_joueur":"DIABLO veut le mot ou la phrase qui te fait perdre tes moyens dans un contexte intime.","points":60,"penalite_refus":"shot"},
+      {"id":"B082","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le dernier fantasme qu il a eu juste avant de s endormir.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler le dernier fantasme que tu as eu juste avant de t endormir.","points":65,"penalite_refus":"shot"},
+      {"id":"B083","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus insatiable si on lui donnait carte blanche ce soir ? Vote en secret.","texte_vote":"Vote : qui serait le plus insatiable avec carte blanche ce soir ?","texte_joueur":"DIABLO t a designe. L Oracle confirme le verdict du groupe.","points":30,"penalite_refus":"shot"},
+      {"id":"B084","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils s allongent l un contre l autre pendant 2 minutes. Double accord.","texte_joueur":"DIABLO soumet en secret : vous vous allongez l un contre l autre pendant 2 minutes. Si les deux oui. Anonymat si non.","points":100,"penalite_refus":"shot chacun"},
+      {"id":"B085","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose qu il ferait en premier si tout le groupe etait d accord pour que cette soiree devienne quelque chose de plus.","texte_joueur":"DIABLO veut savoir ce que tu ferais en premier si tout le groupe etait d accord pour que cette soiree devienne quelque chose de plus.","points":75,"penalite_refus":"2 shots"},
+      {"id":"B086","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler le moment ou il a ete le plus bravement impudique de sa vie.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler le moment ou tu as ete le plus bravement impudique de ta vie.","points":70,"penalite_refus":"shot"},
+      {"id":"B087","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le regard le plus difficile a soutenir sans penser a quelque chose d interdit ? Vote en secret.","texte_vote":"Vote : qui a le regard le plus difficile a soutenir sans penser a quelque chose d interdit ?","texte_joueur":"DIABLO t a designe. Pose ce regard sur {joueur2} pendant 20 secondes.","points":30,"penalite_refus":"shot"},
+      {"id":"B088","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un fait glisser lentement son doigt depuis l oreille jusqu au lobe du cou de l autre. Double accord.","texte_joueur":"DIABLO soumet en secret : l un fait glisser lentement son doigt depuis l oreille jusqu au lobe du cou de l autre. Si les deux oui. Anonymat si non.","points":80,"penalite_refus":"shot chacun"},
+      {"id":"B089","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la proposition la plus explicite qu il ait jamais faite a quelqu un.","texte_joueur":"DIABLO veut la proposition la plus explicite que tu aies jamais faite a quelqu un. Contexte et formulation exacte.","points":65,"penalite_refus":"2 shots"},
+      {"id":"B090","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe invente le defi le plus torride de toute la soiree. {joueur} execute ce qu il veut dans les limites du consentement. 1 minute.","texte_joueur":"DIABLO a donne le pouvoir total au groupe. Ils inventent maintenant. Tu executes dans les limites du consentement. 1 minute.","points":100,"penalite_refus":"3 shots"},
+      {"id":"B091","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils se regardent dans les yeux pendant que chacun dit a voix tres basse ce qu il ferait si personne ne regardait. Simultanement. Double accord.","texte_joueur":"DIABLO soumet en secret : regard dans les yeux, chacun dit a voix tres basse ce qu il ferait si personne ne regardait. En meme temps. Si les deux oui. Anonymat si non.","points":90,"penalite_refus":"shot chacun"},
+      {"id":"B092","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le plus deja transgresse une limite qu il s etait fixee par desir ? Vote en secret.","texte_vote":"Vote : qui a le plus transgresse ses propres limites par desir ?","texte_joueur":"DIABLO t a designe. Revele une transgression.","points":35,"penalite_refus":"shot"},
+      {"id":"B093","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler ce qu il a envie de faire ce soir apres cette soiree et avec qui.","texte_joueur":"DIABLO veut savoir ce que tu as envie de faire ce soir apres cette soiree et avec qui. Honnêtement.","points":75,"penalite_refus":"2 shots"},
+      {"id":"B094","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : l un embrasse l autre dans le creux du cou. Double accord.","texte_joueur":"DIABLO soumet en secret : l un embrasse l autre dans le creux du cou. Si les deux oui. Anonymat si non.","points":85,"penalite_refus":"shot chacun"},
+      {"id":"B095","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler avec qui dans cette piece il passerait le reste de la nuit si tout etait permis et sans consequence.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler avec qui ici tu passerais le reste de la nuit si tout etait permis.","points":80,"penalite_refus":"shot"},
+      {"id":"B096","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a le corps que le groupe voudrait le plus voir sans vetements ? Vote en secret.","texte_vote":"Vote : qui a le corps que le groupe voudrait le plus voir ?","texte_joueur":"DIABLO t a designe. L Oracle sourit. Le groupe aussi.","points":30,"penalite_refus":"shot"},
+      {"id":"B097","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose qu il a faite et dont il n a jamais parle a personne. Dans un contexte intime.","texte_joueur":"DIABLO veut la chose que tu as faite et dont tu n as jamais parle a personne. Dans un contexte intime.","points":70,"penalite_refus":"2 shots"},
+      {"id":"B098","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils se deshabillent mutuellement jusqu a rester en sous-vetements. Double accord maximal.","texte_joueur":"DIABLO soumet le defi le plus intense : vous vous deshabillezmutuellement jusqu aux sous-vetements. Si les deux oui. Anonymat total si non.","points":100,"penalite_refus":"shot chacun"},
+      {"id":"B099","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler ce qui l exciterait le plus dans cette piece si tout etait permis.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ce qui t exciterait le plus dans cette piece si tout etait permis.","points":75,"penalite_refus":"shot"},
+      {"id":"B100","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a deja couche avec quelqu un de cette soiree ou le fera probablement ? Vote en secret.","texte_vote":"Vote : qui a deja couche ou couchera probablement avec quelqu un de cette soiree ?","texte_joueur":"DIABLO t a designe. Commente ce verdict avec honnêtete.","points":35,"penalite_refus":"shot"},
+      {"id":"B101","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le moment le plus intense de sa vie ou il a failli perdre totalement le controle.","texte_joueur":"DIABLO veut le moment le plus intense de ta vie ou tu as failli perdre totalement le controle. Contexte complet.","points":65,"penalite_refus":"shot"},
+      {"id":"B102","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils restent embrasses etroitement pendant 1 minute complete les yeux fermes. Double accord.","texte_joueur":"DIABLO soumet en secret : embrasses etroitement, yeux fermes. 1 minute. Si les deux oui. Anonymat si non.","points":90,"penalite_refus":"shot chacun"},
+      {"id":"B103","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler ce qui le rendrait absolument fou ou folle cette nuit.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ce qui te rendrait absolument fou cette nuit.","points":70,"penalite_refus":"shot"},
+      {"id":"B104","type":"vote","texte":"L Oracle prononce son avant-dernier verdict : qui a ete le plus torride et courageux depuis le debut ? Vote final en secret.","texte_vote":"Vote : qui a ete le plus torride et courageux depuis le debut ?","texte_joueur":"DIABLO te couronne. Le groupe a vote. L Oracle confirme. Tout le monde boit a ta sante.","points":0,"penalite_refus":"shot"},
+      {"id":"B105","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose qui lui manque le plus dans sa vie intime en ce moment.","texte_joueur":"DIABLO veut la chose qui te manque le plus dans ta vie intime en ce moment.","points":55,"penalite_refus":"shot"},
+      {"id":"B106","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils s embrassent en se tenant le visage a deux mains pendant 5 secondes. Double accord.","texte_joueur":"DIABLO soumet en secret : baiser en tenant le visage de l autre a deux mains. 5 secondes. Si les deux oui. Anonymat si non.","points":95,"penalite_refus":"shot chacun"},
+      {"id":"B107","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler ce qu il ferait si {joueur2} lui enlevait sa chemise maintenant.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ce que tu ferais si la personne designee t enlevait ta chemise maintenant.","points":80,"penalite_refus":"shot"},
+      {"id":"B108","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe a deja couche avec quelqu un juste pour ne pas dormir seul ? Vote en secret.","texte_vote":"Vote : qui a couche avec quelqu un juste pour ne pas dormir seul ?","texte_joueur":"DIABLO t a designe. Commente ce verdict avec honnêtete.","points":25,"penalite_refus":"shot"},
+      {"id":"B109","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler le souhait le plus intime qu il n a jamais ose formuler a voix haute.","texte_joueur":"DIABLO veut le souhait le plus intime que tu n as jamais ose formuler a voix haute. Ce soir tu oses.","points":70,"penalite_refus":"2 shots"},
+      {"id":"B110","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils passent 2 minutes entierement seuls a l ecart. Ce qui se passe reste entre eux. Double accord.","texte_joueur":"DIABLO soumet en secret : 2 minutes entierement seuls a l ecart. Ce qui se passe reste entre vous deux. Si les deux oui. Anonymat si non.","points":100,"penalite_refus":"shot chacun"},
+      {"id":"B111","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe a 30 secondes pour le convaincre de reveler sa limite la plus haute en matiere de plaisir.","texte_joueur":"DIABLO ordonne : le groupe essaie de te convaincre de reveler ta limite la plus haute en matiere de plaisir.","points":75,"penalite_refus":"shot"},
+      {"id":"B112","type":"vote","texte":"L Oracle veut savoir : qui dans ce groupe serait le plus susceptible de proposer quelque chose de tres audacieux apres cette soiree ? Vote en secret.","texte_vote":"Vote : qui ferait une proposition tres audacieuse apres cette soiree ?","texte_joueur":"DIABLO t a designe. Fais cette proposition maintenant si tu oses.","points":35,"penalite_refus":"shot"},
+      {"id":"B113","type":"solo","texte":"L Oracle designe {joueur}. Il doit reveler la chose qu il ferait si {joueur2} lui disait maintenant qu il a envie de lui.","texte_joueur":"DIABLO veut savoir ce que tu ferais si la personne designee te disait maintenant qu elle a envie de toi.","points":70,"penalite_refus":"2 shots"},
+      {"id":"B114","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. En secret : ils s embrassent passionnement pendant que le groupe compte jusqu a 15. Double accord maximal.","texte_joueur":"DIABLO soumet le defi ultime final : baiser passionne pendant que le groupe compte jusqu a 15. Si les deux oui. Anonymat total si non.","points":100,"penalite_refus":"shot chacun"},
+      {"id":"B115","type":"groupe","texte":"L Oracle designe {joueur}. Le groupe invente le gage collectif le plus torride de la soiree. {joueur} et {joueur2} l executent si les deux acceptent.","texte_joueur":"DIABLO a donne le pouvoir au groupe. Gage collectif. Tu l executes avec la personne designee si vous acceptez tous les deux.","points":100,"penalite_refus":"2 shots"},
+      {"id":"B116","type":"vote","texte":"L Oracle prononce son verdict sur qui a ete le plus courageux dans les defis les plus intimes. Vote final en secret.","texte_vote":"Vote final : qui a ete le plus courageux dans les defis les plus intimes ?","texte_joueur":"DIABLO te couronne champion ultime de cette soiree. Tout le groupe boit a ta sante.","points":0,"penalite_refus":"shot"},
+      {"id":"B117","type":"solo","texte":"L Oracle designe {joueur}. Derniere confession : la chose la plus torride qu il ait jamais faite ou imaginees impliquant quelqu un dans cette piece.","texte_joueur":"DIABLO veut la derniere confession : la chose la plus torride que tu aies jamais faite ou imaginee impliquant quelqu un ici.","points":80,"penalite_refus":"3 shots"},
+      {"id":"B118","type":"duo","texte":"L Oracle designe {joueur1} et {joueur2}. Defi final duo : 2 minutes completes seuls dans un espace prive. Aucune limite sauf le consentement. Double accord.","texte_joueur":"DIABLO soumet le defi final : 2 minutes seuls. Aucune limite sauf le consentement. Si les deux oui. Anonymat total si non.","points":100,"penalite_refus":"shot chacun"},
+      {"id":"B119","type":"groupe","texte":"L Oracle prononce le defi final. Le groupe designe deux personnes. Elles executent le gage le plus intense que le groupe ose imaginer. Dans les limites du consentement.","texte_joueur":"DIABLO prononce le defi final. Le groupe a decide. Tu executes dans les limites du consentement. L Oracle regarde.","points":100,"penalite_refus":"3 shots"},
+      {"id":"B120","type":"vote","texte":"L Oracle prononce le jugement definitif de la soiree : qui a ete le joueur le plus legendaire de cette soiree DIABLO ? Vote final.","texte_vote":"Vote legendaire : qui a ete le joueur le plus legendaire de cette soiree ?","texte_joueur":"DIABLO te couronne legende de la soiree. Ce soir tu as prouve quelque chose. Le groupe le sait. L Oracle aussi.","points":0,"penalite_refus":"shot"}
     ]
   }
 }
