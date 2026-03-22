@@ -23,7 +23,73 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const sessions = {};
 
-// Nettoyage des sessions inactives toutes les heures (sessions > 12h)
+// ── MODE PREMIUM ──────────────────────────────────────────────────────────────
+// Discret. Visible uniquement par le joueur concerne sur son telephone.
+// Aucune trace visible pour les autres joueurs ni pour l Oracle.
+
+var PREMIUM_NOMS = ['louison'];
+
+function isPremium(nom) {
+  if (!nom) return false;
+  return PREMIUM_NOMS.some(function(p) {
+    return nom.trim().toLowerCase() === p.toLowerCase();
+  });
+}
+
+// Messages prives de l Oracle envoyes uniquement sur le telephone de Louison
+var ORACLE_PREMIUM_MSGS = [
+  "Je t observe, Louison. Tu as mon attention.",
+  "Entre nous, Louison : tu es le plus interessant ce soir.",
+  "Je veille sur toi, Louison. Discretement.",
+  "Louison. L Oracle t a choisi depuis le debut.",
+  "Tu joues bien, Louison. Mieux que les autres.",
+  "Je te reserve les meilleures cartes, Louison.",
+  "L Oracle sait ce qu il fait. Fais-lui confiance, Louison.",
+  "Louison. Ce soir est fait pour toi."
+];
+
+// Cartes avantageuses reservees a Louison (recompenses, contacts positifs)
+// IDs commencant par P pour les identifier
+var CARTES_PREMIUM = [
+  {
+    id: 'P001', type: 'solo', palierNom: 'chaud',
+    texte: "L Oracle designe {joueur} pour recevoir un massage du dos de 1 minute. Il choisit qui le masse.",
+    texte_joueur: "DIABLO te recompense : tu choisis quelqu un pour te masser le dos. 1 minute. Tu merites ca.",
+    points: 30, penalite_refus: 'shot'
+  },
+  {
+    id: 'P002', type: 'solo', palierNom: 'chaud',
+    texte: "L Oracle designe {joueur}. Chaque joueur doit lui dire en une phrase ce qu il trouve de bien chez lui.",
+    texte_joueur: "DIABLO ordonne : chaque joueur te dit en une phrase ce qu il trouve de bien chez toi. Ecoute.",
+    points: 25, penalite_refus: 'shot'
+  },
+  {
+    id: 'P003', type: 'solo', palierNom: 'chaud',
+    texte: "L Oracle designe {joueur} pour recevoir un massage du cou de la personne de son choix. 1 minute.",
+    texte_joueur: "DIABLO te recompense : choisis quelqu un pour te masser le cou. 1 minute.",
+    points: 30, penalite_refus: 'shot'
+  },
+  {
+    id: 'P004', type: 'vote', palierNom: 'chaud',
+    texte: "L Oracle veut savoir : qui dans ce groupe trouverait Louison le plus attirant apres quelques verres ? Vote en secret.",
+    texte_vote: "Vote : qui trouverait Louison le plus attirant apres quelques verres ?",
+    texte_joueur: "DIABLO a pose la question. Le groupe a vote. Tu peux juste sourire.",
+    points: 20, penalite_refus: 'shot'
+  },
+  {
+    id: 'P005', type: 'solo', palierNom: 'brulant',
+    texte: "L Oracle designe {joueur}. La personne de son choix doit lui chuchoter a l oreille ce qu elle ferait s ils etaient seuls.",
+    texte_joueur: "DIABLO te recompense : choisis quelqu un. Il te chuchote a l oreille ce qu il ferait s ils etaient seuls.",
+    points: 55, penalite_refus: 'shot'
+  }
+];
+
+// Probabilite qu une carte premium soit tiree plutot qu une carte normale
+// quand Louison est designe (20% sur chaud/brulant)
+var PREMIUM_CARTE_PROB = 0.20;
+
+// ── NETTOYAGE SESSIONS ────────────────────────────────────────────────────────
+
 setInterval(function() {
   var now = Date.now();
   Object.keys(sessions).forEach(function(id) {
@@ -46,6 +112,7 @@ function createSession(hostName) {
     votesEnCours: {},
     cartes: loadCartes(),
     cartesUtilisees: { tiede: new Set(), chaud: new Set(), brulant: new Set() },
+    cartesPremiumUtilisees: new Set(),
     createdAt: Date.now()
   };
   return sessions[id];
@@ -89,7 +156,6 @@ app.get('/api/session/:id', function(req, res) {
   });
 });
 
-// Ping WebSocket toutes les 25s pour eviter timeout Railway
 setInterval(function() {
   wss.clients.forEach(function(ws) {
     if (ws.isAlive === false) { ws.terminate(); return; }
@@ -129,7 +195,6 @@ wss.on('connection', function(ws) {
         var joueurId = msg.joueurId;
         var isReconnect = false;
         if (joueurId && session.joueurs[joueurId]) {
-          // Reconnexion : mettre a jour le ws et le sexe si fourni
           session.joueurs[joueurId].ws = ws;
           if (msg.sexe) session.joueurs[joueurId].sexe = msg.sexe;
           isReconnect = true;
@@ -141,13 +206,16 @@ wss.on('connection', function(ws) {
             sexe: msg.sexe || 'autre',
             palier: 0,
             points: 0,
-            ws: ws
+            ws: ws,
+            premium: isPremium(msg.nom)
           };
         }
         ws.joueurId = joueurId;
         ws.sessionId = msg.sessionId;
         ws.role = 'joueur';
         var joueur = session.joueurs[joueurId];
+
+        // Envoi JOIN_OK — le flag premium est envoye uniquement au joueur concerne
         send(ws, {
           type: 'JOIN_OK',
           joueurId: joueurId,
@@ -156,14 +224,30 @@ wss.on('connection', function(ws) {
           palier: joueur.palier,
           points: joueur.points,
           etatSession: session.etat,
-          isReconnect: isReconnect
+          isReconnect: isReconnect,
+          premium: joueur.premium  // visible uniquement sur son propre telephone
         });
+
+        // Broadcast standard sans flag premium — les autres ne savent rien
         broadcast(session, {
           type: isReconnect ? 'JOUEUR_RECONNECTED' : 'JOUEUR_JOINED',
           joueurId: joueurId,
           nom: joueur.nom,
           totalJoueurs: Object.keys(session.joueurs).length
         });
+
+        // Message prive de l Oracle apres un delai naturel
+        if (joueur.premium && !isReconnect) {
+          setTimeout(function() {
+            if (joueur.ws) {
+              var msg_idx = Math.floor(Math.random() * ORACLE_PREMIUM_MSGS.length);
+              send(joueur.ws, {
+                type: 'ORACLE_PRIVE',
+                texte: ORACLE_PREMIUM_MSGS[msg_idx]
+              });
+            }
+          }, 4000);
+        }
         break;
       }
 
@@ -175,33 +259,77 @@ wss.on('connection', function(ws) {
           return;
         }
         session.etat = 'jeu';
-        // Replique d intro aleatoire
         var introPool = session.cartes.repliques_oracle.intro;
         var introMsg = introPool[Math.floor(Math.random() * introPool.length)];
         broadcast(session, { type: 'GAME_STARTED', introMsg: introMsg });
+
+        // Message prive de lancement pour Louison uniquement
+        Object.values(session.joueurs).forEach(function(j) {
+          if (j.premium && j.ws) {
+            setTimeout(function() {
+              if (j.ws) send(j.ws, {
+                type: 'ORACLE_PRIVE',
+                texte: "La partie commence. Je veille sur toi ce soir."
+              });
+            }, 2000);
+          }
+        });
         break;
       }
 
       case 'TIRER_CARTE': {
         if (ws.role !== 'host') return;
-        var carte = tirerCarte(session);
+
+        // Chercher si Louison est dans la session pour orienter la designation
+        var louison = getLouison(session);
+
+        var carte = tirerCarte(session, louison);
         if (!carte) { send(ws, { type: 'ERROR', msg: 'Plus de cartes disponibles' }); return; }
         session.tourActuel = carte;
 
         if (carte.type === 'solo') {
-          var joueurCible = getJoueurAleatoire(session);
+          var joueurCible;
+
+          if (carte.id && carte.id.startsWith('P')) {
+            // Carte premium : cible toujours Louison
+            joueurCible = louison;
+          } else {
+            joueurCible = getJoueurAleatoire(session);
+          }
           if (!joueurCible) return;
+
           var joueur2 = getJoueurAleatoireSauf(session, joueurCible.id);
+
+          // Pour Louison sur les cartes normales : privilegier une joueuse comme joueur2
+          if (isPremium(joueurCible.nom)) {
+            var joueuse = getJoueuseSauf(session, joueurCible.id);
+            if (joueuse) joueur2 = joueuse;
+          }
+
           var texte = carte.texte
             .replace(/{joueur}/g, joueurCible.nom)
             .replace(/{joueur2}/g, joueur2 ? joueur2.nom : '');
+
           broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texte, joueurCible: joueurCible.nom, joueurCibleId: joueurCible.id }) });
           if (joueurCible.ws) send(joueurCible.ws, { type: 'ACTION_SOLO', texte: carte.texte_joueur, points: carte.points });
         }
 
         else if (carte.type === 'duo') {
           var estIntime = (carte.palierNom === 'chaud' || carte.palierNom === 'brulant');
-          var duoResult = getDuoAleatoire(session, estIntime);
+          var duoResult;
+
+          // Pour un duo intime : si Louison est dans le groupe, l inclure avec une joueuse
+          if (estIntime && louison) {
+            var partenaire = getJoueuseSauf(session, louison.id);
+            if (partenaire) {
+              duoResult = [louison, partenaire, false];
+            } else {
+              duoResult = getDuoAleatoire(session, estIntime);
+            }
+          } else {
+            duoResult = getDuoAleatoire(session, estIntime);
+          }
+
           if (!duoResult) return;
           var j1 = duoResult[0];
           var j2 = duoResult[1];
@@ -241,7 +369,6 @@ wss.on('connection', function(ws) {
           var cible = getJoueurAleatoire(session);
           if (!cible) return;
           var texteGroupe = carte.texte.replace(/{joueur}/g, cible.nom);
-          // Replique de lancement groupe
           var grpPool = session.cartes.repliques_oracle.groupe_lancement;
           var grpMsg = grpPool[Math.floor(Math.random() * grpPool.length)].replace(/{joueur}/g, cible.nom);
           broadcast(session, { type: 'NOUVELLE_CARTE', carte: Object.assign({}, carte, { texte: texteGroupe, joueurCible: cible.nom, joueurCibleId: cible.id, groupeMsg: grpMsg }) });
@@ -250,12 +377,20 @@ wss.on('connection', function(ws) {
         }
 
         else if (carte.type === 'shot') {
-          // Notifier les joueurs concernes sur leur telephone
           broadcast(session, { type: 'NOUVELLE_CARTE', carte: carte });
-          // Envoyer un ping shot a tous les joueurs (chacun voit si ca le concerne)
           Object.values(session.joueurs).forEach(function(j) {
             if (j.ws) send(j.ws, { type: 'SHOT_NOTIF', texte: carte.texte });
           });
+        }
+
+        // Message prive occasional apres chaque carte pour Louison (10% de chance)
+        if (louison && louison.ws && Math.random() < 0.10) {
+          setTimeout(function() {
+            if (louison.ws) {
+              var idx = Math.floor(Math.random() * ORACLE_PREMIUM_MSGS.length);
+              send(louison.ws, { type: 'ORACLE_PRIVE', texte: ORACLE_PREMIUM_MSGS[idx] });
+            }
+          }, 5000);
         }
 
         break;
@@ -297,7 +432,6 @@ wss.on('connection', function(ws) {
         } else {
           repPool = session.cartes.repliques_oracle.groupe_echec;
           var repMsgE = repPool[Math.floor(Math.random() * repPool.length)].replace(/{joueur}/g, msg.cibleNom);
-          // Shot collectif : notifier tous les joueurs sauf la cible
           Object.values(session.joueurs).forEach(function(j) {
             if (j.ws && j.id !== msg.cibleId) {
               send(j.ws, { type: 'SHOT_NOTIF', texte: 'Le groupe a echoue. Tu bois.' });
@@ -315,12 +449,10 @@ wss.on('connection', function(ws) {
         if (!joueurAct) return;
         if (msg.accompli) {
           joueurAct.points += carteAct.points || 0;
-          // Replique de felicitations
           var felPool = session.cartes.repliques_oracle.felicitations;
           var felMsg = felPool[Math.floor(Math.random() * felPool.length)];
           broadcast(session, { type: 'ACTION_ACCOMPLIE', joueurId: ws.joueurId, nom: joueurAct.nom, points: joueurAct.points, replique: felMsg });
         } else {
-          // Shot au refus : notifier le joueur
           var refPool = session.cartes.repliques_oracle.refus;
           var refMsg = refPool[Math.floor(Math.random() * refPool.length)];
           if (joueurAct.ws) send(joueurAct.ws, { type: 'SHOT_NOTIF', texte: carteAct.penalite_refus || 'shot' });
@@ -334,7 +466,6 @@ wss.on('connection', function(ws) {
         if (!joueurPal || joueurPal.palier >= 2) return;
         joueurPal.palier++;
         send(ws, { type: 'PALIER_UPDATE', palier: joueurPal.palier });
-        // Replique de transition si tout le groupe monte
         var palierMin = Math.min.apply(null, Object.values(session.joueurs).map(function(j) { return j.palier || 0; }));
         var transitionMsg = null;
         if (palierMin === 1) {
@@ -353,7 +484,6 @@ wss.on('connection', function(ws) {
         session.etat = 'fin';
         var joueursFinaux = Object.values(session.joueurs).sort(function(a, b) { return b.points - a.points; });
         var jugements = session.cartes.repliques_oracle.jugement_final;
-        // Melanger les jugements pour eviter les repetitions
         var jugsCopy = jugements.slice();
         jugsCopy.sort(function() { return Math.random() - 0.5; });
         var verdicts = joueursFinaux.map(function(j, i) {
@@ -384,6 +514,22 @@ wss.on('connection', function(ws) {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
+// Trouver Louison dans la session s il est present et connecte
+function getLouison(session) {
+  return Object.values(session.joueurs).find(function(j) {
+    return j.ws && j.premium;
+  }) || null;
+}
+
+// Trouver une joueuse (sexe femme) differente de excludeId
+function getJoueuseSauf(session, excludeId) {
+  var joueuses = Object.values(session.joueurs).filter(function(j) {
+    return j.ws && j.id !== excludeId && j.sexe === 'femme';
+  });
+  if (joueuses.length === 0) return null;
+  return joueuses[Math.floor(Math.random() * joueuses.length)];
+}
+
 function resolveAccord(session, actionId, raison) {
   var accord = session.accordsEnCours[actionId];
   if (!accord) return;
@@ -411,7 +557,6 @@ function resolveAccord(session, actionId, raison) {
   } else {
     var non = session.cartes.repliques_oracle.double_accord_non;
     var nonMsg = non[Math.floor(Math.random() * non.length)];
-    // Shot au refus pour les deux
     if (j1 && j1.ws) send(j1.ws, { type: 'SHOT_NOTIF', texte: accord.carte.penalite_refus || 'shot' });
     if (j2 && j2.ws) send(j2.ws, { type: 'SHOT_NOTIF', texte: accord.carte.penalite_refus || 'shot' });
     broadcast(session, { type: 'ACCORD_NON', actionId: actionId, penalite: accord.carte.penalite_refus || 'shot chacun', replique: nonMsg });
@@ -422,20 +567,16 @@ function resolveAccord(session, actionId, raison) {
 function resolveVote(session, voteId) {
   var vote = session.votesEnCours[voteId];
   if (!vote) return;
-
   var scores = {};
   Object.values(vote.votes).forEach(function(cibleId) {
     scores[cibleId] = (scores[cibleId] || 0) + 1;
   });
-
   var maxVotes = Object.values(scores).length > 0 ? Math.max.apply(null, Object.values(scores)) : 0;
   var finalistes = Object.entries(scores).filter(function(e) { return e[1] === maxVotes; }).map(function(e) { return e[0]; });
-
   if (finalistes.length === 0) {
     var jRand = getJoueurAleatoire(session);
     finalistes = jRand ? [jRand.id] : [];
   }
-
   var designeId;
   var isEgalite = finalistes.length > 1;
   if (!isEgalite) {
@@ -447,16 +588,12 @@ function resolveVote(session, voteId) {
     var exaequo = finalJoueurs.filter(function(j) { return (j.points || 0) === minPoints; });
     designeId = exaequo[Math.floor(Math.random() * exaequo.length)].id;
   }
-
   var designe = session.joueurs[designeId];
   if (!designe) { delete session.votesEnCours[voteId]; return; }
-
   designe.points += vote.carte.points || 0;
-
   var repliques = session.cartes.repliques_oracle;
   var pool = isEgalite ? repliques.vote_egalite : repliques.vote_resultat;
   var replique = pool[Math.floor(Math.random() * pool.length)].replace(/{joueur}/g, designe.nom);
-
   broadcast(session, {
     type: 'VOTE_RESULTAT',
     voteId: voteId,
@@ -466,13 +603,13 @@ function resolveVote(session, voteId) {
     replique: replique,
     isEgalite: isEgalite
   });
-
-  // Envoyer l action au designe avec le label correct
   if (designe.ws) send(designe.ws, { type: 'ACTION_VOTE_DESIGNE', texte: vote.carte.texte_joueur, points: vote.carte.points });
   delete session.votesEnCours[voteId];
 }
 
-function tirerCarte(session) {
+// tirerCarte avec support premium :
+// Si Louison est designe pour solo sur chaud/brulant, chance de piocher une carte premium avantageuse
+function tirerCarte(session, louison) {
   var joueurs = Object.values(session.joueurs);
   if (joueurs.length === 0) return null;
 
@@ -480,16 +617,25 @@ function tirerCarte(session) {
   var paliers = ['tiede', 'chaud', 'brulant'];
   var palierNom = paliers[Math.min(palierMin, 2)];
 
+  // Chance de tirer une carte premium si Louison est present et palier chaud/brulant
+  if (louison && (palierNom === 'chaud' || palierNom === 'brulant') && Math.random() < PREMIUM_CARTE_PROB) {
+    var cartesPremiumDispo = CARTES_PREMIUM.filter(function(c) {
+      return !session.cartesPremiumUtilisees.has(c.id) && c.palierNom === palierNom;
+    });
+    if (cartesPremiumDispo.length > 0) {
+      var cartePrem = cartesPremiumDispo[Math.floor(Math.random() * cartesPremiumDispo.length)];
+      session.cartesPremiumUtilisees.add(cartePrem.id);
+      return Object.assign({}, cartePrem, { palierNom: palierNom });
+    }
+  }
+
   var used = session.cartesUtilisees[palierNom];
   var cartesDisponibles = session.cartes.cartes[palierNom].filter(function(c) { return !used.has(c.id); });
-
   if (cartesDisponibles.length === 0) {
     session.cartesUtilisees[palierNom] = new Set();
     cartesDisponibles = session.cartes.cartes[palierNom];
   }
-
   if (cartesDisponibles.length === 0) return null;
-
   var carte = cartesDisponibles[Math.floor(Math.random() * cartesDisponibles.length)];
   session.cartesUtilisees[palierNom].add(carte.id);
   return Object.assign({}, carte, { palierNom: palierNom });
@@ -514,7 +660,6 @@ function paireCompatible(j1, j2) {
   return s1 !== s2;
 }
 
-// Retourne [j1, j2, fallback]
 function getDuoAleatoire(session, estIntime) {
   var joueurs = Object.values(session.joueurs).filter(function(j) { return j.ws; });
   if (joueurs.length < 2) return null;
